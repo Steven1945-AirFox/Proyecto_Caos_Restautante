@@ -1,0 +1,942 @@
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\GustoySazon.dll.config
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\GustoySazon.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\GustoySazon.pdb
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\csc.exe
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\csc.exe.config
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\csc.rsp
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\csi.exe
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\csi.exe.config
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\csi.rsp
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.Managed.Core.targets
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.Win32.Primitives.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\System.AppContext.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\System.Console.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\System.Globalization.Calendars.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\System.IO.Compression.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\System.IO.Compression.ZipFile.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\System.Net.Http.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\System.Net.Sockets.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\System.Security.Cryptography.Encoding.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\System.Security.Cryptography.Primitives.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\System.Text.Encoding.CodePages.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\System.Threading.Tasks.Extensions.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\System.ValueTuple.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\System.Xml.ReaderWriter.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\System.Xml.XmlDocument.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\System.Xml.XPath.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\System.Xml.XPath.XDocument.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\vbc.exe
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\vbc.exe.config
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\vbc.rsp
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\VBCSCompiler.exe
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\Antlr3.Runtime.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\Newtonsoft.Json.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\System.Web.Helpers.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\System.Web.Mvc.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\System.Web.Optimization.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\System.Web.Razor.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.Deployment.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.Razor.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\WebGrease.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\System.Web.Helpers.xml
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\System.Web.Mvc.xml
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\System.Web.Optimization.xml
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\System.Web.Razor.xml
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.xml
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.Deployment.xml
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.Razor.xml
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\Newtonsoft.Json.xml
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\Antlr3.Runtime.pdb
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\es\System.Web.Helpers.resources.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\es\System.Web.Mvc.resources.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\es\System.Web.Optimization.resources.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\es\System.Web.Razor.resources.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\es\System.Web.WebPages.resources.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\es\System.Web.WebPages.Deployment.resources.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\bin\es\System.Web.WebPages.Razor.resources.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\obj\Debug\GustoySazon.csproj.AssemblyReference.cache
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\obj\Debug\GustoySazon.csproj.CoreCompileInputs.cache
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\obj\Debug\GustoySa.1E94B6CB.Up2Date
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\obj\Debug\GustoySazon.dll
+C:\Users\zhado\OneDrive\Escritorio\Gusto y Sazon\GustoySazon\obj\Debug\GustoySazon.pdb
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\GustoySazon.dll.config
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\GustoySazon.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\GustoySazon.pdb
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\csc.exe
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\csc.exe.config
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\csc.rsp
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\csi.exe
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\csi.exe.config
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\csi.rsp
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.Managed.Core.targets
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.Win32.Primitives.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.AppContext.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Console.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Globalization.Calendars.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.IO.Compression.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.IO.Compression.ZipFile.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Net.Http.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Net.Sockets.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Security.Cryptography.Encoding.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Security.Cryptography.Primitives.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Text.Encoding.CodePages.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Threading.Tasks.Extensions.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.ValueTuple.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Xml.ReaderWriter.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Xml.XmlDocument.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Xml.XPath.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Xml.XPath.XDocument.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\vbc.exe
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\vbc.exe.config
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\vbc.rsp
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\VBCSCompiler.exe
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\Antlr3.Runtime.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\Newtonsoft.Json.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Helpers.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Mvc.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Optimization.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Razor.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.Deployment.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.Razor.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\WebGrease.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Helpers.xml
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Mvc.xml
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Optimization.xml
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Razor.xml
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.xml
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.Deployment.xml
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.Razor.xml
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\Newtonsoft.Json.xml
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\Antlr3.Runtime.pdb
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.Helpers.resources.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.Mvc.resources.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.Optimization.resources.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.Razor.resources.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.WebPages.resources.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.WebPages.Deployment.resources.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.WebPages.Razor.resources.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\obj\Debug\GustoySazon.csproj.AssemblyReference.cache
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\obj\Debug\GustoySazon.csproj.CoreCompileInputs.cache
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\obj\Debug\GustoySa.1E94B6CB.Up2Date
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\obj\Debug\GustoySazon.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\GustoySazon\obj\Debug\GustoySazon.pdb
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\GustoySazon.dll.config
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\GustoySazon.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\GustoySazon.pdb
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\csc.exe
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\csc.exe.config
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\csc.rsp
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\csi.exe
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\csi.exe.config
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\csi.rsp
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.Managed.Core.targets
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.Win32.Primitives.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.AppContext.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Console.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Globalization.Calendars.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.IO.Compression.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.IO.Compression.ZipFile.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Net.Http.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Net.Sockets.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Security.Cryptography.Encoding.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Security.Cryptography.Primitives.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Text.Encoding.CodePages.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Threading.Tasks.Extensions.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.ValueTuple.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Xml.ReaderWriter.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Xml.XmlDocument.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Xml.XPath.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Xml.XPath.XDocument.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\vbc.exe
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\vbc.exe.config
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\vbc.rsp
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\VBCSCompiler.exe
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\Antlr3.Runtime.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\Newtonsoft.Json.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Helpers.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Mvc.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Optimization.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Razor.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.Deployment.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.Razor.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\WebGrease.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Helpers.xml
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Mvc.xml
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Optimization.xml
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Razor.xml
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.xml
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.Deployment.xml
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.Razor.xml
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\Newtonsoft.Json.xml
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\Antlr3.Runtime.pdb
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.Helpers.resources.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.Mvc.resources.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.Optimization.resources.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.Razor.resources.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.WebPages.resources.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.WebPages.Deployment.resources.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.WebPages.Razor.resources.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\obj\Debug\GustoySazon.csproj.AssemblyReference.cache
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\obj\Debug\GustoySazon.csproj.CoreCompileInputs.cache
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\obj\Debug\GustoySa.1E94B6CB.Up2Date
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\obj\Debug\GustoySazon.dll
+C:\Users\josue\Downloads\Gusto y Sazon\Gusto y Sazon\GustoySazon\obj\Debug\GustoySazon.pdb
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\GustoySazon.dll.config
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\GustoySazon.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\GustoySazon.pdb
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\csc.exe
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\csc.exe.config
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\csc.rsp
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\csi.exe
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\csi.exe.config
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\csi.rsp
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.Managed.Core.targets
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.Win32.Primitives.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.AppContext.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Console.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Globalization.Calendars.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.IO.Compression.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.IO.Compression.ZipFile.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Net.Http.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Net.Sockets.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Security.Cryptography.Encoding.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Security.Cryptography.Primitives.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Text.Encoding.CodePages.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Threading.Tasks.Extensions.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.ValueTuple.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Xml.ReaderWriter.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Xml.XmlDocument.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Xml.XPath.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Xml.XPath.XDocument.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\vbc.exe
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\vbc.exe.config
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\vbc.rsp
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\VBCSCompiler.exe
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\Antlr3.Runtime.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\Newtonsoft.Json.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Helpers.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Mvc.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Optimization.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Razor.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.Deployment.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.Razor.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\WebGrease.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Helpers.xml
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Mvc.xml
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Optimization.xml
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Razor.xml
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.xml
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.Deployment.xml
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.Razor.xml
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\Newtonsoft.Json.xml
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\Antlr3.Runtime.pdb
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.Helpers.resources.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.Mvc.resources.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.Optimization.resources.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.Razor.resources.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.WebPages.resources.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.WebPages.Deployment.resources.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.WebPages.Razor.resources.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\obj\Debug\GustoySazon.csproj.AssemblyReference.cache
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\obj\Debug\GustoySazon.csproj.CoreCompileInputs.cache
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\obj\Debug\GustoySa.1E94B6CB.Up2Date
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\obj\Debug\GustoySazon.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon\Gusto y Sazon\Gusto y Sazon\GustoySazon\obj\Debug\GustoySazon.pdb
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\GustoySazon.dll.config
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\GustoySazon.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\GustoySazon.pdb
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\csc.exe
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\csc.exe.config
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\csc.rsp
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\csi.exe
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\csi.exe.config
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\csi.rsp
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.Managed.Core.targets
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.Win32.Primitives.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.AppContext.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Console.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Globalization.Calendars.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.IO.Compression.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.IO.Compression.ZipFile.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Net.Http.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Net.Sockets.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Security.Cryptography.Encoding.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Security.Cryptography.Primitives.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Text.Encoding.CodePages.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Threading.Tasks.Extensions.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.ValueTuple.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Xml.ReaderWriter.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Xml.XmlDocument.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Xml.XPath.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Xml.XPath.XDocument.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\vbc.exe
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\vbc.exe.config
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\vbc.rsp
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\VBCSCompiler.exe
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\Antlr3.Runtime.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\Newtonsoft.Json.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Helpers.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Mvc.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Optimization.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Razor.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.Deployment.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.Razor.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\WebGrease.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Helpers.xml
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Mvc.xml
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Optimization.xml
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Razor.xml
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.xml
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.Deployment.xml
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.Razor.xml
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\Newtonsoft.Json.xml
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\Antlr3.Runtime.pdb
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.Helpers.resources.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.Mvc.resources.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.Optimization.resources.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.Razor.resources.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.WebPages.resources.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.WebPages.Deployment.resources.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.WebPages.Razor.resources.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\obj\Debug\GustoySazon.csproj.AssemblyReference.cache
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\obj\Debug\GustoySazon.csproj.CoreCompileInputs.cache
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\obj\Debug\GustoySa.1E94B6CB.Up2Date
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\obj\Debug\GustoySazon.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\obj\Debug\GustoySazon.pdb
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\GustoySazon.dll.config
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\GustoySazon.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\GustoySazon.pdb
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\csc.exe
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\csc.exe.config
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\csc.rsp
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\csi.exe
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\csi.exe.config
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\csi.rsp
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.Managed.Core.targets
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.Win32.Primitives.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.AppContext.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Console.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Globalization.Calendars.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.IO.Compression.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.IO.Compression.ZipFile.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Net.Http.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Net.Sockets.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Security.Cryptography.Encoding.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Security.Cryptography.Primitives.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Text.Encoding.CodePages.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Threading.Tasks.Extensions.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.ValueTuple.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Xml.ReaderWriter.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Xml.XmlDocument.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Xml.XPath.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Xml.XPath.XDocument.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\vbc.exe
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\vbc.exe.config
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\vbc.rsp
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\VBCSCompiler.exe
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\Antlr3.Runtime.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\Newtonsoft.Json.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Helpers.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Mvc.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Optimization.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Razor.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.Deployment.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.Razor.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\WebGrease.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Helpers.xml
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Mvc.xml
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Optimization.xml
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Razor.xml
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.xml
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.Deployment.xml
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.Razor.xml
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\Newtonsoft.Json.xml
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\Antlr3.Runtime.pdb
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.Helpers.resources.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.Mvc.resources.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.Optimization.resources.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.Razor.resources.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.WebPages.resources.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.WebPages.Deployment.resources.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.WebPages.Razor.resources.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\obj\Debug\GustoySazon.csproj.AssemblyReference.cache
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\obj\Debug\GustoySazon.csproj.CoreCompileInputs.cache
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\obj\Debug\GustoySa.1E94B6CB.Up2Date
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\obj\Debug\GustoySazon.dll
+C:\Users\josue\Downloads\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\obj\Debug\GustoySazon.pdb
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\GustoySazon.dll.config
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\GustoySazon.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\GustoySazon.pdb
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\csc.exe
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\csc.exe.config
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\csc.rsp
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\csi.exe
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\csi.exe.config
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\csi.rsp
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.Managed.Core.targets
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.Win32.Primitives.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.AppContext.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Console.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Globalization.Calendars.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.IO.Compression.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.IO.Compression.ZipFile.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Net.Http.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Net.Sockets.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Security.Cryptography.Encoding.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Security.Cryptography.Primitives.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Text.Encoding.CodePages.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Threading.Tasks.Extensions.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.ValueTuple.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Xml.ReaderWriter.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Xml.XmlDocument.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Xml.XPath.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Xml.XPath.XDocument.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\vbc.exe
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\vbc.exe.config
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\vbc.rsp
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\VBCSCompiler.exe
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\Antlr3.Runtime.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\Newtonsoft.Json.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Helpers.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Mvc.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Optimization.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Razor.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.Deployment.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.Razor.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\WebGrease.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Helpers.xml
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Mvc.xml
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Optimization.xml
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.Razor.xml
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.xml
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.Deployment.xml
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.Razor.xml
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\Newtonsoft.Json.xml
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\Antlr3.Runtime.pdb
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.Helpers.resources.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.Mvc.resources.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.Optimization.resources.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.Razor.resources.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.WebPages.resources.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.WebPages.Deployment.resources.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.WebPages.Razor.resources.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\obj\Debug\GustoySazon.csproj.AssemblyReference.cache
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\obj\Debug\GustoySazon.csproj.CoreCompileInputs.cache
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\obj\Debug\GustoySa.1E94B6CB.Up2Date
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\obj\Debug\GustoySazon.dll
+C:\Users\steve\OneDrive\Escritorio\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\obj\Debug\GustoySazon.pdb
+C:\Users\zhado\OneDrive\Documentos\Personal\Gusto y sazon\Gusto y Sazon(Josue y Steven) 2FA\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\obj\Debug\GustoySazon.dll
+C:\Users\zhado\OneDrive\Documentos\Personal\Gusto y sazon\Gusto y Sazon(Josue y Steven) 2FA\Gusto y Sazon Steven\Gusto y Sazon Steven\Gusto y Sazon\Gusto y Sazon\GustoySazon\obj\Debug\GustoySazon.pdb
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\obj\Debug\GustoySazon.csproj.AssemblyReference.cache
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\obj\Debug\GustoySazon.csproj.CoreCompileInputs.cache
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\GustoySazon.dll.config
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\GustoySazon.dll
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\GustoySazon.pdb
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\roslyn\csc.exe
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\roslyn\csc.exe.config
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\roslyn\csc.rsp
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\roslyn\csi.exe
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\roslyn\csi.exe.config
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\roslyn\csi.rsp
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.Managed.Core.CurrentVersions.targets
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.Managed.Core.targets
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Buffers.dll
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Memory.dll
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Numerics.Vectors.dll
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Text.Encoding.CodePages.dll
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\roslyn\System.Threading.Tasks.Extensions.dll
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\roslyn\vbc.exe
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\roslyn\vbc.exe.config
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\roslyn\vbc.rsp
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\roslyn\VBCSCompiler.exe
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\Antlr3.Runtime.dll
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\Newtonsoft.Json.dll
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\System.Web.Helpers.dll
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\System.Web.Mvc.dll
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\System.Web.Optimization.dll
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\System.Web.Razor.dll
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.Deployment.dll
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.dll
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.Razor.dll
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\WebGrease.dll
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\Antlr3.Runtime.pdb
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\Newtonsoft.Json.xml
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\System.Web.Helpers.xml
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\System.Web.Mvc.xml
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\System.Web.Optimization.xml
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\System.Web.Razor.xml
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.xml
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.Deployment.xml
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\System.Web.WebPages.Razor.xml
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.Helpers.resources.dll
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.Mvc.resources.dll
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.Optimization.resources.dll
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.Razor.resources.dll
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.WebPages.resources.dll
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.WebPages.Deployment.resources.dll
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\es\System.Web.WebPages.Razor.resources.dll
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\obj\Debug\GustoySa.1E94B6CB.Up2Date
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\obj\Debug\GustoySazon.dll
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\obj\Debug\GustoySazon.pdb
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\EntityFramework.dll
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\EntityFramework.SqlServer.dll
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\Microsoft.Configuration.ConfigurationBuilders.Base.dll
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\Microsoft.Configuration.ConfigurationBuilders.UserSecrets.dll
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\System.Data.SqlClient.dll
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\EntityFramework.xml
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\EntityFramework.SqlServer.xml
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\Microsoft.Configuration.ConfigurationBuilders.Base.xml
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\Microsoft.Configuration.ConfigurationBuilders.UserSecrets.xml
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon\bin\System.Data.SqlClient.xml
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\obj\Debug\GustoySazon.csproj.AssemblyReference.cache
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\obj\Debug\GustoySazon.csproj.CoreCompileInputs.cache
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\obj\Debug\GustoySazon.dll
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\obj\Debug\GustoySazon.pdb
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\GustoySazon.dll.config
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\GustoySazon.dll
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\GustoySazon.pdb
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\roslyn\csc.exe
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\roslyn\csc.exe.config
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\roslyn\csc.rsp
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\roslyn\csi.exe
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\roslyn\csi.exe.config
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\roslyn\csi.rsp
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.dll
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\roslyn\Microsoft.CSharp.Core.targets
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\roslyn\Microsoft.Managed.Core.CurrentVersions.targets
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\roslyn\Microsoft.Managed.Core.targets
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\roslyn\Microsoft.VisualBasic.Core.targets
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\roslyn\System.Buffers.dll
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\roslyn\System.Collections.Immutable.dll
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\roslyn\System.Memory.dll
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\roslyn\System.Numerics.Vectors.dll
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\roslyn\System.Reflection.Metadata.dll
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\roslyn\System.Runtime.CompilerServices.Unsafe.dll
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\roslyn\System.Text.Encoding.CodePages.dll
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\roslyn\System.Threading.Tasks.Extensions.dll
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\roslyn\vbc.exe
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\roslyn\vbc.exe.config
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\roslyn\vbc.rsp
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\roslyn\VBCSCompiler.exe
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\roslyn\VBCSCompiler.exe.config
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\Antlr3.Runtime.dll
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\EntityFramework.dll
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\EntityFramework.SqlServer.dll
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\Microsoft.Configuration.ConfigurationBuilders.Base.dll
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\Microsoft.Configuration.ConfigurationBuilders.UserSecrets.dll
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\Microsoft.Web.Infrastructure.dll
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\Newtonsoft.Json.dll
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\System.Data.SqlClient.dll
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\System.Web.Helpers.dll
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\System.Web.Mvc.dll
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\System.Web.Optimization.dll
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\System.Web.Razor.dll
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\System.Web.WebPages.Deployment.dll
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\System.Web.WebPages.dll
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\System.Web.WebPages.Razor.dll
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\WebGrease.dll
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\Antlr3.Runtime.pdb
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\EntityFramework.xml
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\EntityFramework.SqlServer.xml
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\Microsoft.Configuration.ConfigurationBuilders.Base.xml
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\Microsoft.Configuration.ConfigurationBuilders.UserSecrets.xml
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\Newtonsoft.Json.xml
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\System.Data.SqlClient.xml
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\System.Web.Helpers.xml
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\System.Web.Mvc.xml
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\System.Web.Optimization.xml
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\System.Web.Razor.xml
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\System.Web.WebPages.xml
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\System.Web.WebPages.Deployment.xml
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\System.Web.WebPages.Razor.xml
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\es\System.Web.Helpers.resources.dll
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\es\System.Web.Mvc.resources.dll
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\es\System.Web.Optimization.resources.dll
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\es\System.Web.Razor.resources.dll
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\es\System.Web.WebPages.resources.dll
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\es\System.Web.WebPages.Deployment.resources.dll
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\bin\es\System.Web.WebPages.Razor.resources.dll
+S:\Proyectos\RestauranteCaosFinal\GustoySazon\GustoySazon\obj\Debug\GustoySa.1E94B6CB.Up2Date
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\GustoySazon.dll.config
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\GustoySazon.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\GustoySazon.pdb
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\csc.exe
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\csc.exe.config
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\csc.rsp
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\csi.exe
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\csi.exe.config
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\csi.rsp
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\Microsoft.Managed.Core.CurrentVersions.targets
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\Microsoft.Managed.Core.targets
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\System.Buffers.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\System.Memory.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\System.Numerics.Vectors.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\System.Text.Encoding.CodePages.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\System.Threading.Tasks.Extensions.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\vbc.exe
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\vbc.exe.config
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\vbc.rsp
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\VBCSCompiler.exe
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Antlr3.Runtime.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\EntityFramework.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\EntityFramework.SqlServer.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Microsoft.Configuration.ConfigurationBuilders.Base.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Microsoft.Configuration.ConfigurationBuilders.UserSecrets.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Newtonsoft.Json.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\System.Data.SqlClient.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\System.Web.Helpers.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\System.Web.Mvc.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\System.Web.Optimization.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\System.Web.Razor.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\System.Web.WebPages.Deployment.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\System.Web.WebPages.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\System.Web.WebPages.Razor.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\WebGrease.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Antlr3.Runtime.pdb
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\EntityFramework.xml
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\EntityFramework.SqlServer.xml
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Microsoft.Configuration.ConfigurationBuilders.Base.xml
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Microsoft.Configuration.ConfigurationBuilders.UserSecrets.xml
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Newtonsoft.Json.xml
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\System.Data.SqlClient.xml
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\System.Web.Helpers.xml
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\System.Web.Mvc.xml
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\System.Web.Optimization.xml
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\System.Web.Razor.xml
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\System.Web.WebPages.xml
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\System.Web.WebPages.Deployment.xml
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\System.Web.WebPages.Razor.xml
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\es\System.Web.Helpers.resources.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\es\System.Web.Mvc.resources.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\es\System.Web.Optimization.resources.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\es\System.Web.Razor.resources.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\es\System.Web.WebPages.resources.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\es\System.Web.WebPages.Deployment.resources.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\es\System.Web.WebPages.Razor.resources.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\obj\Debug\GustoySazon.csproj.AssemblyReference.cache
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\obj\Debug\GustoySazon.csproj.CoreCompileInputs.cache
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\obj\Debug\GustoySa.1E94B6CB.Up2Date
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\obj\Debug\GustoySazon.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\obj\Debug\GustoySazon.pdb
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Microsoft.AspNet.SignalR.Core.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Microsoft.Owin.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Microsoft.Owin.Security.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Owin.dll
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Microsoft.AspNet.SignalR.Core.pdb
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Microsoft.AspNet.SignalR.Core.xml
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Microsoft.AspNet.SignalR.SystemWeb.pdb
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Microsoft.Owin.xml
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\zhado\Downloads\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Microsoft.Owin.Security.xml
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\GustoySazon.dll.config
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\GustoySazon.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\GustoySazon.pdb
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\csc.exe
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\csc.exe.config
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\csc.rsp
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\csi.exe
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\csi.exe.config
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\csi.rsp
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\Microsoft.CSharp.Core.targets
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\Microsoft.Managed.Core.CurrentVersions.targets
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\Microsoft.Managed.Core.targets
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\Microsoft.VisualBasic.Core.targets
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\System.Buffers.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\System.Collections.Immutable.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\System.Memory.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\System.Numerics.Vectors.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\System.Reflection.Metadata.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\System.Runtime.CompilerServices.Unsafe.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\System.Text.Encoding.CodePages.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\System.Threading.Tasks.Extensions.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\vbc.exe
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\vbc.exe.config
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\vbc.rsp
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\VBCSCompiler.exe
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\roslyn\VBCSCompiler.exe.config
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Antlr3.Runtime.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\EntityFramework.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\EntityFramework.SqlServer.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Microsoft.AspNet.SignalR.Core.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Microsoft.Configuration.ConfigurationBuilders.Base.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Microsoft.Configuration.ConfigurationBuilders.UserSecrets.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Microsoft.Owin.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Microsoft.Owin.Host.SystemWeb.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Microsoft.Owin.Security.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Microsoft.Web.Infrastructure.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Newtonsoft.Json.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Owin.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\System.Data.SqlClient.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\System.Web.Helpers.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\System.Web.Mvc.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\System.Web.Optimization.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\System.Web.Razor.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\System.Web.WebPages.Deployment.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\System.Web.WebPages.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\System.Web.WebPages.Razor.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\WebGrease.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Antlr3.Runtime.pdb
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\EntityFramework.xml
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\EntityFramework.SqlServer.xml
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Microsoft.AspNet.SignalR.Core.pdb
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Microsoft.AspNet.SignalR.Core.xml
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Microsoft.AspNet.SignalR.SystemWeb.pdb
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Microsoft.Configuration.ConfigurationBuilders.Base.xml
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Microsoft.Configuration.ConfigurationBuilders.UserSecrets.xml
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Microsoft.Owin.xml
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Microsoft.Owin.Host.SystemWeb.xml
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Microsoft.Owin.Security.xml
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\Newtonsoft.Json.xml
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\System.Data.SqlClient.xml
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\System.Web.Helpers.xml
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\System.Web.Mvc.xml
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\System.Web.Optimization.xml
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\System.Web.Razor.xml
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\System.Web.WebPages.xml
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\System.Web.WebPages.Deployment.xml
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\System.Web.WebPages.Razor.xml
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\es\System.Web.Helpers.resources.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\es\System.Web.Mvc.resources.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\es\System.Web.Optimization.resources.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\es\System.Web.Razor.resources.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\es\System.Web.WebPages.resources.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\es\System.Web.WebPages.Deployment.resources.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\bin\es\System.Web.WebPages.Razor.resources.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\obj\Debug\GustoySazon.csproj.AssemblyReference.cache
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\obj\Debug\GustoySazon.csproj.CoreCompileInputs.cache
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\obj\Debug\GustoySa.1E94B6CB.Up2Date
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\obj\Debug\GustoySazon.dll
+E:\Sitios\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2_07-28-25\GustoySazon-Steven2\GustoySazon\obj\Debug\GustoySazon.pdb

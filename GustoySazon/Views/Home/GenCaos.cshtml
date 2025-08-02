@@ -1,0 +1,1242 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Crisis - Restaurante Gusto y Sazón</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="~/Content/GENERADOR CADOS.css" rel="stylesheet" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
+    <script src="/signalr/hubs"></script>
+
+</head>
+<body>
+    <!-- Notifications Container -->
+    <div class="notifications" id="notifications"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🍽️ Simulador de Crisis - Restaurante Gusto y Sazón</h1>
+            <p>Sistema Integral de Gestión de Crisis Operacional</p>
+        </div>
+
+        <!-- Main Tabs -->
+        <div class="tabs">
+            <div class="tab-list">
+                <button class="tab-button active" data-tab="command">🛡️ Centro de Comando</button>
+                <button class="tab-button" data-tab="auto">🌀 Simulación Automática</button>
+                <button class="tab-button" data-tab="manual">🎛️ Gestión Manual</button>
+                <button class="tab-button" data-tab="ai">🧠 IA Predictiva</button>
+            </div>
+
+            <!-- Centro de Comando Tab - Simplified -->
+            <div class="tab-content active" id="command">
+                <!-- DEFCON Status Only -->
+                <div class="defcon-status">
+                    <div class="defcon-level">
+                        <div class="defcon-indicator defcon-5" id="defconIndicator">5</div>
+                        <div class="defcon-info">
+                            <h3 id="defconName">EJERCICIO</h3>
+                            <p id="defconDescription">Condiciones normales de operación</p>
+                        </div>
+                    </div>
+                    <div class="defcon-progress">
+                        <div class="defcon-progress-label">
+                            <span>Nivel de Riesgo</span>
+                            <span id="defconRiskLabel">NORMAL</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="defconProgress" style="width: 20%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Evacuation Plan (Hidden by default) -->
+                <div class="evacuation-plan hidden" id="evacuationPlan">
+                    <div class="evacuation-header">
+                        <div class="evacuation-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="evacuation-title">🚨 PLAN DE EVACUACIÓN ACTIVADO</div>
+                    </div>
+                    <div class="evacuation-steps">
+                        <div class="evacuation-step">
+                            <strong>1.</strong> Dirigir clientes hacia salidas de emergencia
+                        </div>
+                        <div class="evacuation-step">
+                            <strong>2.</strong> Apagar equipos de cocina no esenciales
+                        </div>
+                        <div class="evacuation-step">
+                            <strong>3.</strong> Contactar servicios de emergencia: 911
+                        </div>
+                        <div class="evacuation-step">
+                            <strong>4.</strong> Punto de encuentro: Estacionamiento principal
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Metrics Grid with Dynamic Colors -->
+                <div class="metrics-grid" id="metricsGrid">
+                    <!-- Metrics will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Simulación Automática Tab -->
+            <div class="tab-content" id="auto">
+                <div class="ai-panel">
+                    <div class="ai-header">
+                        <div class="ai-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div>
+                            <div class="ai-title">Simulación Automática Omnipresente</div>
+                            <p>Eventos aleatorios cada 8 segundos con impacto automático</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <button class="btn btn-success" id="autoSimulationToggle">
+                            <i class="fas fa-play"></i> Iniciar Simulación Automática
+                        </button>
+                        <div class="flex items-center gap-2">
+                            <label class="switch">
+                                <input type="checkbox" id="autoResolverToggle">
+                                <span class="slider"></span>
+                            </label>
+                            <span>AutoResolver IA</span>
+                        </div>
+                    </div>
+                    <div id="autoSimulationStatus" class="text-center">
+                        <p>Sistema en espera - Presiona "Iniciar" para comenzar</p>
+                    </div>
+                </div>
+
+                <!-- Active Event Display -->
+                <div class="event-card hidden" id="activeEventDisplay">
+                    <!-- Active event will be displayed here -->
+                </div>
+            </div>
+
+            <!-- Gestión Manual Tab -->
+            <div class="tab-content" id="manual">
+                <div class="mb-4">
+                    <h2 class="text-center mb-2">Eventos Críticos Disponibles</h2>
+                    <p class="text-center text-secondary">Selecciona cualquier evento para activarlo manualmente</p>
+                </div>
+
+                <!-- Events Grid -->
+                <div class="events-grid" id="eventsGrid">
+                    <!-- Events will be populated by JavaScript -->
+                </div>
+
+                <div class="mb-4 mt-4">
+                    <h2 class="text-center mb-2">Escenarios Complejos Predefinidos</h2>
+                    <p class="text-center text-secondary">Situaciones que combinan múltiples eventos críticos</p>
+                </div>
+
+                <!-- Scenarios Grid -->
+                <div class="events-grid" id="scenariosGrid">
+                    <!-- Scenarios will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- IA Predictiva Tab -->
+            <div class="tab-content" id="ai">
+                <div class="ai-panel">
+                    <div class="ai-header">
+                        <div class="ai-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <div class="ai-title">Inteligencia Artificial Predictiva</div>
+                    </div>
+                    <div class="ai-recommendations" id="aiRecommendations">
+                        <!-- AI recommendations will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Application State
+        let isAutoSimulating = false;
+        let autoResolverEnabled = false;
+        let currentDefconLevel = 5;
+        let activeEventId = null;
+        let autoSimulationInterval = null;
+        let currentActiveItem = null; // Store current active event/scenario for impact tracking
+
+        // Data Definitions
+        const metrics = [
+            { id: 'clients', title: 'Clientes Activos', value: 45, max: 100, icon: 'fas fa-users', color: 'blue' },
+            { id: 'orders', title: 'Pedidos Pendientes', value: 12, max: 50, icon: 'fas fa-shopping-cart', color: 'orange' },
+            { id: 'staff', title: 'Personal Activo', value: 8, max: 12, icon: 'fas fa-user-tie', color: 'green' },
+            { id: 'waitTime', title: 'Tiempo de Espera', value: 15, max: 60, icon: 'fas fa-clock', color: 'yellow', unit: 'min' },
+            { id: 'chefStress', title: 'Estrés del Chef', value: 35, max: 100, icon: 'fas fa-thermometer-half', color: 'red', unit: '%' },
+            { id: 'satisfaction', title: 'Satisfacción Cliente', value: 85, max: 100, icon: 'fas fa-smile', color: 'purple', unit: '%' },
+            { id: 'efficiency', title: 'Eficiencia Cocina', value: 78, max: 100, icon: 'fas fa-chart-line', color: 'teal', unit: '%' },
+            { id: 'revenue', title: 'Ingresos', value: 67, max: 100, icon: 'fas fa-dollar-sign', color: 'indigo', unit: '%' }
+        ];
+
+        const criticalEvents = [
+            {
+                id: 'massive-arrival',
+                title: 'Llegada Masiva de Clientes',
+                description: 'Incremento súbito de clientes que supera la capacidad normal',
+                icon: 'fas fa-users',
+                category: 'clientes',
+                enabled: true,
+                solutions: [
+                    { severity: 'leve', text: 'Aumentar personal temporal' },
+                    { severity: 'grave', text: 'Reorganizar mesas y menús' },
+                    { severity: 'critica', text: 'Cierre parcial por saturación' }
+                ],
+                impact: { clients: 30, waitTime: 20, chefStress: 25, satisfaction: -15 }
+            },
+            {
+                id: 'staff-abandonment',
+                title: 'Abandono de Trabajadores',
+                description: 'Personal abandona el trabajo durante horas críticas',
+                icon: 'fas fa-user-minus',
+                category: 'personal',
+                enabled: true,
+                solutions: [
+                    { severity: 'leve', text: 'Incentivos rápidos' },
+                    { severity: 'grave', text: 'Redistribuir funciones' },
+                    { severity: 'critica', text: 'Detener operaciones temporalmente' }
+                ],
+                impact: { staff: -3, efficiency: -30, chefStress: 40, waitTime: 25 }
+            },
+            {
+                id: 'kitchen-fire',
+                title: 'Incendio en Cocina',
+                description: 'Emergencia crítica que requiere evacuación parcial',
+                icon: 'fas fa-fire',
+                category: 'cocina',
+                enabled: true,
+                solutions: [
+                    { severity: 'leve', text: 'Usar extintores' },
+                    { severity: 'grave', text: 'Evacuación parcial' },
+                    { severity: 'critica', text: 'Llamar bomberos y cerrar cocina' }
+                ],
+                impact: { efficiency: -50, chefStress: 60, satisfaction: -40, orders: -20 }
+            },
+            {
+                id: 'social-complaints',
+                title: 'Quejas en Redes Sociales',
+                description: 'Crisis de reputación viral en plataformas digitales',
+                icon: 'fas fa-comments',
+                category: 'clientes',
+                enabled: true,
+                solutions: [
+                    { severity: 'leve', text: 'Disculpa automática' },
+                    { severity: 'grave', text: 'Enviar ofertas o cupones' },
+                    { severity: 'critica', text: 'Suspender servicio en línea' }
+                ],
+                impact: { satisfaction: -25, revenue: -20, clients: -15 }
+            },
+            {
+                id: 'health-inspection',
+                title: 'Inspección Sanitaria',
+                description: 'Visita sorpresa de autoridades sanitarias',
+                icon: 'fas fa-shield-alt',
+                category: 'sanidad',
+                enabled: true,
+                solutions: [
+                    { severity: 'leve', text: 'Limpieza exprés' },
+                    { severity: 'grave', text: 'Ocultar fallas' },
+                    { severity: 'critica', text: 'Cierre temporal' }
+                ],
+                impact: { efficiency: -20, chefStress: 35, satisfaction: -10 }
+            },
+            {
+                id: 'ingredient-shortage',
+                title: 'Escasez de Ingredientes',
+                description: 'Falta crítica de ingredientes principales',
+                icon: 'fas fa-shopping-basket',
+                category: 'cocina',
+                enabled: true,
+                solutions: [
+                    { severity: 'leve', text: 'Sustituir ingredientes' },
+                    { severity: 'grave', text: 'Reducir menú' },
+                    { severity: 'critica', text: 'Suspender pedidos' }
+                ],
+                impact: { orders: -15, efficiency: -25, satisfaction: -20 }
+            },
+            {
+                id: 'gas-leak',
+                title: 'Fuga de Gas',
+                description: 'Emergencia de seguridad por escape de gas',
+                icon: 'fas fa-wind',
+                category: 'cocina',
+                enabled: true,
+                solutions: [
+                    { severity: 'leve', text: 'Ventilar' },
+                    { severity: 'grave', text: 'Cortar suministro' },
+                    { severity: 'critica', text: 'Evacuación total' }
+                ],
+                impact: { efficiency: -40, chefStress: 50, clients: -30, satisfaction: -35 }
+            },
+            {
+                id: 'food-poisoning',
+                title: 'Cliente Intoxicado',
+                description: 'Caso de intoxicación alimentaria reportado',
+                icon: 'fas fa-skull-crossbones',
+                category: 'sanidad',
+                enabled: true,
+                solutions: [
+                    { severity: 'leve', text: 'Atender y disculparse' },
+                    { severity: 'grave', text: 'Llamar ambulancia' },
+                    { severity: 'critica', text: 'Notificar al Ministerio de Salud' }
+                ],
+                impact: { satisfaction: -45, revenue: -30, clients: -25 }
+            },
+            {
+                id: 'protest',
+                title: 'Protesta frente al Restaurante',
+                description: 'Manifestación que bloquea el acceso de clientes',
+                icon: 'fas fa-exclamation-triangle',
+                category: 'clientes',
+                enabled: true,
+                solutions: [
+                    { severity: 'leve', text: 'Negociación pacífica' },
+                    { severity: 'grave', text: 'Llamar seguridad' },
+                    { severity: 'critica', text: 'Cierre completo' }
+                ],
+                impact: { clients: -40, revenue: -35, satisfaction: -20 }
+            },
+            {
+                id: 'power-outage',
+                title: 'Corte de Energía Eléctrica',
+                description: 'Falla eléctrica que paraliza equipos esenciales',
+                icon: 'fas fa-bolt',
+                category: 'cocina',
+                enabled: true,
+                solutions: [
+                    { severity: 'leve', text: 'Usar planta auxiliar' },
+                    { severity: 'grave', text: 'Operar solo áreas críticas' },
+                    { severity: 'critica', text: 'Cerrar restaurante' }
+                ],
+                impact: { efficiency: -60, orders: -25, chefStress: 45, satisfaction: -30 }
+            }
+        ];
+
+        const complexScenarios = [
+            {
+                id: 'rush-hour-chaos',
+                title: 'Caos en Hora Pico',
+                description: 'Llegada masiva + abandono de personal + quejas virales',
+                icon: 'fas fa-hurricane',
+                category: 'clientes',
+                enabled: true,
+                combinedEvents: ['massive-arrival', 'staff-abandonment', 'social-complaints'],
+                solutions: [
+                    { severity: 'leve', text: 'Personal extra + menú corto' },
+                    { severity: 'grave', text: 'Priorización de pedidos' },
+                    { severity: 'critica', text: 'Cerrar pedidos complejos' }
+                ],
+                impact: { clients: 25, waitTime: 35, chefStress: 50, satisfaction: -30, efficiency: -25 }
+            },
+            {
+                id: 'supply-chain-failure',
+                title: 'Fallo Cadena de Suministro',
+                description: 'Escasez + inspección sanitaria + quejas simultáneas',
+                icon: 'fas fa-truck',
+                category: 'cocina',
+                enabled: true,
+                combinedEvents: ['ingredient-shortage', 'health-inspection', 'social-complaints'],
+                solutions: [
+                    { severity: 'leve', text: 'Cambiar proveedor' },
+                    { severity: 'grave', text: 'Ajustar menú y avisar clientes' },
+                    { severity: 'critica', text: 'Suspender pedidos clave' }
+                ],
+                impact: { orders: -20, efficiency: -35, satisfaction: -25, revenue: -30 }
+            },
+            {
+                id: 'kitchen-collapse',
+                title: 'Colapso en Cocina',
+                description: 'Incendio + fuga de gas + escasez de ingredientes',
+                icon: 'fas fa-fire-extinguisher',
+                category: 'cocina',
+                enabled: true,
+                combinedEvents: ['kitchen-fire', 'gas-leak', 'ingredient-shortage'],
+                solutions: [
+                    { severity: 'leve', text: 'Reasignar chefs' },
+                    { severity: 'grave', text: 'Apagar estaciones secundarias' },
+                    { severity: 'critica', text: 'Detener cocina' }
+                ],
+                impact: { efficiency: -70, chefStress: 80, orders: -40, satisfaction: -50 }
+            },
+            {
+                id: 'viral-negative-event',
+                title: 'Evento Viral Negativo',
+                description: 'Intoxicación + quejas masivas + protesta externa',
+                icon: 'fas fa-virus',
+                category: 'clientes',
+                enabled: true,
+                combinedEvents: ['food-poisoning', 'social-complaints', 'protest'],
+                solutions: [
+                    { severity: 'leve', text: 'Responder en redes' },
+                    { severity: 'grave', text: 'Comunicado oficial + ofertas' },
+                    { severity: 'critica', text: 'Cerrar sitio web + campaña reputacional' }
+                ],
+                impact: { satisfaction: -60, revenue: -50, clients: -45, chefStress: 40 }
+            },
+            {
+                id: 'no-staff-day',
+                title: 'Día sin Personal',
+                description: 'Abandono masivo + corte eléctrico + llegada de clientes',
+                icon: 'fas fa-user-slash',
+                category: 'personal',
+                enabled: true,
+                combinedEvents: ['staff-abandonment', 'power-outage', 'massive-arrival'],
+                solutions: [
+                    { severity: 'leve', text: 'Llamado a reemplazos' },
+                    { severity: 'grave', text: 'Recorte de menú y atención' },
+                    { severity: 'critica', text: 'Cierre completo por falta de personal' }
+                ],
+                impact: { staff: -5, efficiency: -80, clients: -30, satisfaction: -40, waitTime: 50 }
+            }
+        ];
+
+        const defconLevels = [
+            { level: 5, name: 'EJERCICIO', color: 'defcon-5', description: 'Condiciones normales de operación' },
+            { level: 4, name: 'DOBLE TOMA', color: 'defcon-4', description: 'Vigilancia incrementada' },
+            { level: 3, name: 'GUARDIA REDONDA', color: 'defcon-3', description: 'Aumento en preparación' },
+            { level: 2, name: 'PASO RÁPIDO', color: 'defcon-2', description: 'Siguiente paso hacia máxima preparación' },
+            { level: 1, name: 'MÁXIMA PREPARACIÓN', color: 'defcon-1', description: 'Máximo estado de alerta' }
+        ];
+
+        // Initialize Application
+        function init() {
+            setupTabs();
+            renderMetrics();
+            renderEvents();
+            renderScenarios();
+            setupEventListeners();
+            updateDefconLevel();
+            generateAIRecommendations();
+        }
+
+        // Setup Tabs
+        function setupTabs() {
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const targetTab = button.dataset.tab;
+
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    document.getElementById(targetTab).classList.add('active');
+                });
+            });
+        }
+
+        // Determine Impact Severity for Metric
+        function getMetricImpactSeverity(metricId, impactValue) {
+            if (!currentActiveItem || !impactValue) return null;
+
+            const absImpact = Math.abs(impactValue);
+            const isPositive = impactValue > 0;
+
+            // For positive metrics (satisfaction, efficiency, staff, revenue)
+            const positiveMetrics = ['satisfaction', 'efficiency', 'staff', 'revenue'];
+            const isPositiveMetric = positiveMetrics.includes(metricId);
+
+            // Determine if this is a positive or negative impact
+            const isGoodImpact = (isPositiveMetric && isPositive) || (!isPositiveMetric && !isPositive);
+
+            if (isGoodImpact) {
+                return 'positive';
+            } else {
+                // Determine severity based on impact magnitude
+                if (absImpact >= 40) return 'critical';
+                if (absImpact >= 20) return 'grave';
+                if (absImpact >= 10) return 'leve';
+            }
+
+            return null;
+        }
+
+        // Render Metrics with Dynamic Colors
+        function renderMetrics() {
+            const grid = document.getElementById('metricsGrid');
+            grid.innerHTML = '';
+
+            metrics.forEach(metric => {
+                const percentage = (metric.value / metric.max) * 100;
+                const card = document.createElement('div');
+                card.className = 'metric-card';
+
+                // Apply impact-based styling if there's an active event
+                if (currentActiveItem && currentActiveItem.impact[metric.id]) {
+                    const impactValue = currentActiveItem.impact[metric.id];
+                    const severity = getMetricImpactSeverity(metric.id, impactValue);
+                    if (severity) {
+                        card.classList.add(`impact-${severity}`);
+                    }
+                }
+
+                card.innerHTML = `
+                            <div class="metric-impact-indicator"></div>
+                            <div class="metric-icon">
+                                <i class="${metric.icon}"></i>
+                            </div>
+                            <div class="metric-value">
+                                ${metric.value}${metric.unit || ''}
+                            </div>
+                            <div class="metric-title">${metric.title}</div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${percentage}%"></div>
+                            </div>
+                        `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Render Events
+        function renderEvents() {
+            const grid = document.getElementById('eventsGrid');
+            grid.innerHTML = '';
+
+            criticalEvents.forEach(event => {
+                const card = createEventCard(event);
+                grid.appendChild(card);
+            });
+        }
+
+        // Render Scenarios
+        function renderScenarios() {
+            const grid = document.getElementById('scenariosGrid');
+            grid.innerHTML = '';
+
+            complexScenarios.forEach(scenario => {
+                const card = createScenarioCard(scenario);
+                grid.appendChild(card);
+            });
+        }
+
+        // Create Event Card
+        function createEventCard(event) {
+            const card = document.createElement('div');
+            card.className = `event-card ${activeEventId === event.id ? 'active' : ''}`;
+            card.dataset.id = event.id;
+
+            const solutionsHtml = event.solutions.map((solution, index) => `
+                        <div class="solution-item" data-solution="${index}" data-event="${event.id}">
+                            <div class="solution-severity severity-${solution.severity}">${solution.severity}</div>
+                            <div class="solution-text">${solution.text}</div>
+                        </div>
+                    `).join('');
+
+            card.innerHTML = `
+                        <div class="event-category category-${event.category}">${event.category}</div>
+                        <div class="event-header">
+                            <div class="event-info">
+                                <div class="event-icon">
+                                    <i class="${event.icon}"></i>
+                                </div>
+                                <div class="event-details">
+                                    <h3>${event.title}</h3>
+                                    <p>${event.description}</p>
+                                </div>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" ${event.enabled ? 'checked' : ''} onchange="toggleEvent('${event.id}', this.checked)">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="solutions ${activeEventId === event.id ? 'show' : ''}" id="solutions-${event.id}">
+                            <div class="solutions-header">
+                                <i class="fas fa-lightbulb"></i>
+                                <div class="solutions-title">Selecciona una solución:</div>
+                            </div>
+                            ${solutionsHtml}
+                        </div>
+                        <button class="btn btn-primary mt-2" onclick="activateEvent('${event.id}')" ${activeEventId === event.id ? 'style="display:none"' : ''}>
+                            <i class="fas fa-play"></i> Activar Evento
+                        </button>
+                    `;
+
+            return card;
+        }
+
+        // Create Scenario Card
+        function createScenarioCard(scenario) {
+            const card = document.createElement('div');
+            card.className = `event-card ${activeEventId === scenario.id ? 'active' : ''}`;
+            card.dataset.id = scenario.id;
+
+            const combinedEventsHtml = scenario.combinedEvents.map(eventId => {
+                const event = criticalEvents.find(e => e.id === eventId);
+                return event ? `<span class="category-${event.category}">${event.title}</span>` : '';
+            }).join(' + ');
+
+            const solutionsHtml = scenario.solutions.map((solution, index) => `
+                        <div class="solution-item" data-solution="${index}" data-event="${scenario.id}">
+                            <div class="solution-severity severity-${solution.severity}">${solution.severity}</div>
+                            <div class="solution-text">${solution.text}</div>
+                        </div>
+                    `).join('');
+
+            card.innerHTML = `
+                        <div class="event-category category-${scenario.category}">ESCENARIO</div>
+                        <div class="event-header">
+                            <div class="event-info">
+                                <div class="event-icon">
+                                    <i class="${scenario.icon}"></i>
+                                </div>
+                                <div class="event-details">
+                                    <h3>${scenario.title}</h3>
+                                    <p>${scenario.description}</p>
+                                    <div class="mt-2" style="font-size: 0.8rem; color: var(--text-muted);">
+                                        <strong>Combina:</strong> ${combinedEventsHtml}
+                                    </div>
+                                </div>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" ${scenario.enabled ? 'checked' : ''} onchange="toggleScenario('${scenario.id}', this.checked)">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="solutions ${activeEventId === scenario.id ? 'show' : ''}" id="solutions-${scenario.id}">
+                            <div class="solutions-header">
+                                <i class="fas fa-lightbulb"></i>
+                                <div class="solutions-title">Selecciona una solución:</div>
+                            </div>
+                            ${solutionsHtml}
+                        </div>
+                        <button class="btn btn-primary mt-2" onclick="activateScenario('${scenario.id}')" ${activeEventId === scenario.id ? 'style="display:none"' : ''}>
+                            <i class="fas fa-play"></i> Activar Escenario
+                        </button>
+                    `;
+
+            return card;
+        }
+
+        // Setup Event Listeners
+        function setupEventListeners() {
+            // Auto Simulation Toggle
+            document.getElementById('autoSimulationToggle').addEventListener('click', toggleAutoSimulation);
+
+            // AutoResolver Switch
+            document.getElementById('autoResolverToggle').addEventListener('change', (e) => {
+                autoResolverEnabled = e.target.checked;
+            });
+
+            // Solution Selection
+            document.addEventListener('click', (e) => {
+                if (e.target.closest('.solution-item')) {
+                    const solutionItem = e.target.closest('.solution-item');
+                    const eventId = solutionItem.dataset.event;
+                    const solutionIndex = parseInt(solutionItem.dataset.solution);
+                    applySolution(eventId, solutionIndex);
+                }
+            });
+        }
+
+        // Toggle Event
+        function toggleEvent(eventId, enabled) {
+            const event = criticalEvents.find(e => e.id === eventId);
+            if (event) {
+                event.enabled = enabled;
+            }
+        }
+
+        // Toggle Scenario
+        function toggleScenario(scenarioId, enabled) {
+            const scenario = complexScenarios.find(s => s.id === scenarioId);
+            if (scenario) {
+                scenario.enabled = enabled;
+            }
+        }
+
+        // Activate Event
+        function activateEvent(eventId) {
+            if (activeEventId) {
+                showNotification('Evento Activo', 'Ya hay un evento activo. Resuelve primero la situación actual.', 'warning');
+                return;
+            }
+
+            const event = criticalEvents.find(e => e.id === eventId);
+            if (!event || !event.enabled) return;
+
+            activeEventId = eventId;
+            currentActiveItem = event;
+            applyImpact(event.impact);
+            updateEventDisplay();
+            updateDefconLevel();
+
+            solucionHub.invoke("EnviarSoluciones", event.category, event.id, event.title, event.solutions);
+
+            showNotification('Evento Activado', `${event.title} ha sido activado. Selecciona una solución.`, 'warning');
+        }
+
+        // Activate Scenario
+        function activateScenario(scenarioId) {
+            if (activeEventId) {
+                showNotification('Evento Activo', 'Ya hay un evento activo. Resuelve primero la situación actual.', 'warning');
+                return;
+            }
+
+            const scenario = complexScenarios.find(s => s.id === scenarioId);
+            if (!scenario || !scenario.enabled) return;
+
+            activeEventId = scenarioId;
+            currentActiveItem = scenario;
+            applyImpact(scenario.impact);
+            updateEventDisplay();
+            updateDefconLevel();
+
+            solucionHub.invoke("EnviarSoluciones", scenario.category, scenario.id, scenario.title, scenario.solutions);
+
+            showNotification('Escenario Activado', `${scenario.title} ha sido activado. Selecciona una solución.`, 'error');
+        }
+
+        // Apply Impact
+        function applyImpact(impact) {
+            metrics.forEach((metric, index) => {
+                if (impact[metric.id]) {
+                    let newValue = metric.value + impact[metric.id];
+                    newValue = Math.max(0, Math.min(metric.max, newValue));
+                    metrics[index].value = Math.round(newValue);
+                }
+            });
+            renderMetrics();
+        }
+
+        // Apply Solution
+        function applySolution(itemId, solutionIndex) {
+            const item = [...criticalEvents, ...complexScenarios].find(i => i.id === itemId);
+            if (!item) return;
+
+            const solution = item.solutions[solutionIndex];
+            const effectMultiplier = solutionIndex === 0 ? 0.3 : solutionIndex === 1 ? 0.6 : 1.0;
+
+            // Apply positive impact (solutions reduce negative effects)
+            Object.keys(item.impact).forEach(metricId => {
+                const metric = metrics.find(m => m.id === metricId);
+                if (metric) {
+                    const impact = item.impact[metricId];
+                    const adjustedImpact = Math.abs(impact) * effectMultiplier * (impact < 0 ? 1 : -1);
+                    let newValue = metric.value + adjustedImpact;
+                    newValue = Math.max(0, Math.min(metric.max, newValue));
+                    metric.value = Math.round(newValue);
+                }
+            });
+
+            activeEventId = null;
+            currentActiveItem = null;
+            renderMetrics();
+            updateEventDisplay();
+            updateDefconLevel();
+            generateAIRecommendations();
+
+            showNotification('Solución Aplicada', `Solución ${solution.severity.toUpperCase()} aplicada para ${item.title}`, 'success');
+        }
+
+        // Update Event Display
+        function updateEventDisplay() {
+            // Update manual tab cards
+            document.querySelectorAll('.event-card').forEach(card => {
+                const isActive = card.dataset.id === activeEventId;
+                card.classList.toggle('active', isActive);
+
+                const solutions = card.querySelector('.solutions');
+                const button = card.querySelector('.btn');
+
+                if (solutions) {
+                    solutions.classList.toggle('show', isActive);
+                }
+                if (button) {
+                    button.style.display = isActive ? 'none' : 'block';
+                }
+            });
+
+            // Update auto simulation display
+            const activeDisplay = document.getElementById('activeEventDisplay');
+            if (activeEventId) {
+                const item = [...criticalEvents, ...complexScenarios].find(i => i.id === activeEventId);
+                if (item) {
+                    activeDisplay.className = 'event-card active';
+                    activeDisplay.innerHTML = `
+                                <div class="event-header">
+                                    <div class="event-info">
+                                        <div class="event-icon">
+                                            <i class="${item.icon}"></i>
+                                        </div>
+                                        <div class="event-details">
+                                            <h3>${item.title}</h3>
+                                            <p>${item.description}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="solutions show">
+                                    <div class="solutions-header">
+                                        <i class="fas fa-lightbulb"></i>
+                                        <div class="solutions-title">Soluciones disponibles:</div>
+                                    </div>
+                                    ${item.solutions.map((solution, index) => `
+                                        <div class="solution-item" data-solution="${index}" data-event="${item.id}">
+                                            <div class="solution-severity severity-${solution.severity}">${solution.severity}</div>
+                                            <div class="solution-text">${solution.text}</div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            `;
+                }
+            } else {
+                activeDisplay.classList.add('hidden');
+            }
+        }
+
+        // Toggle Auto Simulation
+        function toggleAutoSimulation() {
+            const button = document.getElementById('autoSimulationToggle');
+            const status = document.getElementById('autoSimulationStatus');
+
+            if (isAutoSimulating) {
+                stopAutoSimulation();
+                button.innerHTML = '<i class="fas fa-play"></i> Iniciar Simulación Automática';
+                status.innerHTML = '<p>Sistema detenido - Presiona "Iniciar" para comenzar</p>';
+                showNotification('Simulación Automática Detenida', 'El sistema automático ha sido detenido', 'info');
+            } else {
+                startAutoSimulation();
+                button.innerHTML = '<i class="fas fa-stop"></i> Detener Simulación Automática';
+                status.innerHTML = '<p style="color: var(--primary-green); font-weight: 600;">🟢 Sistema activo - Eventos cada 8 segundos</p>';
+                showNotification('Simulación Automática Iniciada', 'El sistema generará eventos automáticamente cada 8 segundos', 'success');
+            }
+        }
+
+        // Start Auto Simulation
+        function startAutoSimulation() {
+            isAutoSimulating = true;
+
+            autoSimulationInterval = setInterval(() => {
+                if (!activeEventId) {
+                    triggerRandomEvent();
+                } else if (autoResolverEnabled) {
+                    autoResolveEvent();
+                }
+            }, 8000);
+        }
+
+        // Stop Auto Simulation
+        function stopAutoSimulation() {
+            isAutoSimulating = false;
+            if (autoSimulationInterval) {
+                clearInterval(autoSimulationInterval);
+                autoSimulationInterval = null;
+            }
+        }
+
+        // Trigger Random Event
+        function triggerRandomEvent() {
+            const enabledItems = [
+                ...criticalEvents.filter(e => e.enabled),
+                ...complexScenarios.filter(s => s.enabled)
+            ];
+
+            if (enabledItems.length === 0) return;
+
+            const randomItem = enabledItems[Math.floor(Math.random() * enabledItems.length)];
+            activeEventId = randomItem.id;
+            currentActiveItem = randomItem;
+            applyImpact(randomItem.impact);
+            updateEventDisplay();
+            updateDefconLevel();
+            generateAIRecommendations();
+
+            const itemType = criticalEvents.find(e => e.id === randomItem.id) ? 'Evento Crítico' : 'Escenario Complejo';
+            showNotification(`${itemType} Automático`, `${randomItem.title} ha sido activado automáticamente`, 'warning');
+        }
+
+        // Auto Resolve Event
+        function autoResolveEvent() {
+            if (!activeEventId) return;
+
+            const item = [...criticalEvents, ...complexScenarios].find(i => i.id === activeEventId);
+            if (!item) return;
+
+            // AI chooses best solution based on current metrics
+            let bestSolutionIndex = 0;
+            const criticalMetrics = metrics.filter(m =>
+                (m.id === 'chefStress' && m.value > 70) ||
+                (m.id === 'satisfaction' && m.value < 30) ||
+                (m.id === 'staff' && m.value < 4)
+            );
+
+            if (criticalMetrics.length >= 2) {
+                bestSolutionIndex = 2; // Critical solution
+            } else if (criticalMetrics.length === 1) {
+                bestSolutionIndex = 1; // Grave solution
+            } else {
+                bestSolutionIndex = 0; // Leve solution
+            }
+
+            applySolution(activeEventId, bestSolutionIndex);
+            showNotification('IA AutoResolver', `La IA aplicó solución ${item.solutions[bestSolutionIndex].severity.toUpperCase()} automáticamente`, 'success');
+        }
+
+        // Update DEFCON Level
+        function updateDefconLevel() {
+            let riskScore = 0;
+
+            // Calculate risk based on metrics
+            metrics.forEach(metric => {
+                if (metric.id === 'chefStress' && metric.value > 70) riskScore += 25;
+                if (metric.id === 'satisfaction' && metric.value < 30) riskScore += 20;
+                if (metric.id === 'waitTime' && metric.value > 45) riskScore += 15;
+                if (metric.id === 'staff' && metric.value < 4) riskScore += 20;
+                if (metric.id === 'efficiency' && metric.value < 30) riskScore += 15;
+            });
+
+            // Add risk for active events
+            if (activeEventId) {
+                const isScenario = complexScenarios.find(s => s.id === activeEventId);
+                riskScore += isScenario ? 30 : 20;
+            }
+
+            // Determine DEFCON level
+            let newLevel = 5;
+            if (riskScore > 80) newLevel = 1;
+            else if (riskScore > 60) newLevel = 2;
+            else if (riskScore > 40) newLevel = 3;
+            else if (riskScore > 20) newLevel = 4;
+
+            if (newLevel !== currentDefconLevel) {
+                currentDefconLevel = newLevel;
+                updateDefconDisplay();
+                generateAIRecommendations();
+
+                if (newLevel <= 2) {
+                    showNotification('ALERTA DEFCON', `Nivel DEFCON ${newLevel} activado - Situación crítica`, 'error');
+                }
+            }
+        }
+
+        // Update DEFCON Display
+        function updateDefconDisplay() {
+            const defcon = defconLevels.find(d => d.level === currentDefconLevel);
+            const indicator = document.getElementById('defconIndicator');
+            const name = document.getElementById('defconName');
+            const description = document.getElementById('defconDescription');
+            const progress = document.getElementById('defconProgress');
+            const riskLabel = document.getElementById('defconRiskLabel');
+            const evacuationPlan = document.getElementById('evacuationPlan');
+
+            indicator.textContent = currentDefconLevel;
+            indicator.className = `defcon-indicator ${defcon.color}`;
+            name.textContent = defcon.name;
+            description.textContent = defcon.description;
+            progress.style.width = `${(6 - currentDefconLevel) * 20}%`;
+
+            // Update risk label
+            const riskLabels = {
+                1: 'CRÍTICO',
+                2: 'ALTO',
+                3: 'MEDIO',
+                4: 'BAJO',
+                5: 'NORMAL'
+            };
+            riskLabel.textContent = riskLabels[currentDefconLevel];
+
+            // Show/hide evacuation plan
+            if (currentDefconLevel <= 2) {
+                evacuationPlan.classList.remove('hidden');
+            } else {
+                evacuationPlan.classList.add('hidden');
+            }
+        }
+
+        // Generate AI Recommendations
+        function generateAIRecommendations() {
+            const container = document.getElementById('aiRecommendations');
+            const recommendations = [];
+
+            if (currentDefconLevel <= 2) {
+                recommendations.push({
+                    icon: 'fas fa-exclamation-triangle',
+                    text: 'ACTIVAR PROTOCOLO DE EMERGENCIA INMEDIATAMENTE',
+                    priority: 'critical'
+                });
+                recommendations.push({
+                    icon: 'fas fa-phone',
+                    text: 'Contactar servicios de emergencia y preparar evacuación',
+                    priority: 'critical'
+                });
+                recommendations.push({
+                    icon: 'fas fa-users',
+                    text: 'Iniciar evacuación parcial de clientes hacia salidas',
+                    priority: 'critical'
+                });
+            } else if (currentDefconLevel === 3) {
+                recommendations.push({
+                    icon: 'fas fa-eye',
+                    text: 'Aumentar vigilancia en todas las áreas operativas',
+                    priority: 'high'
+                });
+                recommendations.push({
+                    icon: 'fas fa-user-plus',
+                    text: 'Reforzar personal de cocina y servicio',
+                    priority: 'high'
+                });
+                recommendations.push({
+                    icon: 'fas fa-mobile-alt',
+                    text: 'Preparar comunicaciones de crisis y contactos',
+                    priority: 'medium'
+                });
+            } else if (currentDefconLevel === 4) {
+                recommendations.push({
+                    icon: 'fas fa-chart-line',
+                    text: 'Monitorear métricas críticas cada 5 minutos',
+                    priority: 'medium'
+                });
+                recommendations.push({
+                    icon: 'fas fa-tools',
+                    text: 'Revisar equipos preventivamente',
+                    priority: 'medium'
+                });
+                recommendations.push({
+                    icon: 'fas fa-clipboard-list',
+                    text: 'Preparar planes de contingencia',
+                    priority: 'low'
+                });
+            } else {
+                recommendations.push({
+                    icon: 'fas fa-check-circle',
+                    text: 'Mantener operaciones normales',
+                    priority: 'low'
+                });
+                recommendations.push({
+                    icon: 'fas fa-chart-line',
+                    text: 'Optimizar eficiencia operacional',
+                    priority: 'low'
+                });
+                recommendations.push({
+                    icon: 'fas fa-smile',
+                    text: 'Enfocarse en satisfacción del cliente',
+                    priority: 'low'
+                });
+            }
+
+            // Add specific recommendations based on active event
+            if (activeEventId) {
+                const item = [...criticalEvents, ...complexScenarios].find(i => i.id === activeEventId);
+                if (item) {
+                    recommendations.unshift({
+                        icon: 'fas fa-lightbulb',
+                        text: `Evento activo: ${item.title} - Selecciona solución ${currentDefconLevel <= 2 ? 'CRÍTICA' : currentDefconLevel === 3 ? 'GRAVE' : 'LEVE'}`,
+                        priority: 'critical'
+                    });
+                }
+            }
+
+            // Add metric-specific recommendations
+            const criticalMetrics = metrics.filter(m =>
+                (m.id === 'chefStress' && m.value > 80) ||
+                (m.id === 'satisfaction' && m.value < 20) ||
+                (m.id === 'waitTime' && m.value > 50)
+            );
+
+            criticalMetrics.forEach(metric => {
+                if (metric.id === 'chefStress') {
+                    recommendations.push({
+                        icon: 'fas fa-thermometer-full',
+                        text: 'Chef al borde del colapso: aplicar descanso inmediato',
+                        priority: 'critical'
+                    });
+                } else if (metric.id === 'satisfaction') {
+                    recommendations.push({
+                        icon: 'fas fa-frown',
+                        text: 'Satisfacción crítica: activar protocolo de recuperación',
+                        priority: 'high'
+                    });
+                } else if (metric.id === 'waitTime') {
+                    recommendations.push({
+                        icon: 'fas fa-clock',
+                        text: 'Tiempos de espera excesivos: redistribuir personal',
+                        priority: 'high'
+                    });
+                }
+            });
+
+            container.innerHTML = recommendations.map(rec => `
+                        <div class="ai-recommendation">
+                            <div class="flex items-center gap-2">
+                                <i class="${rec.icon}"></i>
+                                <span>${rec.text}</span>
+                            </div>
+                        </div>
+                    `).join('');
+        }
+
+        // Show Notification
+        function showNotification(title, message, type = 'info') {
+            const container = document.getElementById('notifications');
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+
+            const icons = {
+                'info': 'fas fa-info-circle',
+                'success': 'fas fa-check-circle',
+                'warning': 'fas fa-exclamation-triangle',
+                'error': 'fas fa-times-circle'
+            };
+
+            notification.innerHTML = `
+                        <div class="notification-header">
+                            <i class="${icons[type]}"></i>
+                            <div class="notification-title">${title}</div>
+                        </div>
+                        <div class="notification-message">${message}</div>
+                    `;
+
+            container.appendChild(notification);
+
+            // Show notification
+            setTimeout(() => notification.classList.add('show'), 100);
+
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    if (container.contains(notification)) {
+                        container.removeChild(notification);
+                    }
+                }, 300);
+            }, 5000);
+        }
+
+        // Initialize application when DOM is loaded
+        document.addEventListener('DOMContentLoaded', init);
+
+
+        // ✅ Variables adicionales
+        let ID_SIMULACION = null;
+
+        // ✅ Iniciar simulación al cargar
+        function iniciarSimulacionAutomatica() {
+            fetch('/Simulacion/Iniciar', {
+                method: 'POST'
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        ID_SIMULACION = data.id;
+                        console.log("Simulación automática iniciada con ID: " + ID_SIMULACION);
+                        showNotification('Simulación Automática Iniciada', `ID: ${ID_SIMULACION}`, 'success');
+                    } else {
+                        console.error("Error al iniciar simulación:", data.message);
+                    }
+                })
+                .catch(err => {
+                    console.error("Error de red:", err);
+                });
+        }
+
+        document.getElementById('autoSimulationToggle').addEventListener('click', function () {
+            iniciarSimulacionAutomatica();
+            /* toggleAutoSimulation();*/ // tu lógica de iniciar simulación automática
+        });
+
+
+        // ✅ Enviar métricas al backend
+        function enviarMetricaAlServidor(simulacionId, metricaId, valor) {
+            fetch('/Simulacion/RegistrarMetrica', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ simulacionId, metricaId, valor })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log(`Métrica "${metricaId}" registrada con valor: ${valor}`);
+                    } else {
+                        console.error('Error al registrar métrica:', data.message);
+                    }
+                })
+                .catch(err => console.error('Error al conectar con el servidor:', err));
+        }
+
+        // ✅ Enviar soluciones aplicadas
+        function registrarSolucionAplicada(simulacionId, eventoId, solucion, severidad) {
+            fetch('/Simulacion/RegistrarSolucion', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    simulacionId: simulacionId,
+                    eventoId: eventoId,
+                    solucion: solucion,
+                    severidad: severidad
+                })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log(`Solución aplicada registrada: ${solucion} (${severidad})`);
+                    } else {
+                        console.error('Error al registrar solución:', data.message);
+                    }
+                })
+                .catch(err => console.error('Error al conectar con el servidor:', err));
+        }
+
+        // Llamar iniciarSimulacion dentro de init()
+        const originalInit = init;
+        init = function () {
+            originalInit();
+            iniciarSimulacion();
+        };
+
+        // 🛠️ Hook en applyImpact y applySolution
+        const originalApplyImpact = applyImpact;
+        applyImpact = function (impact) {
+            originalApplyImpact(impact);
+            if (!ID_SIMULACION) return;
+            metrics.forEach(m => enviarMetricaAlServidor(ID_SIMULACION, m.id, m.value));
+        };
+
+        const originalApplySolution = applySolution;
+        applySolution = function (itemId, solutionIndex) {
+            const item = [...criticalEvents, ...complexScenarios].find(i => i.id === itemId);
+            const solution = item.solutions[solutionIndex];
+            originalApplySolution(itemId, solutionIndex);
+            if (ID_SIMULACION) {
+                registrarSolucionAplicada(ID_SIMULACION, item.id, solution.text, solution.severity);
+            }
+        };
+
+        const hubConnection = $.hubConnection();
+        const solucionHub = hubConnection.createHubProxy('solucionHub');
+
+        hubConnection.start().done(function () {
+            console.log("✅ Simulador conectado a SignalR");
+        });
+
+        solucionHub.on("SolucionSeleccionada", function (eventoId, severidad) {
+            console.log(`✅ Aplicar solución desde vista externa: ${eventoId} (${severidad})`);
+
+            const item = [...criticalEvents, ...complexScenarios].find(i => i.id === eventoId);
+            if (!item) return;
+
+            const index = item.solutions.findIndex(s => s.severity === severidad);
+            if (index !== -1) {
+                applySolution(eventoId, index);
+            }
+        });
+
+    </script>
+</body>
+</html>
+

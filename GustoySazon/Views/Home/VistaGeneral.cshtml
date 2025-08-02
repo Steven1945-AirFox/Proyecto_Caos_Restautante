@@ -1,0 +1,1281 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Acciones Críticas - Responsivo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    screens: {
+                        'xs': '475px',
+                    },
+                    colors: {
+                        'crisis-red': '#dc2626',
+                        'warning-orange': '#ea580c',
+                        'safe-green': '#16a34a',
+                        'neutral-blue': '#2563eb'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <link href="~/Content/visgen.css" rel="stylesheet" />
+</head>
+<body class="bg-gray-100 min-h-screen" id="mainBody">
+    <!-- Header Responsivo -->
+    <header class="bg-gradient-to-r from-red-800 to-red-600 text-white shadow-lg">
+        <div class="main-container">
+            <div class="header-content">
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-utensils text-xl md:text-2xl"></i>
+                    <div>
+                        <h1 class="text-xl md:text-2xl lg:text-3xl font-bold">Panel de Gerencia</h1>
+                        <p class="text-red-200 text-xs md:text-sm">Restaurante Gusto y Sazón</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ml-auto flex items-center gap-3" id="operacionBadgeWrap">
+            <span id="badgeOperacion"
+                  class="hidden bg-green-100 text-green-800 text-xs md:text-sm px-3 py-1 rounded-full font-semibold flex items-center gap-2 shadow">
+                <span class="inline-block w-2 h-2 bg-green-500 rounded-full"></span>
+                Operación activa • <span id="timerOperacion">00:00:00</span>
+            </span>
+        </div>
+
+    </header>
+
+    <div class="main-container">
+        <!-- Sección de Acciones Críticas -->
+        <section id="acciones-criticas" class="mb-6 md:mb-8">
+            <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-4 md:mb-6 flex items-center">
+                <span>Acciones Críticas</span>
+                <span class="hidden sm:inline ml-2">del Gerente</span>
+            </h2>
+
+            <div class="actions-grid">
+
+                <!-- Botón 7: Iniciar Operación -->
+                <button id="btnIniciarOperacion"
+                        class="action-button bg-gradient-to-r from-neutral-blue to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white p-4 md:p-6 rounded-lg shadow-lg"
+                        data-action="iniciar_operacion"
+                        data-table="AccionesCriticas">
+                    <i class="fas fa-play text-2xl md:text-3xl mb-2 md:mb-3"></i>
+                    <div class="font-bold text-base md:text-lg">Iniciar Operación</div>
+                    <div class="text-xs md:text-sm opacity-90">Jornada del día</div>
+                </button>
+
+                <!-- Botón 1: Contratar Meseros -->
+                <button id="btnContratarMesero"
+                        class="action-button bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white p-4 md:p-6 rounded-lg shadow-lg"
+                        data-action="contratar_mesero"
+                        data-table="AccionesCriticas">
+                    <i class="fas fa-user-plus text-2xl md:text-3xl mb-2 md:mb-3"></i>
+                    <div class="font-bold text-base md:text-lg">Contratar Meseros</div>
+                    <div class="text-xs md:text-sm opacity-90">Personal de servicio</div>
+                </button>
+
+                <!-- Botón 2: Contratar Chefs -->
+                <button id="btnContratarChef"
+                        class="action-button bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white p-4 md:p-6 rounded-lg shadow-lg"
+                        data-action="contratar_chef"
+                        data-table="AccionesCriticas">
+                    <i class="fas fa-chef-hat text-2xl md:text-3xl mb-2 md:mb-3"></i>
+                    <div class="font-bold text-base md:text-lg">Contratar Chefs</div>
+                    <div class="text-xs md:text-sm opacity-90">Personal de cocina</div>
+                </button>
+
+                <!-- Botón 3: Alerta Comando -->
+                <button id="btnAlertaComando"
+                        class="action-button bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white p-4 md:p-6 rounded-lg shadow-lg"
+                        data-action="alerta_comando"
+                        data-table="AccionesCriticas">
+                    <i class="fas fa-siren text-2xl md:text-3xl mb-2 md:mb-3"></i>
+                    <div class="font-bold text-base md:text-lg">Alerta Comando</div>
+                    <div class="text-xs md:text-sm opacity-90">Emergencia crítica</div>
+                </button>
+
+                <!-- Botón 4: Autorizar Descuentos -->
+                <button id="btnDescuentoClientes"
+                        class="action-button bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white p-4 md:p-6 rounded-lg shadow-lg"
+                        data-action="autorizar_descuento"
+                        data-table="AccionesCriticas">
+                    <i class="fas fa-percentage text-2xl md:text-3xl mb-2 md:mb-3"></i>
+                    <div class="font-bold text-base md:text-lg">Autorizar Descuentos</div>
+                    <div class="text-xs md:text-sm opacity-90">Clientes insatisfechos</div>
+                </button>
+
+                <!-- Botón 5: Protocolo Emergencia -->
+                <button id="btnProtocoloEmergencia"
+                        class="action-button bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white p-4 md:p-6 rounded-lg shadow-lg"
+                        data-action="protocolo_emergencia"
+                        data-table="AccionesCriticas">
+                    <i class="fas fa-shield-alt text-2xl md:text-3xl mb-2 md:mb-3"></i>
+                    <div class="font-bold text-base md:text-lg">Protocolo Emergencia</div>
+                    <div class="text-xs md:text-sm opacity-90">Medidas críticas</div>
+                </button>
+
+                <!-- Botón 6: Reasignar Personal -->
+                <button id="btnReasignarPersonal"
+                        class="action-button bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white p-4 md:p-6 rounded-lg shadow-lg"
+                        data-action="reasignar_personal"
+                        data-table="AccionesCriticas">
+                    <i class="fas fa-exchange-alt text-2xl md:text-3xl mb-2 md:mb-3"></i>
+                    <div class="font-bold text-base md:text-lg">Reasignar Personal</div>
+                    <div class="text-xs md:text-sm opacity-90">Cambiar entre áreas</div>
+                </button>
+            </div>
+        </section>
+
+        <!-- Tabla de Personal Activo -->
+        <section id="seccion-personal" class="mb-6 md:mb-8">
+            <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-4 flex items-center flex-wrap">
+                <i class="fas fa-users mr-2 md:mr-3 text-blue-600"></i>
+                <span>Personal Activo</span>
+                <span class="ml-2 md:ml-3 bg-blue-100 text-blue-800 text-xs md:text-sm px-2 md:px-3 py-1 rounded-full" id="contadorPersonal">0 empleados</span>
+            </h2>
+
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="table-container">
+                    <table id="tablaPersonal" class="w-full">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-3 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                                <th class="px-3 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
+                                <th class="px-3 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rol</th>
+                                <th class="px-3 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
+                                <th class="px-3 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell">Turno</th>
+                                <th class="px-3 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200" id="tablaPersonalBody">
+                            <!-- Se llena dinámicamente con JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Modal para Editar Empleado -->
+        <div id="modalEditar" class="hidden fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center">
+            <div class="bg-white rounded-lg p-6 w-full max-w-md shadow-xl">
+                <form id="formEditarEmpleado" class="space-y-4">
+                    <input type="hidden" id="editId" name="Id">
+
+                    <div>
+                        <label for="editNombre" class="block text-sm font-medium text-gray-700">Nombre</label>
+                        <input type="text" id="editNombre" name="Nombre" class="mt-1 block w-full border border-gray-300 rounded-md p-2" required>
+                    </div>
+
+                    <div>
+                        <label for="editRol" class="block text-sm font-medium text-gray-700">Rol</label>
+                        <select id="editRol" name="Rol" class="mt-1 block w-full border border-gray-300 rounded-md p-2" required>
+                            <option value="Mesero">Mesero</option>
+                            <option value="Chef">Chef</option>
+                        </select>
+                    </div>
+
+                    <div class="flex justify-end gap-3">
+                        <button type="button" onclick="cerrarModalEditar()" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-md">Cancelar</button>
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- Log de Acciones -->
+        @*<section id="log-acciones" class="mb-6 md:mb-8">
+                <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                    <i class="fas fa-history mr-2 md:mr-3 text-gray-600"></i>
+                    <span>Registro de Acciones</span>
+                </h2>
+
+                <div class="bg-white rounded-lg shadow-lg p-4 md:p-6">
+                    <div id="logContainer" class="log-container space-y-2">
+                        <div class="text-gray-500 text-sm italic">No hay acciones registradas aún...</div>
+                    </div>
+                </div>
+            </section>*@
+        <!-- Control Financiero -->
+        <section id="control-financiero" class="mb-6 md:mb-8">
+            <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                <i class="fas fa-chart-line mr-2 md:mr-3 text-safe-green"></i>
+                <span>Control Financiero</span>
+            </h2>
+
+            <div class="space-y-4 md:space-y-6">
+                <!-- Flujo por Minuto -->
+                <!--<div class="bg-white rounded-lg shadow-lg p-4 md:p-6">
+                    <h3 class="text-base md:text-lg font-semibold text-gray-800 mb-4">Flujo por Minuto</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="text-center p-4 bg-green-50 rounded-lg">
+                            <div class="text-xl md:text-2xl font-bold text-safe-green" id="ingresosPorMinuto">+$1,250</div>
+                            <div class="text-xs md:text-sm text-gray-600">Ingresos/min</div>
+                            <div class="text-xs text-green-600 mt-1">
+                                <i class="fas fa-arrow-up"></i> +5% vs hora anterior
+                            </div>
+                        </div>
+                        <div class="text-center p-4 bg-red-50 rounded-lg">
+                            <div class="text-xl md:text-2xl font-bold text-crisis-red" id="gastosPorMinuto">-$890</div>
+                            <div class="text-xs md:text-sm text-gray-600">Gastos/min</div>
+                            <div class="text-xs text-red-600 mt-1">
+                                <i class="fas fa-arrow-up"></i> +12% vs hora anterior
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t text-center">
+                        <div class="text-lg md:text-xl font-bold text-neutral-blue" id="gananciaNeta">+$360</div>
+                        <div class="text-xs md:text-sm text-gray-600">Ganancia Neta/min</div>
+                    </div>
+                </div>-->
+                <!-- Presupuesto de Emergencia -->
+                <!--<div class="bg-white rounded-lg shadow-lg p-4 md:p-6">
+                    <h3 class="text-base md:text-lg font-semibold text-gray-800 mb-4">Presupuesto de Emergencia</h3>
+                    <div class="mb-4">
+                        <div class="flex justify-between text-xs md:text-sm text-gray-600 mb-2">
+                            <span>Disponible</span>
+                            <span id="presupuestoTexto">$15,000 / $25,000</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-3 md:h-4">
+                            <div class="bg-warning-orange h-3 md:h-4 rounded-full transition-all duration-500" style="width: 60%" id="barraPresupuesto"></div>
+                        </div>
+                        <div class="flex justify-between text-xs text-gray-500 mt-1">
+                            <span>$0</span>
+                            <span>$25,000</span>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <button class="bg-neutral-blue hover:bg-blue-700 text-white py-2 px-4 rounded-lg transition-colors text-sm md:text-base" id="btnHistorialGastos">
+                            <i class="fas fa-history mr-2"></i>Ver Historial
+                        </button>
+                        <button class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-lg transition-colors text-sm md:text-base" id="btnAprobarGasto">
+                            <i class="fas fa-dollar-sign mr-2"></i>Aprobar Gasto
+                        </button>
+                    </div>
+                </div>-->
+                <!-- Métricas Adicionales -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="bg-white rounded-lg shadow-md p-4 text-center">
+                        <div class="text-lg md:text-xl font-bold text-blue-600" id="ventasHoy">₡0</div>
+                        <div class="text-xs md:text-sm text-gray-600">Ventas Hoy</div>
+                    </div>
+                    @*<div class="bg-white rounded-lg shadow-md p-4 text-center">
+                            <div class="text-lg md:text-xl font-bold text-green-600" id="ticketPromedio">$45</div>
+                            <div class="text-xs md:text-sm text-gray-600">Ticket Promedio</div>
+                        </div>
+                        <div class="bg-white rounded-lg shadow-md p-4 text-center">
+                            <div class="text-lg md:text-xl font-bold text-orange-600" id="gastosEmergencia">$2,100</div>
+                            <div class="text-xs md:text-sm text-gray-600">Gastos Emergencia</div>
+                        </div>*@
+                    @*<div class="bg-white rounded-lg shadow-md p-4 text-center">
+                            <div class="text-lg md:text-xl font-bold text-purple-600" id="margenGanancia">12.7%</div>
+                            <div class="text-xs md:text-sm text-gray-600">Margen Ganancia</div>
+                        </div>*@
+                </div>
+            </div>
+        </section>
+
+        <!-- Control de Quejas de Clientes -->
+        <section id="quejas-clientes" class="mb-6 md:mb-8">
+            <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-4 flex items-center flex-wrap">
+                <span>Quejas de Clientes</span>
+            </h2>
+
+            <!-- Filtros de Quejas
+            <div class="bg-white rounded-lg shadow-lg p-4 md:p-6 mb-4">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
+                    <div class="flex flex-wrap gap-2">
+                        <button class="filter-btn active bg-gray-800 text-white px-3 py-1 rounded-full text-xs md:text-sm" data-filter="all">
+                            Todas (3)
+                        </button>
+                        <button class="filter-btn bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-xs md:text-sm hover:bg-gray-300" data-filter="critica">
+                            Críticas (1)
+                        </button>
+                        <button class="filter-btn bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-xs md:text-sm hover:bg-gray-300" data-filter="media">
+                            Medias (1)
+                        </button>
+                        <button class="filter-btn bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-xs md:text-sm hover:bg-gray-300" data-filter="baja">
+                            Bajas (1)
+                        </button>
+                    </div>
+                    <button class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm md:text-base" id="btnNuevaQueja">
+                        <i class="fas fa-plus mr-2"></i>Nueva Queja
+                    </button>
+                </div>
+            </div>-->
+            <!-- Tabla de Quejas -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <!-- Tabla de Quejas -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <div class="table-container">
+                        <table id="tablaQuejas" class="w-full">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-3 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cliente</th>
+                                    <th class="px-3 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Motivo</th>
+                                    <th class="px-3 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prioridad</th>
+
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200" id="tablaQuejasBody">
+                                <!-- Las quejas serán cargadas dinámicamente con JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- JavaScript con funcionalidad completa -->
+        <script>
+            // Variables globales
+            let empleadoIdCounter = 4;
+            let accionesLog = [];
+
+            // Arrays de nombres ficticios
+            const nombresMeseros = [
+                'Roberto Silva', 'Patricia Morales', 'Diego Herrera', 'Carmen Vega',
+                'Fernando Castro', 'Lucía Mendoza', 'Andrés Jiménez', 'Sofía Ramos'
+            ];
+
+            const nombresChefs = [
+                'Ricardo Delgado', 'Elena Vargas', 'Miguel Torres', 'Alejandra Cruz',
+                'Pablo Guerrero', 'Natalia Flores', 'Sebastián Rojas', 'Valentina Ortiz'
+            ];
+
+            const coloresAvatares = [
+                'bg-red-500', 'bg-blue-500', 'bg-green-500', 'bg-yellow-500',
+                'bg-purple-500', 'bg-pink-500', 'bg-indigo-500', 'bg-teal-500'
+            ];
+
+
+
+            // Función para mostrar notificaciones toast responsivas
+            function mostrarToast(mensaje, tipo = 'success') {
+                const toast = document.createElement('div');
+                toast.className = `toast ${tipo}`;
+
+                // Icono según el tipo
+                let icono = 'fa-check-circle';
+                if (tipo === 'error') icono = 'fa-exclamation-circle';
+                if (tipo === 'warning') icono = 'fa-exclamation-triangle';
+                if (tipo === 'info') icono = 'fa-info-circle';
+
+                toast.innerHTML = `
+                                                                                                <div class="flex items-center">
+                                                                                                    <i class="fas ${icono} mr-2 flex-shrink-0"></i>
+                                                                                                    <span class="text-sm md:text-base">${mensaje}</span>
+                                                                                                </div>
+                                                                                            `;
+
+                document.body.appendChild(toast);
+
+                setTimeout(() => toast.classList.add('show'), 100);
+
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                    setTimeout(() => {
+                        if (document.body.contains(toast)) {
+                            document.body.removeChild(toast);
+                        }
+                    }, 300);
+                }, 4000);
+            }
+
+            // Función para registrar acción
+            function registrarAccion(accion, detalle) {
+                const timestamp = new Date().toLocaleString('es-ES');
+                const logEntry = {
+                    id: accionesLog.length + 1,
+                    accion: accion,
+                    detalle: detalle,
+                    fecha: timestamp,
+                    usuarioId: 'GERENTE_001'
+                };
+
+                accionesLog.push(logEntry);
+                actualizarLogVisual(logEntry);
+
+                // Aquí puede conectarse con backend SQL más adelante
+                console.log('Acción para registrar en BD:', logEntry);
+            }
+
+            // Función para actualizar log visual
+            function actualizarLogVisual(logEntry) {
+                const logContainer = document.getElementById('logContainer');
+                if (!logContainer) {
+                    console.error('No se encontró el contenedor con id "logContainer".');
+                    return;
+                }
+
+                if (
+                    logContainer.children.length === 1 &&
+                    logContainer.children[0].textContent.includes('No hay acciones')
+                ) {
+                    logContainer.innerHTML = '';
+                }
+
+                const logElement = document.createElement('div');
+                logElement.className = 'bg-gray-50 p-3 rounded border-l-4 border-blue-500';
+                logElement.innerHTML = `
+                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start">
+                    <div class="flex-1">
+                        <div class="font-semibold text-gray-800 text-sm md:text-base">${logEntry.accion}</div>
+                        <div class="text-xs md:text-sm text-gray-600 mt-1">${logEntry.detalle}</div>
+                    </div>
+                    <div class="text-xs text-gray-500 mt-2 sm:mt-0 sm:ml-4 flex-shrink-0">${logEntry.fecha}</div>
+                </div>
+            `;
+
+                logContainer.insertBefore(logElement, logContainer.firstChild);
+            }
+
+            // Función para actualizar contador
+            function actualizarContadorPersonal() {
+                const filas = document.querySelectorAll('#tablaPersonalBody tr');
+                document.getElementById('contadorPersonal').textContent = `${filas.length} empleados`;
+            }
+
+            // Función para generar iniciales
+            function generarIniciales(nombre) {
+                return nombre.split(' ').map(n => n[0]).join('').toUpperCase();
+            }
+
+            // Función para color aleatorio
+            function obtenerColorAleatorio() {
+                return coloresAvatares[Math.floor(Math.random() * coloresAvatares.length)];
+            }
+
+            // 1. CONTRATAR MESERO
+            document.getElementById('btnContratarMesero').addEventListener('click', function () {
+                const nombreAleatorio = nombresMeseros[Math.floor(Math.random() * nombresMeseros.length)];
+                const iniciales = generarIniciales(nombreAleatorio);
+                const colorAvatar = obtenerColorAleatorio();
+
+                const nuevaFila = document.createElement('tr');
+                nuevaFila.className = 'new-row';
+                nuevaFila.setAttribute('data-employee-id', empleadoIdCounter);
+
+                nuevaFila.innerHTML = `
+                                                                <td class="px-3 md:px-6 py-4 whitespace-nowrap text-sm text-gray-900">${empleadoIdCounter.toString().padStart(3, '0')}</td>
+                                                                <td class="px-3 md:px-6 py-4 whitespace-nowrap">
+                                                                    <div class="flex items-center">
+                                                                        <div class="w-6 h-6 md:w-8 md:h-8 ${colorAvatar} rounded-full flex items-center justify-center text-white text-xs md:text-sm font-bold">${iniciales}</div>
+                                                                        <div class="ml-2 md:ml-3">
+                                                                            <div class="text-xs md:text-sm font-medium text-gray-900">${nombreAleatorio}</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="px-3 md:px-6 py-4 whitespace-nowrap">
+                                                                    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">Mesero</span>
+                                                                </td>
+                                                                <td class="px-3 md:px-6 py-4 whitespace-nowrap">
+                                                                    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Activo</span>
+                                                                </td>
+                                                                <td class="px-3 md:px-6 py-4 whitespace-nowrap text-xs md:text-sm text-gray-900 hidden sm:table-cell">Mañana</td>
+                                                                <td class="px-3 md:px-6 py-4 whitespace-nowrap text-xs md:text-sm font-medium">
+                                                                    <button class="text-indigo-600 hover:text-indigo-900 mr-2 md:mr-3">
+                                                                        <i class="fas fa-edit"></i>
+                                                                        <span class="hidden md:inline ml-1">Editar</span>
+                                                                    </button>
+                                                                    <button class="text-red-600 hover:text-red-900">
+                                                                        <i class="fas fa-trash"></i>
+                                                                        <span class="hidden md:inline ml-1">Eliminar</span>
+                                                                    </button>
+                                                                </td>
+                                                            `;
+
+                document.getElementById('tablaPersonalBody').appendChild(nuevaFila);
+                actualizarContadorPersonal();
+                mostrarToast(`Nuevo mesero contratado: ${nombreAleatorio}`, 'success');
+                registrarAccion('Contratar Mesero', `Nuevo empleado: ${nombreAleatorio} (ID: ${empleadoIdCounter})`);
+
+                // ✅ Registrar en base de datos
+                agregarEmpleado(nombreAleatorio, 'Mesero');
+
+                empleadoIdCounter++;
+            });
+
+
+            // 2. CONTRATAR CHEF
+            document.getElementById('btnContratarChef').addEventListener('click', function () {
+                const nombreAleatorio = nombresChefs[Math.floor(Math.random() * nombresChefs.length)];
+                const iniciales = generarIniciales(nombreAleatorio);
+                const colorAvatar = obtenerColorAleatorio();
+
+                const nuevaFila = document.createElement('tr');
+                nuevaFila.className = 'new-row';
+                nuevaFila.setAttribute('data-employee-id', empleadoIdCounter);
+
+                nuevaFila.innerHTML = `
+                                                                <td class="px-3 md:px-6 py-4 whitespace-nowrap text-sm text-gray-900">${empleadoIdCounter.toString().padStart(3, '0')}</td>
+                                                                <td class="px-3 md:px-6 py-4 whitespace-nowrap">
+                                                                    <div class="flex items-center">
+                                                                        <div class="w-6 h-6 md:w-8 md:h-8 ${colorAvatar} rounded-full flex items-center justify-center text-white text-xs md:text-sm font-bold">${iniciales}</div>
+                                                                        <div class="ml-2 md:ml-3">
+                                                                            <div class="text-xs md:text-sm font-medium text-gray-900">${nombreAleatorio}</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="px-3 md:px-6 py-4 whitespace-nowrap">
+                                                                    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-purple-100 text-purple-800">Chef</span>
+                                                                </td>
+                                                                <td class="px-3 md:px-6 py-4 whitespace-nowrap">
+                                                                    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Activo</span>
+                                                                </td>
+                                                                <td class="px-3 md:px-6 py-4 whitespace-nowrap text-xs md:text-sm text-gray-900 hidden sm:table-cell">Mañana</td>
+                                                                <td class="px-3 md:px-6 py-4 whitespace-nowrap text-xs md:text-sm font-medium">
+                                                                    <button class="text-indigo-600 hover:text-indigo-900 mr-2 md:mr-3">
+                                                                        <i class="fas fa-edit"></i>
+                                                                        <span class="hidden md:inline ml-1">Editar</span>
+                                                                    </button>
+                                                                    <button class="text-red-600 hover:text-red-900">
+                                                                        <i class="fas fa-trash"></i>
+                                                                        <span class="hidden md:inline ml-1">Eliminar</span>
+                                                                    </button>
+                                                                </td>
+                                                            `;
+
+                document.getElementById('tablaPersonalBody').appendChild(nuevaFila);
+                actualizarContadorPersonal();
+                mostrarToast(`Nuevo chef contratado: ${nombreAleatorio}`, 'success');
+                registrarAccion('Contratar Chef', `Nuevo empleado: ${nombreAleatorio} (ID: ${empleadoIdCounter})`);
+
+                // ✅ Registrar en base de datos
+                agregarEmpleado(nombreAleatorio, 'Chef');
+
+                empleadoIdCounter++;
+            });
+
+
+            // 3. ALERTA COMANDO
+            document.getElementById('btnAlertaComando').addEventListener('click', function () {
+                // Aquí puede conectarse con backend SQL más adelante
+
+                const modal = document.createElement('div');
+                modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4';
+                modal.innerHTML = `
+                                                                                                <div class="modal-content bg-white rounded-lg p-6 md:p-8 text-center">
+                                                                                                    <div class="text-4xl md:text-6xl text-red-500 mb-4">🚨</div>
+                                                                                                    <h3 class="text-xl md:text-2xl font-bold text-gray-800 mb-4">Alerta Enviada</h3>
+                                                                                                    <p class="text-gray-600 mb-6 text-sm md:text-base">Se ha enviado una alerta crítica al Centro de Comando</p>
+                                                                                                    <div class="bg-red-50 border border-red-200 rounded p-4 mb-6">
+                                                                                                        <p class="text-red-800 font-semibold text-sm md:text-base">Estado: EMERGENCIA ACTIVA</p>
+                                                                                                        <p class="text-red-600 text-xs md:text-sm">Tiempo de respuesta estimado: 2-3 minutos</p>
+                                                                                                    </div>
+                                                                                                    <button onclick="this.parentElement.parentElement.remove()"
+                                                                                                            class="bg-red-500 hover:bg-red-600 text-white px-4 md:px-6 py-2 rounded-lg text-sm md:text-base">
+                                                                                                        Entendido
+                                                                                                    </button>
+                                                                                                </div>
+                                                                                            `;
+
+                document.body.appendChild(modal);
+                mostrarToast('Alerta enviada al Centro de Comando', 'error');
+                registrarAccion('Alerta Centro de Comando', 'Alerta crítica enviada - Respuesta esperada en 2-3 min');
+
+                setTimeout(() => {
+                    if (document.body.contains(modal)) {
+                        document.body.removeChild(modal);
+                    }
+                }, 5000);
+            });
+
+            // 4. AUTORIZAR DESCUENTOS
+            document.getElementById('btnDescuentoClientes').addEventListener('click', function () {
+                // Aquí puede conectarse con backend SQL más adelante
+
+                const porcentajeDescuento = Math.floor(Math.random() * 30) + 10;
+                const clientesAfectados = Math.floor(Math.random() * 5) + 1;
+
+                mostrarToast(`Descuento del ${porcentajeDescuento}% aplicado a ${clientesAfectados} cliente(s)`, 'warning');
+                registrarAccion('Autorizar Descuentos', `${porcentajeDescuento}% de descuento a ${clientesAfectados} cliente(s) insatisfecho(s)`);
+            });
+
+            // 5. PROTOCOLO EMERGENCIA
+            document.getElementById('btnProtocoloEmergencia').addEventListener('click', function () {
+                // Aquí puede conectarse con backend SQL más adelante
+
+                if (confirm('¿Activar el Protocolo de Emergencia? Esta acción afectará todo el restaurante.')) {
+                    document.getElementById('mainBody').classList.add('emergency-mode');
+
+                    const alertaEmergencia = document.createElement('div');
+                    alertaEmergencia.className = 'emergency-alert';
+                    alertaEmergencia.innerHTML = 'PROTOCOLO DE EMERGENCIA ACTIVADO ⚠️';
+
+                    document.body.insertBefore(alertaEmergencia, document.body.firstChild);
+
+                    mostrarToast('⚠️ Protocolo de emergencia activado', 'error');
+                    registrarAccion('Protocolo de Emergencia', 'Protocolo activado - Todas las áreas notificadas');
+
+                    setTimeout(() => {
+                        if (document.body.contains(alertaEmergencia)) {
+                            document.body.removeChild(alertaEmergencia);
+                            document.getElementById('mainBody').classList.remove('emergency-mode');
+                        }
+                    }, 10000);
+                }
+            });
+
+            // 6. REASIGNAR PERSONAL
+            document.getElementById('btnReasignarPersonal').addEventListener('click', function () {
+                // Aquí puede conectarse con backend SQL más adelante
+
+                const filasEmpleados = document.querySelectorAll('#tablaPersonalBody tr');
+
+                if (filasEmpleados.length === 0) {
+                    mostrarToast('No hay personal disponible para reasignar', 'error');
+                    return;
+                }
+
+                const filaAleatoria = filasEmpleados[Math.floor(Math.random() * filasEmpleados.length)];
+                const nombreEmpleado = filaAleatoria.querySelector('.font-medium').textContent;
+                const rolActual = filaAleatoria.querySelector('.inline-flex').textContent;
+
+                let nuevoRol, nuevaClase;
+                if (rolActual === 'Mesero') {
+                    nuevoRol = 'Chef';
+                    nuevaClase = 'bg-purple-100 text-purple-800';
+                } else {
+                    nuevoRol = 'Mesero';
+                    nuevaClase = 'bg-blue-100 text-blue-800';
+                }
+
+                const spanRol = filaAleatoria.querySelector('.inline-flex');
+                spanRol.textContent = nuevoRol;
+                spanRol.className = `inline-flex px-2 py-1 text-xs font-semibold rounded-full ${nuevaClase}`;
+
+                filaAleatoria.classList.add('reassigned-row');
+
+                mostrarToast(` ${nombreEmpleado}: ${rolActual} → ${nuevoRol}`, 'info');
+                registrarAccion('Reasignar Personal', `${nombreEmpleado}: ${rolActual} → ${nuevoRol}`);
+
+                setTimeout(() => {
+                    filaAleatoria.classList.remove('reassigned-row');
+                }, 2000);
+            });
+
+            //// Variables para control financiero
+            //let presupuestoDisponible = 15000;
+            //let presupuestoTotal = 25000;
+            //let gastosEmergenciaTotal = 2100;
+
+            //// Variables para quejas
+            //let quejaIdCounter = 4;
+            //let quejasActivas = 3;
+
+            // FUNCIONES DE CONTROL FINANCIERO
+
+            // Cargar solo "Ventas Hoy" desde SQL Server
+            function cargarVentasHoyDesdeSQL() {
+                fetch('/Financiero/ObtenerResumenDiario')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            const monto = parseFloat(data.totalColones).toLocaleString('es-CR', {
+                                style: 'currency',
+                                currency: 'CRC',
+                                minimumFractionDigits: 0
+                            });
+
+                            document.getElementById('ventasHoy').textContent = monto;
+                        } else {
+                            console.error("Error al obtener ventas:", data.error);
+                        }
+                    })
+                    .catch(err => console.error("Error de red:", err));
+            }
+
+            // Ejecutar al cargar la página
+            document.addEventListener("DOMContentLoaded", function () {
+                cargarVentasHoyDesdeSQL();
+            });
+
+            // FUNCIONES DE CONTROL DE QUEJAS
+
+            //// Función para actualizar contador de quejas
+            //function actualizarContadorQuejas() {
+            //    const quejasVisibles = document.querySelectorAll('.queja-row:not([style*="display: none"])').length;
+            //    document.getElementById('contadorQuejas').textContent = quejasVisibles;
+
+            //    // Actualizar estadísticas
+            //    const criticas = document.querySelectorAll('.queja-row[data-priority="critica"]:not([style*="display: none"])').length;
+            //    document.getElementById('quejasCriticas').textContent = criticas;
+            //}
+
+            //// Función para filtrar quejas
+            //function filtrarQuejas(filtro) {
+            //    const filas = document.querySelectorAll('.queja-row');
+            //    const botones = document.querySelectorAll('.filter-btn');
+
+            //    // Actualizar botones
+            //    botones.forEach(btn => {
+            //        btn.classList.remove('active', 'bg-gray-800', 'text-white');
+            //        btn.classList.add('bg-gray-200', 'text-gray-700');
+            //    });
+
+            //    const botonActivo = document.querySelector(`[data-filter="${filtro}"]`);
+            //    botonActivo.classList.remove('bg-gray-200', 'text-gray-700');
+            //    botonActivo.classList.add('active', 'bg-gray-800', 'text-white');
+
+            //    // Filtrar filas
+            //    filas.forEach(fila => {
+            //        if (filtro === 'all' || fila.dataset.priority === filtro) {
+            //            fila.style.display = '';
+            //        } else {
+            //            fila.style.display = 'none';
+            //        }
+            //    });
+
+            //    actualizarContadorQuejas();
+            //}
+
+            //// Event listeners para filtros de quejas
+            //document.querySelectorAll('.filter-btn').forEach(btn => {
+            //    btn.addEventListener('click', function () {
+            //        filtrarQuejas(this.dataset.filter);
+            //    });
+            //});
+
+            //// Event listeners para atender quejas
+            //document.querySelectorAll('.btn-atender').forEach(btn => {
+            //    btn.addEventListener('click', function () {
+            //        // Aquí puede conectarse con backend SQL más adelante
+            //        const quejaId = this.dataset.quejaId;
+            //        const fila = document.querySelector(`[data-queja-id="${quejaId}"]`);
+            //        const cliente = fila.querySelector('.font-medium').textContent;
+            //        const motivo = fila.querySelector('.text-gray-900').textContent;
+
+            //        if (confirm(`¿Marcar como atendida la queja de ${cliente}?`)) {
+            //            fila.style.opacity = '0.5';
+            //            fila.style.backgroundColor = '#f0f9ff';
+            //            this.textContent = '✅ Atendida';
+            //            this.disabled = true;
+            //            this.classList.remove('bg-green-500', 'hover:bg-green-600');
+            //            this.classList.add('bg-gray-400');
+
+            //            mostrarToast(`Queja de ${cliente} marcada como atendida`, 'success');
+            //            registrarAccion('Atender Queja', `Cliente: ${cliente} - Motivo: ${motivo}`);
+
+            //            // Actualizar estadísticas
+            //            const resueltas = parseInt(document.getElementById('quejasResueltas').textContent) + 1;
+            //            document.getElementById('quejasResueltas').textContent = resueltas;
+
+            //            setTimeout(() => {
+            //                fila.remove();
+            //                actualizarContadorQuejas();
+            //            }, 2000);
+            //        }
+            //    });
+            //});
+
+            // Event listeners para ver detalles de quejas
+            document.querySelectorAll('.btn-detalles').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const quejaId = this.dataset.quejaId;
+                    const fila = document.querySelector(`[data-queja-id="${quejaId}"]`);
+                    const cliente = fila.querySelector('.font-medium').textContent;
+                    const motivo = fila.querySelector('.text-gray-900').textContent;
+                    const prioridad = fila.querySelector('.inline-flex').textContent;
+
+                    const modal = document.createElement('div');
+                    modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4';
+                    modal.innerHTML = `
+                                                                                                    <div class="modal-content bg-white rounded-lg p-6 md:p-8 max-w-md w-full">
+                                                                                                        <h3 class="text-xl font-bold text-gray-800 mb-4">Detalles de la Queja</h3>
+                                                                                                        <div class="space-y-3">
+                                                                                                            <div>
+                                                                                                                <label class="font-semibold text-gray-700">Cliente:</label>
+                                                                                                                <p class="text-gray-600">${cliente}</p>
+                                                                                                            </div>
+                                                                                                            <div>
+                                                                                                                <label class="font-semibold text-gray-700">Motivo:</label>
+                                                                                                                <p class="text-gray-600">${motivo}</p>
+                                                                                                            </div>
+                                                                                                            <div>
+                                                                                                                <label class="font-semibold text-gray-700">Prioridad:</label>
+                                                                                                                <p class="text-gray-600">${prioridad}</p>
+                                                                                                            </div>
+                                                                                                        //    <div>
+                                                                                                        //        <label class="font-semibold text-gray-700">Acciones Sugeridas:</label>
+                                                                                                        //        <ul class="text-sm text-gray-600 list-disc list-inside">
+                                                                                                        //            <li>Ofrecer descuento del 20%</li>
+                                                                                                        //            <li>Rehacer el pedido sin costo</li>
+                                                                                                        //            <li>Asignar mesero senior</li>
+                                                                                                        //        </ul>
+                                                                                                        //    </div>
+                                                                                                        //</div>
+                                                                                                        //<button onclick="this.parentElement.parentElement.remove()"
+                                                                                                        //        class="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg w-full">
+                                                                                                        //    Cerrar
+                                                                                                        //</button>
+                                                                                                    </div>
+                                                                                                `;
+                    document.body.appendChild(modal);
+                });
+            });
+
+            //// Event listener para nueva queja
+            //document.getElementById('btnNuevaQueja').addEventListener('click', function () {
+            //    // Aquí puede conectarse con backend SQL más adelante
+            //    const modal = document.createElement('div');
+            //    modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4';
+            //    modal.innerHTML = `
+            //                                                                            <div class="modal-content bg-white rounded-lg p-6 md:p-8 max-w-md w-full">
+            //                                                                                <h3 class="text-xl font-bold text-gray-800 mb-4">Registrar Nueva Queja</h3>
+            //                                                                                <form id="formNuevaQueja" class="space-y-4">
+            //                                                                                    <div>
+            //                                                                                        <label class="block text-sm font-medium text-gray-700 mb-1">Mesa/Cliente</label>
+            //                                                                                        <input type="text" class="w-full p-2 border border-gray-300 rounded-lg" placeholder="Ej: Mesa 15" required>
+            //                                                                                    </div>
+            //                                                                                    <div>
+            //                                                                                        <label class="block text-sm font-medium text-gray-700 mb-1">Motivo</label>
+            //                                                                                        <textarea class="w-full p-2 border border-gray-300 rounded-lg" rows="3" placeholder="Describe el motivo de la queja..." required></textarea>
+            //                                                                                    </div>
+            //                                                                                    <div>
+            //                                                                                        <label class="block text-sm font-medium text-gray-700 mb-1">Prioridad</label>
+            //                                                                                        <select class="w-full p-2 border border-gray-300 rounded-lg" required>
+            //                                                                                            <option value="baja">Baja</option>
+            //                                                                                            <option value="media">Media</option>
+            //                                                                                            <option value="critica">Crítica</option>
+            //                                                                                        </select>
+            //                                                                                    </div>
+            //                                                                                    <div class="flex gap-3">
+            //                                                                                        <button type="submit" class="flex-1 bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-lg">
+            //                                                                                            Registrar
+            //                                                                                        </button>
+            //                                                                                        <button type="button" onclick="this.closest('.fixed').remove()" class="flex-1 bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded-lg">
+            //                                                                                            Cancelar
+            //                                                                                        </button>
+            //                                                                                    </div>
+            //                                                                                </form>
+            //                                                                            </div>
+            //                                                                        `;
+            //    document.body.appendChild(modal);
+
+            //    // Manejar envío del formulario
+            //    document.getElementById('formNuevaQueja').addEventListener('submit', function (e) {
+            //        e.preventDefault();
+            //        mostrarToast('✅ Nueva queja registrada correctamente', 'success');
+            //        registrarAccion('Registrar Nueva Queja', 'Nueva queja agregada al sistema');
+            //        modal.remove();
+            //    });
+            //});
+
+            //// Actualizar métricas cada 30 segundos
+            //setInterval(() => {
+            //    actualizarMetricasFinancieras();
+            //}, 30000);
+
+            //// Inicializar métricas al cargar
+            //actualizarMetricasFinancieras();
+            //actualizarPresupuesto();
+            /*   actualizarContadorQuejas();*/
+
+            function agregarEmpleado(nombre, rol) {
+                fetch('/Empleado/AgregarEmpleado', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: `nombre=${encodeURIComponent(nombre)}&rol=${encodeURIComponent(rol)}`
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            console.log('Empleado insertado en la base de datos.');
+                        } else {
+                            console.error('Error al insertar empleado:', data.message);
+                        }
+                    });
+            }
+
+            function cerrarModalEditar() {
+                document.getElementById('modalEditar').classList.add('hidden');
+            }
+
+            document.addEventListener('click', function (e) {
+                if (e.target.closest('.btn-editar')) {
+                    const id = e.target.closest('button').dataset.id;
+                    const fila = document.querySelector(`tr[data-employee-id="${id}"]`);
+                    const nombre = fila.querySelector('.font-medium').textContent;
+                    const rol = fila.querySelector('.inline-flex').textContent;
+
+                    document.getElementById('editId').value = id;
+                    document.getElementById('editNombre').value = nombre;
+                    document.getElementById('editRol').value = rol;
+                    document.getElementById('modalEditar').classList.remove('hidden');
+                }
+            });
+
+            const formEditar = document.getElementById('formEditarEmpleado');
+            if (formEditar) {
+                formEditar.addEventListener('submit', function (e) {
+                    e.preventDefault();
+
+                    const id = document.getElementById('editId').value;
+                    const nombre = document.getElementById('editNombre').value;
+                    const rol = document.getElementById('editRol').value;
+
+                    fetch('/Empleado/ActualizarEmpleado', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: `Id=${id}&Nombre=${encodeURIComponent(nombre)}&Cedula=123456789&Correo=na&Contrasena=na&Rol=${encodeURIComponent(rol)}`
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.success) {
+                                cerrarModalEditar();
+                                cargarEmpleadosDesdeServidor();
+                                mostrarToast("Empleado actualizado");
+                            } else {
+                                mostrarToast("Error al actualizar", "error");
+                            }
+                        });
+                });
+            }
+
+
+            document.addEventListener('click', function (e) {
+                if (e.target.closest('.btn-eliminar')) {
+                    const id = e.target.closest('button').dataset.id;
+                    if (confirm("¿Seguro que deseas eliminar este empleado?")) {
+                        fetch('/Empleado/EliminarEmpleado', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                            body: `id=${id}`
+                        })
+                            .then(res => res.json())
+                            .then(data => {
+                                if (data.success) {
+                                    cargarEmpleadosDesdeServidor();
+                                    mostrarToast("✅ Empleado eliminado");
+                                } else {
+                                    mostrarToast("❌ Error al eliminar", "error");
+                                }
+                            });
+                    }
+                }
+            });
+
+
+            function cargarEmpleadosDesdeServidor() {
+                fetch('/Empleado/Listar')
+                    .then(res => res.json())
+                    .then(data => {
+                        const body = document.getElementById('tablaPersonalBody');
+                        body.innerHTML = ''; // Limpiar tabla
+
+                        data.forEach(empleado => {
+                            const iniciales = generarIniciales(empleado.Nombre);
+                            const color = obtenerColorAleatorio();
+                            const rolClase = empleado.Rol === 'Chef' ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800';
+
+                            const fila = document.createElement('tr');
+                            fila.setAttribute('data-employee-id', empleado.Id);
+                            fila.innerHTML = `
+                                                                            <td class="px-3 md:px-6 py-4 text-sm text-gray-900">${String(empleado.Id).padStart(3, '0')}</td>
+                                                                            <td class="px-3 md:px-6 py-4 whitespace-nowrap">
+                                                                                <div class="flex items-center">
+                                                                                    <div class="w-6 h-6 md:w-8 md:h-8 ${color} rounded-full flex items-center justify-center text-white text-xs md:text-sm font-bold">${iniciales}</div>
+                                                                                    <div class="ml-2 md:ml-3">
+                                                                                        <div class="text-xs md:text-sm font-medium text-gray-900">${empleado.Nombre}</div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td class="px-3 md:px-6 py-4"><span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full ${rolClase}">${empleado.Rol}</span></td>
+                                                                            <td class="px-3 md:px-6 py-4"><span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Activo</span></td>
+                                                                            <td class="px-3 md:px-6 py-4 text-xs md:text-sm text-gray-900 hidden sm:table-cell">Mañana</td>
+                                                                            <td class="px-3 md:px-6 py-4 text-xs md:text-sm font-medium">
+                                                                                <button class="text-indigo-600 hover:text-indigo-900 mr-2 md:mr-3 btn-editar" data-id="${empleado.Id}">
+                                                                                    <i class="fas fa-edit"></i><span class="hidden md:inline ml-1">Editar</span>
+                                                                                </button>
+                                                                                <button class="text-red-600 hover:text-red-900 btn-eliminar" data-id="${empleado.Id}">
+                                                                                    <i class="fas fa-trash"></i><span class="hidden md:inline ml-1">Eliminar</span>
+                                                                                </button>
+                                                                            </td>
+                                                                        `;
+                            body.appendChild(fila);
+                        });
+
+                        actualizarContadorPersonal();
+                    })
+                    .catch(err => {
+                        console.error("Error al cargar empleados:", err);
+                    });
+            }
+
+            window.addEventListener('DOMContentLoaded', cargarEmpleadosDesdeServidor);
+
+            document.addEventListener("DOMContentLoaded", function () {
+                fetch('/Financiero/ObtenerResumenDiario')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Formatear como moneda en colones
+                            const monto = parseFloat(data.totalColones).toLocaleString('es-CR', {
+                                style: 'currency',
+                                currency: 'CRC',
+                                minimumFractionDigits: 0
+                            });
+
+                            // Mostrar en el HTML
+                            document.getElementById("ventasHoy").textContent = monto;
+                        } else {
+                            console.error("Error al obtener datos:", data.error);
+                        }
+                    })
+                    .catch(err => console.error("Error de red al conectar con el backend:", err));
+            });
+
+            document.addEventListener("DOMContentLoaded", function () {
+                fetch('/Resena/ListarResenas')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            const tbody = document.getElementById("tablaQuejasBody");
+                            tbody.innerHTML = "";
+
+                            data.data.forEach(resena => {
+                                let prioridad = "baja";
+                                let clase = "bg-green-100 text-green-800";
+                                let etiqueta = "BAJA";
+
+                                if (resena.Calificacion <= 2) {
+                                    prioridad = "critica";
+                                    clase = "bg-red-100 text-red-800 animate-pulse";
+                                    etiqueta = "CRÍTICA";
+                                } else if (resena.Calificacion === 3) {
+                                    prioridad = "media";
+                                    clase = "bg-yellow-100 text-yellow-800";
+                                    etiqueta = "MEDIA";
+                                }
+
+                                const row = `
+                                <tr class="queja-row bg-white" data-priority="${prioridad}" data-queja-id="${resena.Id}">
+                                    <td class="px-3 md:px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="w-6 h-6 md:w-8 md:h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs md:text-sm font-bold">${resena.UsuarioId}</div>
+                                            <div class="ml-2 md:ml-3">
+                                                <div class="text-xs md:text-sm font-medium text-gray-900">Usuario ${resena.UsuarioId}</div>
+                                                <div class="text-xs text-gray-500">${resena.NombreUsuario}</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-3 md:px-6 py-4">
+                                        <div class="text-xs md:text-sm text-gray-900">${resena.ResenaTexto || "Sin texto"}</div>
+                                        <div class="text-xs text-gray-500">Calificación: ${resena.Calificacion ?? 'N/A'}</div>
+                                    </td>
+                                    <td class="px-3 md:px-6 py-4 whitespace-nowrap">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full ${clase}">${etiqueta}</span>
+                                    </td>
+                                    <td class="px-3 md:px-6 py-4 text-xs text-gray-500 hidden sm:table-cell">
+                                        ${new Date(resena.Fecha).toLocaleString()}
+                                    </td>
+                                    <td class="px-3 md:px-6 py-4">
+
+                                    </td>
+                                </tr>
+                            `;
+                                tbody.insertAdjacentHTML("beforeend", row);
+                            });
+                        } else {
+                            console.error("Error al cargar reseñas:", data.error);
+                        }
+                    });
+            });
+
+            //EFECTO DEL BOTON INICIAR OPERACIONES
+
+            // ======= CLAVES DE PERSISTENCIA =======
+            const OPERACION_KEY = 'operacion_activa';        // '1' | '0'
+            const OPERACION_TS_KEY = 'operacion_inicio_ts';  // timestamp en ms
+
+            // ======= HELPERS DE ESTADO =======
+            function isOperacionActiva() { return localStorage.getItem(OPERACION_KEY) === '1'; }
+            function setOperacionActiva(activa) { localStorage.setItem(OPERACION_KEY, activa ? '1' : '0'); }
+            function setOperacionInicioTs(tsMs) { localStorage.setItem(OPERACION_TS_KEY, String(tsMs)); }
+            function getOperacionInicioTs() { const v = localStorage.getItem(OPERACION_TS_KEY); return v ? parseInt(v, 10) : null; }
+            function clearOperacionInicioTs() { localStorage.removeItem(OPERACION_TS_KEY); }
+
+            // ======= TOAST ESTILO WINDOWS =======
+            function mostrarToastWindows({ title = 'Notificación', message = '', icon = '🔔', duration = 5000 }) {
+                const wrap = document.createElement('div');
+                wrap.className = 'win-toast';
+
+                const card = document.createElement('div');
+                card.className = 'win-card bg-white/95 text-gray-800 rounded-xl shadow-2xl border border-gray-200 p-4 win-enter';
+                card.innerHTML = `
+      <div class="flex gap-3">
+        <div class="text-2xl leading-none">${icon}</div>
+        <div class="flex-1">
+          <div class="font-semibold text-sm md:text-base">${title}</div>
+          <div class="text-xs md:text-sm text-gray-600 mt-0.5">${message}</div>
+        </div>
+        <button type="button" aria-label="Cerrar" class="shrink-0 text-gray-400 hover:text-gray-600">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+      <div class="win-progress bg-blue-600 mt-3 rounded-full"></div>
+    `;
+                wrap.appendChild(card);
+                document.body.appendChild(wrap);
+
+                card.querySelector('button').addEventListener('click', cerrar);
+
+                const progress = card.querySelector('.win-progress');
+                progress.style.animation = `winProgress ${duration}ms linear forwards`;
+
+                const t = setTimeout(cerrar, duration);
+                function cerrar() {
+                    clearTimeout(t);
+                    card.classList.remove('win-enter');
+                    card.classList.add('win-exit');
+                    setTimeout(() => wrap.remove(), 280);
+                }
+            }
+
+            // ======= TIMER =======
+            let operacionTimerId = null;
+
+            function formatHHMMSS(ms) {
+                const total = Math.max(0, Math.floor(ms / 1000));
+                const h = String(Math.floor(total / 3600)).padStart(2, '0');
+                const m = String(Math.floor((total % 3600) / 60)).padStart(2, '0');
+                const s = String(total % 60).padStart(2, '0');
+                return `${h}:${m}:${s}`;
+            }
+
+            function startTimer() {
+                const timerEl = document.getElementById('timerOperacion');
+                const badge = document.getElementById('badgeOperacion');
+                const ts = getOperacionInicioTs();
+                if (!timerEl || !badge || !ts) return;
+
+                badge.classList.remove('hidden');
+                if (operacionTimerId) clearInterval(operacionTimerId);
+
+                const tick = () => {
+                    const elapsed = Date.now() - ts;
+                    timerEl.textContent = formatHHMMSS(elapsed);
+                };
+                tick();
+                operacionTimerId = setInterval(tick, 1000);
+            }
+
+            function stopTimer() {
+                const timerEl = document.getElementById('timerOperacion');
+                const badge = document.getElementById('badgeOperacion');
+                if (operacionTimerId) { clearInterval(operacionTimerId); operacionTimerId = null; }
+                if (timerEl) timerEl.textContent = '00:00:00';
+                if (badge) badge.classList.add('hidden');
+            }
+
+            // ======= UI DEL BOTÓN =======
+            function aplicarUIOperacion() {
+                const btn = document.getElementById('btnIniciarOperacion');
+                if (!btn) return;
+
+                const icon = btn.querySelector('i');
+                const titulo = btn.querySelector('.font-bold');
+                const sub = btn.querySelector('.opacity-90');
+
+                if (isOperacionActiva()) {
+                    // Terminar
+                    titulo.textContent = 'Terminar Operación';
+                    if (sub) sub.textContent = 'Operación en curso';
+                    if (icon) { icon.classList.remove('fa-play'); icon.classList.add('fa-stop'); }
+                    btn.classList.remove('from-neutral-blue', 'to-blue-700', 'hover:from-blue-700', 'hover:to-blue-800');
+                    btn.classList.add('from-crisis-red', 'to-red-700', 'hover:from-red-700', 'hover:to-red-800');
+                    btn.dataset.estado = 'activa';
+                } else {
+                    // Iniciar
+                    titulo.textContent = 'Iniciar Operación';
+                    if (sub) sub.textContent = 'Jornada del día';
+                    if (icon) { icon.classList.remove('fa-stop'); icon.classList.add('fa-play'); }
+                    btn.classList.remove('from-crisis-red', 'to-red-700', 'hover:from-red-700', 'hover:to-red-800');
+                    btn.classList.add('from-neutral-blue', 'to-blue-700', 'hover:from-blue-700', 'hover:to-blue-800');
+                    btn.dataset.estado = 'inactiva';
+                }
+            }
+
+            // ======= ACCIONES =======
+            function iniciarOperacion() {
+                if (isOperacionActiva()) return;
+                setOperacionActiva(true);
+                if (!getOperacionInicioTs()) setOperacionInicioTs(Date.now());
+
+                aplicarUIOperacion();
+                startTimer();
+
+                mostrarToastWindows({
+                    title: 'Operación iniciada',
+                    message: 'La operación del día está activa.',
+                    icon: '🟢',
+                    duration: 5000
+                });
+
+                if (typeof registrarAccion === 'function') {
+                    const fecha = new Date().toLocaleDateString('es-CR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+                    registrarAccion('Iniciar Operación', `Operación del día ${fecha} iniciada por el gerente`);
+                }
+                // fetch('/Operacion/Iniciar', { method: 'POST' });
+            }
+
+            function terminarOperacion() {
+                if (!isOperacionActiva()) return;
+                setOperacionActiva(false);
+                clearOperacionInicioTs();
+
+                aplicarUIOperacion();
+                stopTimer();
+
+                mostrarToastWindows({
+                    title: 'Operación finalizada',
+                    message: 'La operación del día ha finalizado.',
+                    icon: '🔴',
+                    duration: 5000
+                });
+
+                if (typeof registrarAccion === 'function') {
+                    const fecha = new Date().toLocaleDateString('es-CR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+                    registrarAccion('Terminar Operación', `Operación del día ${fecha} finalizada por el gerente`);
+                }
+                // fetch('/Operacion/Finalizar', { method: 'POST' });
+            }
+
+            // ======= INICIALIZACIÓN =======
+            document.addEventListener('DOMContentLoaded', function () {
+                const btn = document.getElementById('btnIniciarOperacion');
+                if (!btn) return;
+
+                // Sincronizar UI
+                aplicarUIOperacion();
+
+                // Retomar estado previo
+                if (isOperacionActiva()) {
+                    if (!getOperacionInicioTs()) setOperacionInicioTs(Date.now());
+                    startTimer();
+                } else {
+                    stopTimer();
+                }
+
+                // Toggle botón
+                btn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    if (isOperacionActiva()) terminarOperacion();
+                    else iniciarOperacion();
+                });
+            });
+
+        </script>
+</body>
+</html>

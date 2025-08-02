@@ -1,0 +1,374 @@
+﻿@model GustoySazon.Models.ClienteViewModel
+@{
+    ViewBag.Title = "registro";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro del Cliente - Gusto y Sazón</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="~/Content/ClienteRegistro.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="body-content">
+        <h1>Registro del Cliente</h1>
+
+        <form action="@Url.Action("Index", "Registro")" method="post" id="clientForm">
+            <div class="form-group">
+                <label for="clientName">Nombre del cliente:</label>
+                <input type="text" id="clientName" name="nombre" placeholder="Ejemplo: Juan Pérez" required>
+            </div>
+
+            <div class="form-group">
+                <label for="cedula">Cédula:</label>
+                <input type="text"
+                       id="cedula"
+                       name="cedula"
+                       placeholder="Ejemplo: 123456789"
+                       maxlength="9"
+                       required
+                       pattern="\d{9}"
+                       oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0,9)" />
+            </div>
+
+            <div class="form-group">
+                <label>Número de asientos a solicitar:</label>
+                <div class="seats-selector">
+                    <div class="seats-toggle" id="seatsToggle">
+                        <span>Seleccionar cantidad</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="seats-dropdown" id="seatsDropdown">
+                        <div data-value="2">2 asientos</div>
+                        <div data-value="3">3 asientos</div>
+                        <div data-value="4">4 asientos</div>
+                        <div data-value="5">5 asientos</div>
+                        <div data-value="6">6 asientos</div>
+                    </div>
+                    <input type="hidden" id="selectedSeats" name="sillas" required>
+                </div>
+            </div>
+
+
+            
+            <div class="form-group">
+                <label for="email">Correo electrónico:</label>
+                <input type="email" id="email" name="correo" placeholder="ejemplo@correo.com" required>
+            </div>
+
+            
+            <div class="form-group">
+                <label for="password">Contraseña:</label>
+                <input type="password" id="password" name="contrasena" placeholder="Contraseña segura" required minlength="6">
+            </div>
+
+
+
+            <div class="form-group">
+                <label>Método de pago:</label>
+                <button type="button" class="add-card-btn" id="addCardBtn">
+                    <i class="far fa-credit-card"></i>
+                    Añadir método de pago
+                </button>
+                <button type="button" class="add-card-btn" id="editCardBtn" style="display:none;">
+                    <i class="fas fa-edit"></i>
+                    Editar método de pago
+                </button>
+                <div id="cardInfo" style="margin-top: 10px; display: none;">
+                    <p><strong>Tarjeta registrada:</strong> <span id="cardTypeDisplay"></span> **** **** **** <span id="cardLastDigits"></span></p>
+                </div>
+            </div>
+
+            <input type="hidden" id="cardType" name="tipoTarjeta" required>
+            <input type="hidden" id="cardNumberHidden" name="numTarjeta" required>
+            <input type="hidden" id="cardExpiryHidden" name="fechaVenc" required>
+
+            <button type="submit" class="submit-btn">Registrar Usuario</button>
+        </form>
+    </div>
+
+    <div class="modal" id="cardModal">
+        <div class="modal-content">
+            <h2 class="modal-title">Añadir Tarjeta Bancaria</h2>
+
+            <div class="form-group">
+                <label>Tipo de tarjeta:</label>
+                <div class="card-types">
+                    <div class="card-type" data-type="visa">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa">
+                    </div>
+                    <div class="card-type" data-type="mastercard">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="cardHolder">Nombre del Titular:</label>
+                <input type="text" id="cardHolder" placeholder="Ejemplo: Juan Pérez" required>
+            </div>
+
+            <div class="form-group">
+                <label for="cardNumber">Número de tarjeta (16 dígitos):</label>
+                <input type="text"
+                       id="cardNumber"
+                       placeholder="Ejemplo: 1234 5678 9012 3456"
+                       maxlength="16"
+                       required
+                       pattern="\d{16}"
+                       oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0,16)" />
+            </div>
+
+            <div class="form-group">
+                <label for="cardExpiry">Fecha de expiración (Formato MM/AA):</label>
+                                                                                                <!--solo meses del 1 al 9 y del 10 al 12-->
+                <input type="text" id="cardExpiry" placeholder="Ejemplo: 07/25" required pattern="^(0[1-9]|1[0-2])\/\d{2}$" title="Formato MM/AA">
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="modal-btn cancel" id="cancelCardBtn">Cancelar</button>
+                <button type="button" class="modal-btn add" id="addCardModalBtn">Agregar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        //seleccionar sillas
+        const seatsToggle = document.getElementById('seatsToggle');
+        const seatsDropdown = document.getElementById('seatsDropdown');
+        const selectedSeats = document.getElementById('selectedSeats');
+
+        seatsToggle.addEventListener('click', () => {
+            seatsDropdown.classList.toggle('show');
+        });
+
+        document.querySelectorAll('.seats-dropdown div').forEach(item => {
+            item.addEventListener('click', () => {
+                const value = item.getAttribute('data-value');
+                selectedSeats.value = value;
+                seatsToggle.querySelector('span').textContent = `${value} asientos`;
+                seatsDropdown.classList.remove('show');
+            });
+        });
+
+
+
+
+        // Parte de la tarjeta
+        const addCardBtn = document.getElementById('addCardBtn');
+        const editCardBtn = document.getElementById('editCardBtn');
+        const cardModal = document.getElementById('cardModal');
+        const cancelCardBtn = document.getElementById('cancelCardBtn');
+        const addCardModalBtn = document.getElementById('addCardModalBtn');
+        const cardInfo = document.getElementById('cardInfo');
+
+        addCardBtn.addEventListener('click', () => {
+            cardModal.style.display = 'flex';
+            clearModalInputs(false);
+        });
+
+        editCardBtn.addEventListener('click', () => {
+            cardModal.style.display = 'flex';
+            const cardType = document.getElementById('cardType').value;
+            const cardNumber = document.getElementById('cardNumberHidden').value;
+            const cardExpiry = document.getElementById('cardExpiryHidden').value;
+
+            document.querySelectorAll('.card-type').forEach(t => t.classList.remove('selected'));
+            if (cardType) {
+                document.querySelector(`.card-type[data-type="${cardType}"]`)?.classList.add('selected');
+                document.getElementById('cardType').value = cardType;
+            }
+
+            document.getElementById('cardNumber').value = cardNumber;
+            document.getElementById('cardExpiry').value = cardExpiry;
+            document.getElementById('cardHolder').value = document.getElementById('clientName').value;
+        });
+
+        cancelCardBtn.addEventListener('click', () => {
+            cardModal.style.display = 'none';
+        });
+
+        function clearModalInputs(clearType = true) {
+            if (clearType) {
+                document.getElementById('cardType').value = '';
+                document.querySelectorAll('.card-type').forEach(t => t.classList.remove('selected'));
+            }
+            document.getElementById('cardNumber').value = '';
+            document.getElementById('cardExpiry').value = '';
+            document.getElementById('cardHolder').value = '';
+        }
+
+
+
+        //Validacion de la fecha
+
+        function esFechaValida(fecha) {
+            const match = fecha.match(/^(0[1-9]|1[0-2])\/(\d{2})$/);
+            if (!match) return false;
+
+            const mesIngresado = parseInt(match[1], 10);
+            const anioIngresado = parseInt(match[2], 10);
+
+            const hoy = new Date();
+            const mesActual = hoy.getMonth() + 1;
+            const anioActual = hoy.getFullYear() % 100; 
+
+            if (anioIngresado < anioActual) return false;
+            if (anioIngresado === anioActual && mesIngresado < mesActual) return false;
+
+            return true;
+        }
+
+
+
+
+
+        addCardModalBtn.addEventListener('click', () => {
+            const cardType = document.getElementById('cardType').value;
+            const cardNumber = document.getElementById('cardNumber').value.trim();
+            const cardExpiry = document.getElementById('cardExpiry').value.trim();
+            const cardHolder = document.getElementById('cardHolder').value.trim();
+
+
+            //Llevar validaciones de la tarjeta
+            if (!cardType) {
+                alert('Por favor seleccione un tipo de tarjeta');
+                return;
+            }
+
+            if (!/^\d{16}$/.test(cardNumber)) {
+                alert('El número de tarjeta debe tener 16 dígitos numéricos');
+                return;
+            }
+
+
+            if (!esFechaValida(cardExpiry)) {
+                alert('Ya tu tarjeta expiró, agrega otra');
+                return;
+            }
+
+            if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(cardExpiry)) {
+                alert('La fecha de expiración debe estar en formato MM/AA (Mes/Año)');
+                return;
+            }
+
+            if (cardHolder.length === 0) {
+                alert('Por favor ingrese el nombre del titular');
+                return;
+            }
+
+            document.getElementById('cardType').value = cardType;
+            document.getElementById('cardNumberHidden').value = cardNumber;
+            document.getElementById('cardExpiryHidden').value = cardExpiry;
+
+
+
+
+            // Mostrar info de la tarjeta en el registro
+            document.getElementById('cardTypeDisplay').textContent = cardType === 'visa' ? 'Visa' : 'Mastercard';
+            document.getElementById('cardLastDigits').textContent = cardNumber.slice(-4);
+            cardInfo.style.display = 'block';
+
+            addCardBtn.style.display = 'none';
+            editCardBtn.style.display = 'inline-flex';
+
+            cardModal.style.display = 'none';
+        });
+
+
+
+
+
+        // Validacion general al enviar formulario
+        document.getElementById('clientForm').addEventListener('submit', (e) => {
+            if (!document.getElementById('clientName').value.trim()) {
+                alert('Por favor ingrese el nombre del cliente');
+                e.preventDefault();
+                return;
+            }
+            if (!/^\d{9}$/.test(document.getElementById('cedula').value)) {
+                alert('La cédula debe tener 9 dígitos numéricos');
+                e.preventDefault();
+                return;
+            }
+            if (!selectedSeats.value) {
+                alert('Por favor seleccione la cantidad de asientos');
+                e.preventDefault();
+                return;
+            }
+            if (!document.getElementById('cardType').value ||
+                !document.getElementById('cardNumberHidden').value ||
+                !document.getElementById('cardExpiryHidden').value) {
+                alert('Debe registrar un método de pago antes de continuar');
+                e.preventDefault();
+                return;
+            }
+
+            if (!document.getElementById('email').value.trim()) {
+                alert('Por favor ingrese su correo electrónico');
+                e.preventDefault();
+                return;
+            }
+
+            if (!document.getElementById('password').value.trim()) {
+                alert('Por favor ingrese una contraseña');
+                e.preventDefault();
+                return;
+            }
+
+
+        });
+
+        // Selección de tipo de tarjeta
+        document.querySelectorAll('.card-type').forEach(type => {
+            type.addEventListener('click', function () {
+                document.querySelectorAll('.card-type').forEach(t => t.classList.remove('selected'));
+                this.classList.add('selected');
+                document.getElementById('cardType').value = this.getAttribute('data-type');
+            });
+        });
+
+
+
+
+
+        //Auto relleno de los datos del formulario del registro
+        document.getElementById('cedula').addEventListener('blur', function() {
+            const cedula = this.value.trim();
+            if (cedula.length === 9) {
+                fetch('@Url.Action("GetClientePorCedula", "Registro")?cedula=' + cedula)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data) {
+                            document.getElementById('clientName').value = data.nombre;
+                            document.getElementById('selectedSeats').value = data.sillas;
+                            document.querySelector('.seats-toggle span').textContent = `${data.sillas} asientos`;
+
+                            if (data.tipoTarjeta && data.numTarjeta && data.fechaVenc) {
+                                document.getElementById('cardType').value = data.tipoTarjeta;
+                                document.getElementById('cardNumberHidden').value = data.numTarjeta;
+                                document.getElementById('cardExpiryHidden').value = data.fechaVenc;
+
+                                document.getElementById('cardTypeDisplay').textContent =
+                                    data.tipoTarjeta === 'visa' ? 'Visa' : 'Mastercard';
+                                document.getElementById('cardLastDigits').textContent =
+                                    data.numTarjeta.slice(-4);
+                                cardInfo.style.display = 'block';
+
+                                addCardBtn.style.display = 'none';
+                                editCardBtn.style.display = 'inline-flex';
+                            }
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+        });
+
+    </script>
+</body>
+
+</html>
+

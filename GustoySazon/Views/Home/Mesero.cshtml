@@ -1,0 +1,767 @@
+﻿@model GustoySazon.Models.MeseroViewModel.MeseroMesaViewModel
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurante Caos - Dashboard Mesero Avanzado</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="~/Content/MeseroDiseno.css" rel="stylesheet" />
+</head>
+<body>
+    <main class="main-container">
+        <!-- Perfil del Mesero -->
+        <section class="waiter-profile">
+            <div class="profile-header">
+                <div class="profile-avatar">
+                    @(Model?.Nombre?.FirstOrDefault().ToString() ?? "?")
+                </div>
+                <div class="profile-info">
+                    <h2>Mesero: @Model.Nombre</h2>
+                    <div class="shift-info">
+                        <span class="shift-badge">Turno @Model.Turno</span>
+                        <span class="time-badge">@Model.HoraInicio.ToString("hh\\:mm") - @Model.HoraFin.ToString("hh\\:mm")</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="status-bars">
+                <!-- Indicadores de estado -->
+                <div class="status-item stress">
+                    <div class="status-label"><span>😰</span> Nivel de Estrés</div>
+                    <div class="status-bar"><div class="status-fill" style="width: @Model.NivelEstres%"></div></div>
+                    <div class="status-value">@Model.NivelEstres%</div>
+                </div>
+
+                <div class="status-item energy">
+                    <div class="status-label"><span>💚</span> Energía</div>
+                    <div class="status-bar"><div class="status-fill" style="width: @Model.NivelEnergia%"></div></div>
+                    <div class="status-value">@Model.NivelEnergia%</div>
+                </div>
+
+                <div class="status-item efficiency">
+                    <div class="status-label"><span>⚡</span> Eficiencia</div>
+                    <div class="status-bar"><div class="status-fill" style="width: @Model.Eficiencia%"></div></div>
+                    <div class="status-value">@Model.Eficiencia%</div>
+                </div>
+
+                <div class="status-item tips">
+                    <div class="status-label"><span>💰</span> Propinas del Turno</div>
+                    <div class="status-bar"><div class="status-fill" style="width: 75%"></div></div>
+                    <div class="status-value">$@Model.PropinasTurno.ToString("0.00")</div>
+                </div>
+
+                <div class="status-item time-worked">
+                    <div class="status-label"><span>⏰</span> Tiempo Trabajado</div>
+                    <div class="status-value">00:00:00</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filtros -->
+        <section class="filter-tabs">
+            <button class="filter-tab active" data-filter="mesas">
+                <span>🍽️</span>Mesas <span></span>
+            </button>
+            <button class="filter-tab" data-filter="cocina">
+                <span>👨‍🍳</span> Cocina <span></span>
+            </button>
+            <button class="filter-tab" data-filter="comunicacion">
+                <span>📱</span> Comunicación <span></span>
+            </button>
+            <button class="filter-tab" data-filter="supervivencia">
+                <span>🆘</span> Supervivencia <span></span>
+            </button>
+        </section>
+
+        <!-- Contenido de Mesas -->
+        <section id="mesas-content" class="content-section">
+            <div class="panel-mesas">
+                <div class="listado-mesas">
+                    @foreach (var mesa in Model.Mesas)
+                    {
+                        <div class="mesa-card" data-mesaid="@mesa.MesaId" data-estado="@mesa.EstadoAtencion?.ToLower()">
+                            <div class="mesa-header @(mesa.EstadoAtencion == "Ocupada" ? "ocupada" : "libre")">
+                                <h3>Mesa @mesa.NumeroMesa</h3>
+                                <span class="estado-mesa">@mesa.EstadoAtencion</span>
+                            </div>
+                            <div class="mesa-body">
+                                <button class="btn btn-info btn-detalles"
+                                        onclick="toggleDetallesAdicionales(@mesa.MesaId, this)">
+                                    👀 Ver Pedido Completo
+                                </button>
+                                <div class="detalles-contenedor" style="margin-top:10px;"></div>
+
+                                <!-- Botones de gestión de órdenes con diseño elegante -->
+                                <div class="orden-actions">
+                                    <button class="btn btn-success btn-entregar"
+                                            onclick="entregarOrden(@mesa.MesaId)"
+                                            title="Entregar orden a cliente">
+                                        🍽️ Entregar Orden
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </section>
+
+        <!-- Contenido de Tareas -->
+        <section id="tareas-content" class="content-section hidden">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span>📋</span> Centro de Tareas
+                </h2>
+                <div class="section-controls">
+                    <input type="text" class="search-box" placeholder="Buscar tarea..." id="tarea-search">
+                    <select class="sort-select" id="tarea-sort">
+                        <option value="prioridad">Ordenar por prioridad</option>
+                        <option value="tiempo">Ordenar por tiempo</option>
+                        <option value="tipo">Ordenar por tipo</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="task-grid" id="tareas-grid">
+                <!-- Aquí se insertarán las tareas desde el backend -->
+            </div>
+        </section>
+
+        <!-- Contenido de Cocina -->
+        <section id="cocina-content" class="content-section hidden">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span>👨‍🍳</span> Centro de Cocina
+                </h2>
+                <div class="section-controls">
+                    <input type="text" class="search-box" placeholder="Buscar orden..." id="cocina-search">
+                    <select class="sort-select" id="cocina-sort">
+                        <option value="time">Ordenar por tiempo</option>
+                        <option value="status">Ordenar por estado</option>
+                        <option value="mesa">Ordenar por mesa</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="task-grid">
+                <div class="task-card task-medium">
+                    <div class="task-header">
+                        <h3 class="task-title">🍳 En Preparación</h3>
+                        <div class="task-timer">⏰ 15-20 min</div>
+                    </div>
+                    <div class="task-description">
+                        Órdenes actualmente siendo preparadas por el equipo de cocina.
+                    </div>
+                    <ul class="request-list">
+                        <li>Mesa 4 - 2 ensaladas sin gluten (15 min)</li>
+                        <li>Mesa 2 - Pendiente tomar orden</li>
+                    </ul>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="verificarProgreso()">
+                            👀 Verificar Progreso
+                        </button>
+                    </div>
+                </div>
+
+                <div class="task-card task-low">
+                    <div class="task-header">
+                        <h3 class="task-title">✅ Listas para Servir</h3>
+                        <div class="task-timer">🍽️ RECOGER</div>
+                    </div>
+                    <div class="task-description">
+                        Órdenes completadas esperando ser recogidas y servidas.
+                    </div>
+                    <ul class="request-list">
+                        <li>Mesa 3 - Cuenta ya entregada ✓</li>
+                    </ul>
+                    <div class="action-buttons">
+                        <button class="btn btn-success" onclick="recogerOrden()">
+                            🍽️ Recoger
+                        </button>
+                    </div>
+                </div>
+
+                <div class="task-card task-medium">
+                    <div class="task-header">
+                        <h3 class="task-title">📊 Estado de Cocina</h3>
+                        <div class="task-timer">📈 TIEMPO REAL</div>
+                    </div>
+                    <div class="task-description">
+                        Información en tiempo real sobre el estado general de la cocina.
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span>🔥</span>
+                            <div>
+                                <strong>Nivel de estrés cocina:</strong><br>
+                                85% (Muy Alto)
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <span>⏱️</span>
+                            <div>
+                                <strong>Tiempo promedio:</strong><br>
+                                28 min (Normal: 15 min)
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <span>👨‍🍳</span>
+                            <div>
+                                <strong>Chefs disponibles:</strong><br>
+                                2 de 3 (1 en descanso)
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <span>📦</span>
+                            <div>
+                                <strong>Ingredientes críticos:</strong><br>
+                                Pan de hamburguesa (Bajo)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contenido de Comunicación -->
+        <section id="comunicacion-content" class="content-section hidden">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span>📱</span> Centro de Comunicación
+                </h2>
+                <div class="section-controls">
+                    <input type="text" class="search-box" placeholder="Buscar conversación..." id="comunicacion-search">
+                    <select class="sort-select" id="comunicacion-sort">
+                        <option value="tiempo">Ordenar por tiempo</option>
+                        <option value="prioridad">Ordenar por prioridad</option>
+                        <option value="tipo">Ordenar por tipo</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="task-grid">
+                <div class="task-card task-high">
+                    <div class="task-header">
+                        <h3 class="task-title">💬 Mensajes Urgentes</h3>
+                        <div class="task-timer">🔴 AHORA</div>
+                    </div>
+                    <div class="task-description">
+                        Comunicaciones que requieren respuesta inmediata.
+                    </div>
+                    <ul class="request-list">
+                        <li>👨‍💼 Gerente: "Mesa 7 requiere atención especial"</li>
+                        <li>👨‍🍳 Chef: "Se agotó el salmón, informar a clientes"</li>
+                    </ul>
+                    <div class="action-buttons">
+                        <button class="btn btn-danger" onclick="responderUrgente()">
+                            ⚡ Responder Ahora
+                        </button>
+                    </div>
+                </div>
+
+                <div class="task-card task-medium">
+                    <div class="task-header">
+                        <h3 class="task-title">📞 Comunicación con Cocina</h3>
+                        <div class="task-timer">📡 EN LÍNEA</div>
+                    </div>
+                    <div class="task-description">
+                        Canal directo de comunicación con el equipo de cocina.
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="contactarCocina()">
+                            👨‍🍳 Contactar Chef
+                        </button>
+                        <button class="btn btn-warning" onclick="reportarProblema()">
+                            ⚠️ Reportar Problema
+                        </button>
+                        <button class="btn btn-info" onclick="consultarTiempos()">
+                            ⏰ Consultar Tiempos
+                        </button>
+                    </div>
+                </div>
+
+                <div class="task-card task-low">
+                    <div class="task-header">
+                        <h3 class="task-title">📋 Notas del Turno</h3>
+                        <div class="task-timer">📝 ACTIVAS</div>
+                    </div>
+                    <div class="task-description">
+                        Notas y recordatorios importantes para el turno actual.
+                    </div>
+                    <ul class="request-list">
+                        <li>Mesa 3: Cliente alérgico a mariscos</li>
+                        <li>Mesa 5: Celebración cumpleaños - preparar postre especial</li>
+                        <li>Mesa 8: Cliente vegetariano estricto</li>
+                    </ul>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="agregarNota()">
+                            ➕ Agregar Nota
+                        </button>
+                        <button class="btn btn-secondary" onclick="editarNotas()">
+                            ✏️ Editar Notas
+                        </button>
+                    </div>
+                </div>
+
+                <div class="task-card task-medium">
+                    <div class="task-header">
+                        <h3 class="task-title">🗣️ Comunicación con Clientes</h3>
+                        <div class="task-timer">💬 ACTIVO</div>
+                    </div>
+                    <div class="task-description">
+                        Herramientas para comunicación efectiva con los clientes.
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-success" onclick="enviarActualizacion()">
+                            📢 Enviar Actualización
+                        </button>
+                        <button class="btn btn-info" onclick="consultarSatisfaccion()">
+                            😊 Consultar Satisfacción
+                        </button>
+                        <button class="btn btn-warning" onclick="manejarQueja()">
+                            🤝 Manejar Queja
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contenido de Supervivencia -->
+        <section id="supervivencia-content" class="content-section hidden">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span>🆘</span> Centro de Supervivencia
+                </h2>
+            </div>
+
+            <div class="survival-dashboard">
+                <div class="survival-card">
+                    <h3>🎯 Estado de Supervivencia</h3>
+                    <div class="stress-meter" style="--stress-level: 92">
+                        <div class="stress-circle">
+                            <div class="stress-value">92%</div>
+                        </div>
+                    </div>
+                    <p style="text-align: center; color: var(--accent-color); font-weight: bold;">
+                        NIVEL CRÍTICO - RIESGO DE COLAPSO
+                    </p>
+                    <div class="action-buttons" style="margin-top: 1rem;">
+                        <button class="btn btn-danger" onclick="activarEmergencia()">
+                            🚨 Activar Protocolo Emergencia
+                        </button>
+                        <button class="btn btn-warning" onclick="solicitarAyuda()">
+                            🆘 Solicitar Ayuda Inmediata
+                        </button>
+                    </div>
+                </div>
+
+                <div class="survival-card">
+                    <h3>💡 Consejos de Supervivencia</h3>
+                    <ul class="request-list">
+                        <li><strong>RESPIRA:</strong> Toma 3 respiraciones profundas antes de cada mesa</li>
+                        <li><strong>PRIORIZA:</strong> Atiende primero las mesas más críticas (1 y 5)</li>
+                        <li><strong>COMUNICA:</strong> Mantén informados a los clientes sobre retrasos</li>
+                        <li><strong>DELEGA:</strong> Pide ayuda a Ana para Mesa 2</li>
+                        <li><strong>CALMA:</strong> Usa frases como "Enseguida lo resuelvo"</li>
+                        <li><strong>SONRÍE:</strong> Aunque sea forzado, ayuda a desarmar tensiones</li>
+                        <li><strong>HIDRATA:</strong> Toma agua cada 30 minutos para mantener energía</li>
+                        <li><strong>PAUSA:</strong> Tómate 30 segundos entre mesas para recentrarte</li>
+                        <li><strong>ORGANIZA:</strong> Mantén tu bandeja y herramientas siempre ordenadas</li>
+                        <li><strong>ANTICIPA:</strong> Lleva condimentos extra para evitar viajes innecesarios</li>
+                        <li><strong>ESCUCHA:</strong> Presta atención completa a cada pedido</li>
+                        <li><strong>OPTIMIZA:</strong> Combina tareas cuando vayas a la cocina</li>
+                        <li><strong>POSTURA:</strong> Mantén la espalda recta para conservar energía</li>
+                        <li><strong>MENTAL:</strong> Repite "Puedo hacerlo" antes de momentos difíciles</li>
+                        <li><strong>RITMO:</strong> Camina con propósito pero sin correr</li>
+                        <li><strong>FLEXIBILIDAD:</strong> Adapta el plan si surge algo urgente</li>
+                        <li><strong>GRATITUD:</strong> Recuerda que cada cliente es una oportunidad</li>
+                        <li><strong>EFICIENCIA:</strong> Pregunta todo lo necesario en una sola visita</li>
+                        <li><strong>APOYO:</strong> No dudes en pedir ayuda cuando lo necesites</li>
+                        <li><strong>ENFOQUE:</strong> Una mesa a la vez, sin pensar en las demás</li>
+                    </ul>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="aplicarConsejo()">
+                            ✨ Aplicar Consejo Aleatorio
+                        </button>
+                    </div>
+                </div>
+
+                <div class="survival-card">
+                    <h3>🆘 Botón de Pánico</h3>
+                    <p style="text-align: center; margin-bottom: 1.5rem;">
+                        Cuando todo se vuelve inmanejable, usa estos recursos de emergencia:
+                    </p>
+                    <div class="action-buttons">
+                        <button class="btn btn-danger" onclick="panicButton()">
+                            🚨 BOTÓN DE PÁNICO
+                        </button>
+                        <button class="btn btn-warning" onclick="llamarRefuerzos()">
+                            📞 Llamar Refuerzos
+                        </button>
+                        <button class="btn btn-primary" onclick="tomarDescanso()">
+                            ☕ Descanso de Emergencia
+                        </button>
+                    </div>
+
+                    <div style="margin-top: 1rem; padding: 1rem; background: rgba(231, 76, 60, 0.1); border-radius: 8px;">
+                        <strong>⚠️ Recuerda:</strong> Es solo un trabajo. Tu salud mental es más importante que cualquier mesa.
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+    // Variables para simulación
+        let nivelEstres = @Model.NivelEstres;
+        let nivelEnergia = @Model.NivelEnergia;
+        let eficiencia = @Model.Eficiencia;
+        let tiempoTranscurrido = 0; // En segundos
+        let ultimaActualizacion = new Date();
+
+        // Formato HH:MM:SS
+        function formatearTiempo(segundos) {
+            const horas = Math.floor(segundos / 3600);
+            const minutos = Math.floor((segundos % 3600) / 60);
+            const segs = segundos % 60;
+            return `${horas.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}:${segs.toString().padStart(2, '0')}`;
+        }
+
+        // Indicadores simulados
+        function actualizarIndicadoresSimulados() {
+            const ahora = new Date();
+            const segundosTranscurridos = Math.floor((ahora - ultimaActualizacion) / 1000);
+            tiempoTranscurrido += 1;
+
+            if (segundosTranscurridos >= 60) {
+                const minutosTranscurridos = Math.floor(segundosTranscurridos / 60);
+                nivelEstres = Math.min(100, nivelEstres + (minutosTranscurridos * 1));
+                nivelEnergia = Math.max(0, nivelEnergia - (minutosTranscurridos * 1));
+                eficiencia = Math.max(0, eficiencia - (minutosTranscurridos * 2));
+                ultimaActualizacion = ahora;
+            }
+
+            actualizarUIIndicadores();
+        }
+
+        // Actualiza barras e indicadores
+        function actualizarUIIndicadores() {
+            document.querySelector('.stress .status-fill').style.width = `${nivelEstres}%`;
+            document.querySelector('.stress .status-value').textContent = `${nivelEstres.toFixed(0)}%`;
+
+            document.querySelector('.energy .status-fill').style.width = `${nivelEnergia}%`;
+            document.querySelector('.energy .status-value').textContent = `${nivelEnergia.toFixed(0)}%`;
+
+            document.querySelector('.efficiency .status-fill').style.width = `${eficiencia}%`;
+            document.querySelector('.efficiency .status-value').textContent = `${eficiencia.toFixed(0)}%`;
+
+            const tiempoElement = document.querySelector('.time-worked .status-value');
+            if (tiempoElement) {
+                tiempoElement.textContent = formatearTiempo(tiempoTranscurrido);
+            }
+        }
+
+        // Array de 20 consejos
+        const consejos = [
+            { texto: "RESPIRA: Toma 3 respiraciones profundas", estres: -5, energia: 2, eficiencia: 1 },
+            { texto: "PRIORIZA: Atiende las mesas más críticas primero", estres: -3, energia: 0, eficiencia: 5 },
+            { texto: "COMUNICA: Mantén informados a los clientes", estres: -4, energia: 1, eficiencia: 3 },
+            { texto: "DELEGA: Pide ayuda cuando lo necesites", estres: -6, energia: 3, eficiencia: 4 },
+            { texto: "CALMA: Usa frases tranquilizadoras", estres: -3, energia: 1, eficiencia: 2 },
+            { texto: "SONRÍE: Desarma tensiones con una sonrisa", estres: -2, energia: 2, eficiencia: 1 },
+            { texto: "HIDRATA: Toma agua para mantener energía", estres: -1, energia: 5, eficiencia: 2 },
+            { texto: "PAUSA: 30 segundos para recentrarte", estres: -4, energia: 3, eficiencia: 1 },
+            { texto: "ORGANIZA: Mantén tus herramientas ordenadas", estres: -2, energia: 1, eficiencia: 4 },
+            { texto: "ANTICIPA: Lleva condimentos extra", estres: -1, energia: 0, eficiencia: 5 },
+            { texto: "ESCUCHA: Atención completa a cada pedido", estres: -2, energia: 1, eficiencia: 3 },
+            { texto: "OPTIMIZA: Combina tareas en cada viaje", estres: -1, energia: 2, eficiencia: 6 },
+            { texto: "POSTURA: Espalda recta conserva energía", estres: -1, energia: 3, eficiencia: 2 },
+            { texto: "MENTAL: Repite 'Puedo hacerlo'", estres: -5, energia: 4, eficiencia: 2 },
+            { texto: "RITMO: Camina con propósito, sin correr", estres: -2, energia: 2, eficiencia: 3 },
+            { texto: "FLEXIBILIDAD: Adapta el plan si es necesario", estres: -3, energia: 1, eficiencia: 4 },
+            { texto: "GRATITUD: Cada cliente es una oportunidad", estres: -4, energia: 3, eficiencia: 1 },
+            { texto: "EFICIENCIA: Pregunta todo en una visita", estres: -1, energia: 1, eficiencia: 5 },
+            { texto: "APOYO: Pide ayuda sin dudarlo", estres: -5, energia: 2, eficiencia: 3 },
+            { texto: "ENFOQUE: Una mesa a la vez", estres: -3, energia: 2, eficiencia: 4 }
+        ];
+
+        // Función aplicarConsejo()
+        function aplicarConsejo() {
+            const consejoAleatorio = consejos[Math.floor(Math.random() * consejos.length)];
+
+            nivelEstres = Math.max(0, Math.min(100, nivelEstres + consejoAleatorio.estres));
+            nivelEnergia = Math.max(0, Math.min(100, nivelEnergia + consejoAleatorio.energia));
+            eficiencia = Math.max(0, Math.min(100, eficiencia + consejoAleatorio.eficiencia));
+
+            actualizarUIIndicadores();
+
+            alert(`✨ ${consejoAleatorio.texto}`);
+        }
+
+        // Propinas simuladas
+        function actualizarPropinas() {
+            fetch('/Hame/ObtenerEstadoMeseroActualizado')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const propinasValue = document.querySelector('.tips .status-value');
+                        if (propinasValue) {
+                            propinasValue.textContent = `${data.propinasTurno.toFixed(2)}`;
+                        }
+                    }
+                })
+                .catch(console.error);
+        }
+
+        // Filtros por pestañas
+        function configurarFiltros() {
+            document.querySelectorAll(".filter-tab").forEach(btn => {
+                btn.addEventListener("click", () => {
+                    document.querySelectorAll(".filter-tab").forEach(b => b.classList.remove("active"));
+                    btn.classList.add("active");
+
+                    const filter = btn.dataset.filter;
+                    document.querySelectorAll(".content-section").forEach(section => {
+                        section.classList.add("hidden");
+                    });
+                    const target = document.getElementById(`${filter}-content`);
+                    if (target) target.classList.remove("hidden");
+                });
+            });
+        }
+
+        // Estado de mesas (colores, switches, fecha)
+        function actualizarEstadoMesas() {
+            fetch('/Hame/ObtenerEstadoMesa')
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.success) return;
+
+                    document.querySelectorAll('.mesa-card').forEach(card => {
+                        let mesaId = parseInt(card.getAttribute('data-mesaid'));
+                        let cliente = data.ClientesEnMesa.find(c => c.Id === mesaId);
+                        if (cliente) {
+                            let estado = cliente.EstadoPedido;
+                            let prioridad = (estado === "Por pagar") ? "high" :
+                                            (estado === "Pedido activo") ? "medium" : "low";
+                            actualizarPrioridadCard(card, prioridad);
+
+                            const fechaElemento = card.querySelector('.time-value');
+                            if (fechaElemento && cliente.FechaAtencion) {
+                                fechaElemento.textContent = cliente.FechaAtencion;
+                            }
+
+                            const servida = document.getElementById(`mesa${mesaId}-comida`);
+                            const cuenta = document.getElementById(`mesa${mesaId}-cuenta`);
+                            if (servida) servida.checked = (estado === "Comida servida");
+                            if (cuenta) cuenta.checked = (estado === "Por pagar");
+                        }
+                    });
+
+                    if (data.EstadoAtencion) {
+                        const estadoElemento = document.getElementById("estado-atencion");
+                        if (estadoElemento) estadoElemento.textContent = "Estado atención: " + data.EstadoAtencion;
+                    }
+                })
+                .catch(console.error);
+        }
+
+        // Alternar detalles de pedido al hacer clic
+        function toggleDetallesAdicionales(mesaId, botonClickeado) {
+            const mesaCard = botonClickeado.closest('.mesa-card');
+            let detallesExistentes = mesaCard.querySelector('.detalles-adicionales');
+
+            if (detallesExistentes) {
+                const visible = detallesExistentes.style.display !== 'none';
+                detallesExistentes.style.display = visible ? 'none' : 'block';
+                botonClickeado.textContent = visible ? 'Ver Pedido' : 'Ocultar Detalles';
+                botonClickeado.classList.toggle('btn-warning', !visible);
+                botonClickeado.classList.toggle('btn-info', visible);
+                return;
+            }
+
+            // Evita agregar múltiples detalles si ya hay una carga en progreso
+            if (mesaCard.dataset.cargando === "true") return;
+
+            mesaCard.dataset.cargando = "true"; // Marcar como cargando
+
+            botonClickeado.textContent = 'Ocultar Detalles';
+            botonClickeado.classList.remove('btn-info');
+            botonClickeado.classList.add('btn-warning');
+
+            cargarDatosAdicionalesDesdeApi(mesaId, mesaCard, botonClickeado);
+        }
+
+        function cargarDatosAdicionalesDesdeApi(mesaId, mesaCard, botonClickeado) {
+            const detallesContainer = mesaCard.querySelector('.detalles-contenedor');
+
+            fetch(`/Hame/ObtenerOrdenesPorMesa?mesaId=${mesaId}`)
+                .then(response => response.json())
+                .then(data => {
+                    mesaCard.dataset.cargando = "false"; // Quitar marca de carga
+
+                    if (!data.success || !data.data || data.data.length === 0) {
+                        detallesContainer.insertAdjacentHTML('beforeend', `
+                    <div class="detalles-adicionales" style="margin-top: 10px;">
+                        <em>Sin pedidos aún.</em>
+                    </div>
+                `);
+                        return;
+                    }
+
+                    let tablaHTML = `
+                <div class="detalles-adicionales" style="margin-top: 10px;">
+                    <table class="pedido-detalle-table">
+                        <thead>
+                            <tr>
+                               <th style="border: 1px solid #ccc; padding: 5px;">Platillo</th>
+                                <th style="border: 1px solid #ccc; padding: 5px;">Cantidad</th>
+                                <th style="border: 1px solid #ccc; padding: 5px;">Precio Unitario</th>
+                                <th style="border: 1px solid #ccc; padding: 5px;">Precio Total</th>
+                                <th style="border: 1px solid #ccc; padding: 5px;">Estado</th>
+                                <th style="border: 1px solid #ccc; padding: 5px;">Fecha</th>
+                                <th style="border: 1px solid #ccc; padding: 5px;">Mesero ID</th>
+                        </thead>
+                        <tbody>
+            `;
+
+                    data.data.forEach(p => {
+                        const fecha = new Date(p.Fecha).toLocaleString();
+                        tablaHTML += `
+                    <tr>
+                        <td style="border: 1px solid #ccc; padding: 5px;">${p.NombreComida}</td>
+                        <td style="border: 1px solid #ccc; padding: 5px; text-align:center;">${p.Cantidad}</td>
+                        <td style="border: 1px solid #ccc; padding: 5px; text-align:right;">$${parseFloat(p.PrecioUnitario).toFixed(2)}</td>
+                        <td style="border: 1px solid #ccc; padding: 5px; text-align:right;">$${parseFloat(p.PrecioTotal).toFixed(2)}</td>
+                        <td style="border: 1px solid #ccc; padding: 5px;">${p.Estado}</td>
+                        <td style="border: 1px solid #ccc; padding: 5px;">${fecha}</td>
+                        <td style="border: 1px solid #ccc; padding: 5px; text-align:center;">${p.MeseroId ?? 'N/D'}</td>
+                    </tr>
+                `;
+                    });
+
+                    tablaHTML += `
+                        </tbody>
+                    </table>
+                </div>
+            `;
+
+                    detallesContainer.insertAdjacentHTML('beforeend', tablaHTML);
+                })
+                .catch(error => {
+                    console.error("Error al cargar las órdenes:", error);
+                    mesaCard.dataset.cargando = "false";
+                    detallesContainer.insertAdjacentHTML('beforeend', `
+                <div class="detalles-adicionales" style="margin-top: 10px; color: red;">
+                    Error al cargar los pedidos.
+                </div>
+            `);
+                });
+        }
+
+
+        // Notificaciones
+        function mostrarNotificacion(tipo, titulo, mensaje) {
+            console.log(`${titulo}: ${mensaje}`); // Puedes personalizar esto con un sistema visual
+        }
+
+        // Prioridad de color o estilo
+        function actualizarPrioridadCard(card, prioridad) {
+            // Cambiar clase según prioridad si lo necesitas
+        }
+
+        // Inicializar cuando cargue todo
+        document.addEventListener('DOMContentLoaded', function () {
+            configurarFiltros();
+
+            setInterval(actualizarIndicadoresSimulados, 1000);
+            setInterval(actualizarPropinas, 30000);
+
+            actualizarUIIndicadores();
+            actualizarPropinas();
+            actualizarEstadoMesas();
+
+            mostrarNotificacion(
+                "critical",
+                "🚨 CÓDIGO ROJO - CRISIS TOTAL",
+                "Nivel de estrés crítico (92%), energía peligrosamente baja (21%). Mesa 1 y 5 en estado de emergencia. ¡Solicita ayuda inmediata del supervisor!"
+            );
+
+            const botonesDetalles = document.querySelectorAll('.btn-detalles');
+            botonesDetalles.forEach(boton => {
+                boton.addEventListener('click', function () {
+                    const mesaId = this.getAttribute('data-mesaid');
+                    toggleDetallesAdicionales(mesaId, this);
+                });
+            });
+        });
+
+
+         @*PARTE AGREGADA POR MARLON NO TOCAR * @*@
+
+         const hubConnection = $.hubConnection();
+        const solucionHub = hubConnection.createHubProxy('solucionHub');
+
+        solucionHub.on("MostrarSoluciones", function (categoria, eventoId, titulo, soluciones) {
+            if (categoria === "clientes") {
+                mostrarTarjetasSolucion(eventoId, titulo, soluciones);
+            }
+        });
+
+        solucionHub.on("SolucionSeleccionada", function (eventoId, severidad) {
+            console.log(`✅ Solución confirmada para evento ${eventoId} [${severidad}]`);
+            document.getElementById("contenedor-soluciones").innerHTML = '';
+        });
+
+        hubConnection.start().done(function () {
+            console.log("✅ Conectado a SignalR como mesero");
+        });
+
+        function mostrarTarjetasSolucion(eventoId, titulo, soluciones) {
+            const contenedor = document.getElementById("contenedor-soluciones");
+            contenedor.innerHTML = '';
+
+            soluciones.forEach(s => {
+                const card = document.createElement("div");
+                card.className = "win-toast"; // estilo general
+
+                card.innerHTML = `
+            <div class="win-card bg-white text-gray-800 rounded-xl shadow-2xl border-l-4 border-blue-500 p-4 win-enter">
+                <div class="flex gap-4">
+                    <div class="text-3xl">⚠️</div>
+                    <div class="flex-1">
+                        <div class="font-bold text-base">${titulo}</div>
+                        <div class="text-sm text-gray-600 mb-2">Nivel: <strong class="uppercase">${s.severity}</strong></div>
+                        <button onclick="confirmarSolucion('${eventoId}', '${s.severity}')"
+                                class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow">
+                            ${s.text}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+                contenedor.appendChild(card);
+            });
+        }
+
+
+        function confirmarSolucion(eventoId, severidad) {
+            solucionHub.invoke("ConfirmarSolucion", eventoId, severidad)
+                .done(() => {
+                    alert(`✅ Solución enviada: ${severidad}`);
+                    document.getElementById("contenedor-soluciones").innerHTML = '';
+                })
+                .fail(err => {
+                    console.error("❌ Error al confirmar solución:", err);
+                });
+        }
+
+         //ACA TERMINA LO DE MARLON *
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,350 @@
+﻿@model GustoySazon.Models.CocinaViewModel
+
+@{
+    ViewData["Title"] = "Panel Cocina";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>Panel Cocina</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            background: #fef6ec;
+            color: #333;
+        }
+
+        .container {
+            padding: 30px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fff;
+            padding: 15px 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
+
+        .indicadores {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .indicador {
+            background: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .barra {
+            height: 12px;
+            margin-top: 8px;
+            border-radius: 6px;
+            transition: width 0.5s ease-in-out;
+        }
+
+        .rojo {
+            background: #dc3545;
+        }
+
+        .verde {
+            background: #28a745;
+        }
+
+        .azul {
+            background: #007bff;
+        }
+
+        .naranja {
+            background: #fd7e14;
+        }
+
+        .morado {
+            background: #6f42c1;
+        }
+
+        .alertas, .resumen {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .alerta, .resumen-card {
+            flex: 1;
+            background: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .resumen-card {
+            min-width: 180px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+            .resumen-card.verde {
+                background: #d4edda;
+                color: #155724;
+            }
+
+            .resumen-card.morado {
+                background: #e2d6f8;
+                color: #4b0082;
+            }
+
+            .resumen-card.naranja {
+                background: #ffe5b4;
+                color: #d35400;
+            }
+
+            .resumen-card.rojo {
+                background: #f8d7da;
+                color: #721c24;
+            }
+
+            .resumen-card.azul {
+                background: #d1ecf1;
+                color: #0c5460;
+            }
+
+        .tabs {
+            margin-bottom: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+            .tabs button {
+                background: #343a40;
+                color: white;
+                border: none;
+                padding: 10px 16px;
+                border-radius: 6px;
+                cursor: pointer;
+                transition: background 0.3s;
+            }
+
+                .tabs button:hover {
+                    background: #495057;
+                }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: #fff;
+        }
+
+            .card:hover {
+                transform: translateY(-6px);
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            }
+
+            .card.vacio {
+                text-align: center;
+                color: #777;
+            }
+
+        .btn-uso {
+            background: #faeff5;
+            border: 1px solid #999;
+            border-radius: 5px;
+            padding: 5px 10px;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+            .btn-uso:hover {
+                transform: scale(1.05);
+                background: #f0d8e2;
+            }
+
+        .temp-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 10px;
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        #ordenesSection, #equiposSection, #ingredientesSection, #comunicacionSection, #emergenciaSection {
+            display: none;
+        }
+
+            #ordenesSection.active, #equiposSection.active, #ingredientesSection.active, #comunicacionSection.active, #emergenciaSection.active {
+                display: grid;
+            }
+
+        .tabla-ingredientes {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+            .tabla-ingredientes th, .tabla-ingredientes td {
+                border: 1px solid #ccc;
+                padding: 12px;
+                text-align: left;
+            }
+
+            .tabla-ingredientes th {
+                background: #e0f7fa;
+                color: #00796b;
+                font-weight: bold;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Chef: Josue Waterhouse</h2>
+            <img src="https://cdn-icons-png.flaticon.com/512/2922/2922065.png" width="50" />
+        </div>
+
+        <div class="indicadores">
+            <div class="indicador"><span>🥵 Estrés</span><div class="barra rojo" style="width:@($"{Model.Estres}%")"></div></div>
+            <div class="indicador"><span>⚡ Energía</span><div class="barra verde" style="width:@($"{Model.Energia}%")"></div></div>
+            <div class="indicador"><span>🧠 Concentración</span><div class="barra azul" style="width:@($"{Model.Concentracion}%")"></div></div>
+            <div class="indicador"><span>🔥 Riesgo Quemado</span><div class="barra naranja" style="width:@($"{Model.RiesgoQuemado}%")"></div></div>
+            <div class="indicador"><span>📏 Calidad</span><div class="barra morado" style="width:@($"{Model.Calidad}%")"></div></div>
+        </div>
+
+        <div class="alertas">
+            <div class="alerta">
+                🔥 Temperatura Cocina: @Model.Temperatura°C<br />
+                <small>(@(Model.Temperatura > 45 ? "Demasiado caliente" : "Normal"))</small>
+            </div>
+            <div class="alerta">
+                🌫️ Nivel de Humo: @Model.Humo%<br />
+                <small>(@(Model.Humo > 80 ? "Mucho humo" : "Nivel normal"))</small>
+            </div>
+        </div>
+
+        <h3>📊 Rendimiento del Turno</h3>
+        <div class="resumen">
+            <div class="resumen-card verde">Órdenes Completadas<br /><strong>@(Model.OrdenesCompletadas == 0 ? "-" : Model.OrdenesCompletadas.ToString())</strong></div>
+            <div class="resumen-card morado">Calidad Promedio<br /><strong>@(Model.CalidadPromedio == 0 ? "-" : Model.CalidadPromedio + "%")</strong></div>
+            <div class="resumen-card naranja">Horas Trabajadas<br /><strong>@(Model.HorasTrabajadas == 0 ? "-" : Model.HorasTrabajadas + "h")</strong></div>
+            <div class="resumen-card rojo">Nivel de Estrés<br /><strong>@Model.Estres%</strong></div>
+            <div class="resumen-card azul">Órdenes Pendientes<br /><strong>@(Model.OrdenesPendientes == 0 ? "-" : Model.OrdenesPendientes.ToString())</strong></div>
+        </div>
+
+        <div class="tabs">
+            <button onclick="showTab('ordenes')">Órdenes</button>
+            <button onclick="showTab('equipos')">Equipos</button>
+            <button onclick="showTab('ingredientes')">Ingredientes</button>
+            <button onclick="showTab('comunicacion')">Comunicación</button>
+            <button onclick="showTab('emergencia')">Emergencia</button>
+        </div>
+
+        <!-- ÓRDENES -->
+        <div id="ordenesSection" class="cards active">
+            <div class="card vacio">No hay órdenes activas por ahora.</div>
+        </div>
+
+        <!-- EQUIPOS -->
+        <div id="equiposSection" class="cards">
+            @for (int i = 1; i <= 3; i++)
+            {
+                var nombre = i == 1 ? "Parrillada Principal" : i == 2 ? "Freidora" : "Parrillada Secundaria";
+                var estado = i == 3 ? "Roto" : "Funcionando";
+                var capacidadUsada = 0;
+                var capacidadTotal = 5;
+                var temperatura = i == 3 ? 0 : (i == 1 ? 200 : 180);
+                var bgColor = i == 3 ? "#f8d7da" : "#d4edda";
+                var porcentaje = (capacidadUsada * 100) / capacidadTotal;
+
+                <div class="card" style="background:@bgColor">
+                    <h4>@nombre</h4>
+                    <p><strong>Estado:</strong> @estado</p>
+                    <p><strong>Capacidad:</strong> @capacidadUsada/@capacidadTotal</p>
+                    <div class="barra" style="background:black; width:@porcentaje%"></div>
+                    <button class="btn-uso">Usar</button>
+                    <div class="temp-icon">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2991/2991115.png" width="24" />
+                        @temperatura°C
+                    </div>
+                </div>
+            }
+        </div>
+
+        <!-- INGREDIENTES -->
+        <div id="ingredientesSection">
+            <table class="tabla-ingredientes">
+                <tr><th>Ingrediente</th><th>Cantidad</th></tr>
+            </table>
+        </div>
+
+        <!-- COMUNICACIÓN -->
+        <div id="comunicacionSection" class="cards">
+            <div class="card">
+                <h4>📢 Comunicación con Meseros</h4>
+                <p>📣 Mesa 1 lista para recoger</p>
+                <p>⏰ Mesa 3 tardará 5 minutos más</p>
+                <p>🔥 Problema en la parrilla principal</p>
+                <button class="btn-uso">Llamar a meseros</button>
+            </div>
+
+            <div class="card">
+                <h4>📢 Comunicación con Gerencia</h4>
+                <ol>
+                    <li>Equipos de cocina necesitan reparación</li>
+                    <li>Ingredientes agotados</li>
+                    <li>Falta de personal</li>
+                </ol>
+                <button class="btn-uso">Llamar a Gerencia</button>
+            </div>
+        </div>
+
+        <!-- EMERGENCIA -->
+        <div id="emergenciaSection" class="cards">
+            <div class="card" style="background: #fde2e2;">
+                <h4 style="color: #cc0000;">Situación Crítica</h4>
+                <button class="btn-uso">Al borde del colapso</button>
+                <button class="btn-uso">Tomar Descanso</button>
+                <button class="btn-uso">Limitar Menú</button>
+            </div>
+            <div class="card" style="background: #f8cfcf;">
+                <h4 style="color: #b30000;">Situación Extrema</h4>
+                <button class="btn-uso">Pedir permiso para ir a casa</button>
+                <button class="btn-uso">Pedir asistencia Médica</button>
+                <button class="btn-uso" style="background: #cc0000; color: white;">Abandonar la Cocina</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tab) {
+            const tabs = ["ordenesSection", "equiposSection", "ingredientesSection", "comunicacionSection", "emergenciaSection"];
+            tabs.forEach(id => document.getElementById(id).classList.remove("active"));
+            document.getElementById(tab + "Section").classList.add("active");
+        }
+    </script>
+</body>
+</html>

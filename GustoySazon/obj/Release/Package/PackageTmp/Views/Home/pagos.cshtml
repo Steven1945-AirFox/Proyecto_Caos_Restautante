@@ -1,0 +1,281 @@
+﻿@model GustoySazon.Models.PagosViewModel
+@{
+    ViewBag.Title = "Pago Final - Gusto y Sazón";
+}
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pago Final - Gusto y Sazón</title>
+    <link href="~/Content/ClientePagos.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <h1>Resumen de tu pedido</h1>
+
+        <table class="resumen-table">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Nombre</th>
+                    <th>Cantidad</th>
+                    <th>Precio Unitario</th>
+                    <th>IVA (13%)</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.ItemsOrden != null && Model.ItemsOrden.Any())
+                {
+                    foreach (var item in Model.ItemsOrden)
+                    {
+                        <tr>
+                            <td>@item.OrdenId</td>
+                            <td>@item.NombreComida</td>
+                            <td>@item.Cantidad</td>
+                            <td>₡@item.PrecioUnitario.ToString("N2")</td>
+                            <td>₡@((item.IVAUnitario * item.Cantidad).ToString("N2"))</td>
+                            <td>₡@item.Subtotal.ToString("N2")</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="6" style="text-align:center;">No hay platillos para mostrar</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        @using (Html.BeginForm("ProcesarPago", "Home", FormMethod.Post, new { id = "pagoForm" }))
+
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.UsuarioId)
+            @Html.HiddenFor(m => m.MesaId)
+            @Html.HiddenFor(m => m.Subtotal)
+            @Html.HiddenFor(m => m.IVA)
+            @Html.HiddenFor(m => m.Propina)
+            @Html.HiddenFor(m => m.Total)
+            @Html.HiddenFor(m => m.TarjetaSeleccionadaId)
+            @Html.HiddenFor(m => m.TipoPropina)
+
+            <div class="payment-section">
+                <h2 class="section-title">Método de pago</h2>
+
+                <div class="payment-methods">
+                    @if (Model.Tarjetas != null && Model.Tarjetas.Any())
+                    {
+                        foreach (var tarjeta in Model.Tarjetas)
+                        {
+                            var isSelected = tarjeta.Id == Model.TarjetaSeleccionadaId;
+                            <div class="payment-card @(isSelected ? "selected" : "")"
+                                 onclick="seleccionarTarjeta(@tarjeta.Id)">
+                                <p><strong>@tarjeta.TipoTarjeta</strong> @tarjeta.NumeroTarjetaEnmascarado</p>
+                                <p>Expira: @tarjeta.FechaVencimiento</p>
+                                <p>Titular: @tarjeta.NombreTitular</p>
+                                @Html.RadioButtonFor(m => m.TarjetaSeleccionadaId, tarjeta.Id,
+                                    new { @class = "tarjeta-radio", style = "display:none;" })
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div>No tienes tarjetas registradas</div>
+                    }
+                </div>
+            </div>
+
+            <h3 class="section-title">¿Desea añadir una propina?</h3>
+
+            <div class="tip-options">
+                <button type="button" class="tip-btn @(Model.TipoPropina == GustoySazon.Models.TipoPropina.Porcentaje5 ? "selected" : "")"
+                        data-percent="5" onclick="seleccionarPropina(5)">
+                    5%
+                </button>
+                <button type="button" class="tip-btn @(Model.TipoPropina == GustoySazon.Models.TipoPropina.Porcentaje10 ? "selected" : "")"
+                        data-percent="10" onclick="seleccionarPropina(10)">
+                    10%
+                </button>
+                <button type="button" class="tip-btn @(Model.TipoPropina == GustoySazon.Models.TipoPropina.Porcentaje15 ? "selected" : "")"
+                        data-percent="15" onclick="seleccionarPropina(15)">
+                    15%
+                </button>
+                <button type="button" class="tip-btn @(Model.TipoPropina == GustoySazon.Models.TipoPropina.Porcentaje20 ? "selected" : "")"
+                        data-percent="20" onclick="seleccionarPropina(20)">
+                    20%
+                </button>
+
+            </div>
+
+            <div class="custom-tip">
+                <label for="propinaCustom">Propina en colones (₡): </label>
+                <input type="number" id="propinaCustom" name="PropinaCustom" min="0" step="100" placeholder="Ejemplo: 500" onchange="propinaCustomChange()" />
+            </div>
+
+            <div class="total-section">
+                <div class="total-row">
+                    <span>Subtotal:</span>
+                    <span id="subtotalDisplay">₡@Model.Subtotal.ToString("N2")</span>
+                </div>
+                <div class="total-row">
+                    <span>IVA (13%):</span>
+                    <span id="ivaDisplay">₡@Model.IVA.ToString("N2")</span>
+                </div>
+                <div class="total-row">
+                    <span>Propina:</span>
+                    <span id="propinaDisplay">₡@Model.Propina.ToString("N2")</span>
+                </div>
+                <div class="total-row final-total">
+                    <span>Total a pagar:</span>
+                    <span id="totalDisplay">₡@Model.Total.ToString("N2")</span>
+                </div>
+            </div>
+
+            <button type="button" class="pay-btn" onclick="validarPago()">Pagar</button>
+        }
+
+        <div class="review-section">
+            <h3>Deja una reseña 📝</h3>
+
+            @if (TempData["Mensaje"] != null)
+            {
+                <div class="mensaje-exito">@TempData["Mensaje"]</div>
+            }
+            @if (TempData["Error"] != null)
+            {
+                <div class="mensaje-error">@TempData["Error"]</div>
+            }
+
+            @using (Html.BeginForm("EnviarResena", "Home", FormMethod.Post))
+            {
+                @Html.HiddenFor(m => m.UsuarioId)
+                @Html.HiddenFor(m => m.NombreUsuario)
+
+                <label>Calificación (1 a 5):</label>
+                <div id="star-rating" style="font-size: 2rem; color: #ccc; cursor: pointer;">
+                    <span data-value="1" class="star">&#9733;</span>
+                    <span data-value="2" class="star">&#9733;</span>
+                    <span data-value="3" class="star">&#9733;</span>
+                    <span data-value="4" class="star">&#9733;</span>
+                    <span data-value="5" class="star">&#9733;</span>
+                </div>
+                <input type="hidden" name="Calificacion" id="Calificacion" required />
+
+                <label for="Comentario">Comentario (opcional):</label><br />
+                <textarea name="Comentario" id="comentarioResena" rows="4" maxlength="500" placeholder="Escribe tu opinión aquí..."></textarea><br />
+
+                <button type="submit" class="submit-review">Enviar reseña</button>
+            }
+        </div>
+        </div>
+
+        <script>
+        // Selección de tarjeta
+        function seleccionarTarjeta(id) {
+            var cards = document.querySelectorAll('.payment-card');
+            cards.forEach(card => {
+                card.classList.remove('selected');
+                var radio = card.querySelector('input[type=radio]');
+                if (radio) radio.checked = false;
+            });
+
+            var selectedCard = Array.from(cards).find(card => card.querySelector('input[type=radio]').value == id);
+            if (selectedCard) {
+                selectedCard.classList.add('selected');
+                selectedCard.querySelector('input[type=radio]').checked = true;
+            }
+        }
+
+        // Selección de propina con porcentajes
+        function seleccionarPropina(percent) {
+            var buttons = document.querySelectorAll('.tip-btn');
+            buttons.forEach(btn => btn.classList.remove('selected'));
+            var selectedBtn = Array.from(buttons).find(btn => btn.getAttribute('data-percent') == percent.toString());
+            if (selectedBtn) selectedBtn.classList.add('selected');
+
+            document.getElementById('propinaCustom').value = '';
+            actualizarTotales(percent);
+        }
+
+        // configurar la propina personalizada
+        function propinaCustomChange() {
+            var customValue = parseFloat(document.getElementById('propinaCustom').value) || 0;
+            var buttons = document.querySelectorAll('.tip-btn');
+            buttons.forEach(btn => btn.classList.remove('selected'));
+            actualizarTotales(null, customValue);
+        }
+
+        // Actualizar totales
+        function actualizarTotales(percentTip, customTip) {
+            var subtotal = parseFloat('@Model.Subtotal');
+            var iva = parseFloat('@Model.IVA');
+            var propina = 0;
+
+            if (customTip !== undefined && customTip !== null) {
+                propina = customTip;
+            } else if (percentTip !== undefined && percentTip !== null) {
+                propina = subtotal * (percentTip / 100);
+            }
+
+            var total = subtotal + iva + propina;
+
+            document.getElementById('propinaDisplay').textContent = '₡' + propina.toFixed(2);
+            document.getElementById('totalDisplay').textContent = '₡' + total.toFixed(2);
+        }
+
+
+
+
+        const stars = document.querySelectorAll('#star-rating .star');
+        const calificacionInput = document.getElementById('Calificacion');
+
+        stars.forEach(star => {
+            star.addEventListener('click', () => {
+                const val = star.getAttribute('data-value');
+                calificacionInput.value = val;
+                updateStars(val);
+            });
+            star.addEventListener('mouseover', () => {
+                const val = star.getAttribute('data-value');
+                updateStars(val);
+            });
+            star.addEventListener('mouseout', () => {
+                updateStars(calificacionInput.value);
+            });
+        });
+
+        function updateStars(rating) {
+            stars.forEach(star => {
+                if (star.getAttribute('data-value') <= rating) {
+                    star.style.color = 'gold';
+                } else {
+                    star.style.color = '#ccc';
+                }
+            });
+        }
+
+
+        if (calificacionInput.value) {
+            updateStars(calificacionInput.value);
+            }
+
+
+
+        function validarPago() {
+                const seleccionada = document.querySelector('input[name="TarjetaSeleccionadaId"]:checked');
+                if (!seleccionada) {
+                    alert("Por favor, selecciona un método de pago antes de continuar.");
+                    return;
+                }
+                document.getElementById("pagoForm").submit();
+        }
+        </script>
+</body>
+</html>

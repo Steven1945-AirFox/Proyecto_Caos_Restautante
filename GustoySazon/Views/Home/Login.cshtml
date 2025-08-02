@@ -1,0 +1,76 @@
+﻿@model GustoySazon.Models.LoginViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Restaurant Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/Content/loginStyle.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="carousel-container">
+        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?...&auto=format&fit=crop&w=2070&q=80" alt="Restaurante elegante" class="carousel-image active">
+        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?...&auto=format&fit=crop&w=2074&q=80" alt="Interior de restaurante" class="carousel-image">
+        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?...&auto=format&fit=crop&w=2070&q=80" alt="Mesa de restaurante" class="carousel-image">
+        <img src="https://images.unsplash.com/photo-1551218808-94e220e084d2?...&auto=format&fit=crop&w=2074&q=80" alt="Cocina de restaurante" class="carousel-image">
+    </div>
+
+    <div class="overlay"></div>
+
+    <div class="login-container">
+        <div class="login-card">
+            <h1 class="login-title">Bienvenido</h1>
+
+            @using (Html.BeginForm("Login", "Home", FormMethod.Post))
+            {
+                <div class="form-group">
+                    <label for="Correo" class="form-label">Correo Electrónico</label>
+                    @Html.TextBoxFor(m => m.Correo, new { @class = "form-input", type = "email", placeholder = "usuario@correo.com", required = "required" })
+                </div>
+
+                <div class="form-group">
+                    <label for="Contrasena" class="form-label">Contraseña</label>
+                    @Html.PasswordFor(m => m.Contrasena, new { @class = "form-input", placeholder="123456" , required = "required" })
+                </div>
+
+                <button type="submit" class="login-button">Entrar</button>
+
+
+            }
+        </div>
+    </div>
+
+    <script>
+        const CAROUSEL_INTERVAL = 6000;
+        const images = document.querySelectorAll('.carousel-image');
+        let currentImageIndex = 0;
+
+        function nextImage() {
+            images[currentImageIndex].classList.remove('active');
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            images[currentImageIndex].classList.add('active');
+        }
+
+        function startCarousel() {
+            setInterval(nextImage, CAROUSEL_INTERVAL);
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            setTimeout(startCarousel, 1000);
+        });
+
+        function preloadImages() {
+            images.forEach(img => {
+                const imageObj = new Image();
+                imageObj.src = img.src;
+            });
+        }
+
+        preloadImages();
+    </script>
+</body>
+</html>

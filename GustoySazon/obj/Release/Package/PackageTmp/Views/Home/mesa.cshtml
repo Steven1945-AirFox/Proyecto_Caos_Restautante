@@ -1,0 +1,284 @@
+﻿@{
+    ViewBag.Title = "mesa";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Gusto y Sazón</title>
+    <link href="~/Content/ClienteMesa.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div class="pagina">
+        <div class="cabecera-mesa fade-in">
+            <img src="@Url.Content("https://images.unsplash.com/photo-1565546346650-0a7d9ea528ed?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")" alt="imagen de mesa" />
+            <div class="infomesa">
+                <h3>Mesa N°: @Model.NumeroMesa</h3>
+                <h3 id="estadoAtencionTexto">Estado de Atención: @Model.EstadoAtencion</h3>
+            </div>
+        </div>
+
+        <div class="clientes-en-mesa fade-in">
+            <h3>👥 Clientes en esta mesa:</h3>
+            <ul id="listaClientes">
+                <li>Cargando clientes en la mesa...</li>
+            </ul>
+        </div>
+
+        <div class="contenedor-tablas">
+            <div class="tabla-infomesa fade-in">
+                <h2 class="table-title">🍽️ Estado del Pedido</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Comida</th>
+                            <th>Cantidad</th>
+                            <th>Precio</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaPedidosBody">
+                        @foreach (var p in Model.Pedidos)
+                        {
+                            <tr>
+                                <td>@p.NombreComida</td>
+                                <td>@p.Cantidad</td>
+                                <td>@p.PrecioUnitario.ToString("C")</td>
+                                <td class="estado-@p.Estado.ToLower()">@p.Estado</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+                <div class="resumen-pedido">
+                    <p><strong>Total de Platos:</strong> <span id="totalPlatos">0</span></p>
+                    <p><strong>Total a Pagar:</strong> <span id="totalPago">$0.00</span></p>
+                </div>
+            </div>
+
+            <div class="tabla-infomesa fade-in">
+                <h2 class="table-title">🧍 Estado del Mesero</h2>
+                <h3 id="tiempoLlegada">El mesero llegará en:</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Veces Llamado</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Mesero</td>
+                            <td id="vecesLlamado">0</td>
+                            <td id="estado">Lejos de la mesa</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="llamar" onclick="abrirModal()">Llamar al Mesero</button>
+            </div>
+        </div>
+
+        <button onclick="salirDelRestaurante()" class="salir">
+            Salir del Restaurante
+        </button>
+    </div>
+
+    <div id="modalMesero" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="cerrarModal()">&times;</span>
+            <h2>¿En qué puedo ayudarle?</h2>
+            <p>El mesero está en su mesa, seleccione lo que necesita:</p>
+            <ul>
+                <li><button onclick="location.href='@Url.Action("menu", "Home")'" class="opcion">Mostrar el menú para ordenar</button></li>
+
+                @if (Model.Pedidos != null && Model.Pedidos.Count > 0 && Model.EstadoAtencion == "Entregado")
+                {
+                    <li><button onclick="location.href='@Url.Action("pagos", "Home")'" class="opcion">Solicitar la cuenta</button></li>
+                }
+
+                <li><button onclick="cerrarModal()" class="opcion">Todo está bien, puede retirarse</button></li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+    let vecesLlamado = parseInt(localStorage.getItem("vecesLlamado")) || 0;
+    let cuentaRegresiva = null;
+
+    function actualizarResumen() {
+        const filas = document.querySelectorAll("#tablaPedidosBody tr");
+        let totalPlatos = 0;
+        let totalPago = 0;
+        filas.forEach(fila => {
+            const cantidad = parseInt(fila.children[1].innerText) || 0;
+            const precioText = fila.children[2].innerText.replace(/[^\d.,]/g, '').replace(',', '.');
+            const precio = parseFloat(precioText) || 0;
+            totalPlatos += cantidad;
+            totalPago += cantidad * precio;
+        });
+        document.getElementById("totalPlatos").innerText = totalPlatos;
+        document.getElementById("totalPago").innerText = totalPago.toLocaleString('es-CR', { style: 'currency', currency: 'CRC' });
+    }
+
+    function abrirModal() {
+        if (cuentaRegresiva !== null) return;
+
+        document.getElementById("estado").innerText = "En camino";
+
+        let segundos = Math.floor(Math.random() * (25 - 7 + 1)) + 7;
+        const originalText = document.getElementById("tiempoLlegada");
+
+        function actualizarTexto() {
+            originalText.innerText = "El mesero llegará en: " + segundos + " segundos";
+        }
+
+        actualizarTexto();
+
+        cuentaRegresiva = setInterval(() => {
+            segundos--;
+
+            if (segundos > 0) {
+                actualizarTexto();
+            } else {
+                clearInterval(cuentaRegresiva);
+                cuentaRegresiva = null;
+
+                originalText.innerText = "El mesero llegó a su mesa.";
+                document.getElementById("estado").innerText = "En la Mesa";
+
+                vecesLlamado++;
+                localStorage.setItem("vecesLlamado", vecesLlamado);
+                document.getElementById("vecesLlamado").innerText = vecesLlamado;
+
+                const ul = document.querySelector("#modalMesero ul");
+                ul.innerHTML = '';
+
+                const btnMenu = document.createElement("li");
+                btnMenu.innerHTML = `<button onclick="location.href='@Url.Action("menu", "Home")'" class="opcion">Mostrar el menú para ordenar</button>`;
+                ul.appendChild(btnMenu);
+
+                // Revisar si hay pedidos y si el estado es ENTREGADO
+                fetch('@Url.Action("ObtenerEstadoMesa", "Home")')
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.Pedidos && data.Pedidos.length > 0 && data.EstadoAtencion === "Entregado") {
+                            const btnPagar = document.createElement("li");
+                            btnPagar.innerHTML = `<button onclick="location.href='@Url.Action("pagos", "Home")'" class="opcion">Solicitar la cuenta</button>`;
+                            ul.appendChild(btnPagar);
+                        }
+
+                        const btnNada = document.createElement("li");
+                        btnNada.innerHTML = `<button onclick="cerrarModal()" class="opcion">Todo está bien, puede retirarse</button>`;
+                        ul.appendChild(btnNada);
+
+                        document.getElementById("modalMesero").style.display = "block";
+                    });
+            }
+        }, 1000);
+    }
+
+    function cerrarModal() {
+        document.getElementById("modalMesero").style.display = "none";
+        document.getElementById("estado").innerText = "Lejos de la mesa";
+    }
+
+    window.onclick = function (event) {
+        const modal = document.getElementById("modalMesero");
+        if (event.target === modal) cerrarModal();
+    };
+
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("vecesLlamado").innerText = vecesLlamado;
+        actualizarResumen();
+    });
+
+    function salirDelRestaurante() {
+        if (confirm('¿Está seguro que desea salir del restaurante y liberar su mesa?')) {
+            fetch('@Url.Action("LiberarMesa", "Home")', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            })
+                .then(response => {
+                    if (response.ok) {
+                        localStorage.removeItem('vecesLlamado');
+                        window.location.href = '@Url.Action("Index", "Home")';
+                    }
+                });
+        }
+    }
+
+    // Aquí asignamos el usuario actual un nombre en la lista
+    const usuarioIdActual = @Html.Raw(Json.Encode(Session["UsuarioId"]));
+
+    function actualizarEstadoMesa() {
+        fetch('@Url.Action("ObtenerEstadoMesa", "Home")')
+            .then(response => response.json())
+            .then(data => {
+                if (!data || !data.EstadoAtencion) return;
+
+                // Estado de atención
+                document.getElementById("estadoAtencionTexto").innerText = "Estado de Atención: " + data.EstadoAtencion;
+
+                // Tabla de pedidos
+                const tbody = document.getElementById("tablaPedidosBody");
+                tbody.innerHTML = "";
+
+                data.Pedidos.forEach(p => {
+                    const fila = `
+                        <tr>
+                            <td>${p.NombreComida}</td>
+                            <td>${p.Cantidad}</td>
+                            <td>${p.PrecioUnitario.toLocaleString('es-CR', { style: 'currency', currency: 'CRC' })}</td>
+                            <td class="estado-${p.Estado.toLowerCase()}">${p.Estado}</td>
+                        </tr>`;
+                    tbody.innerHTML += fila;
+                });
+
+                actualizarResumen();
+
+
+
+                // Actualizar lista de clientes con sus estados
+                const ulClientes = document.getElementById("listaClientes");
+                ulClientes.innerHTML = "";
+
+                if (data.ClientesEnMesa && data.ClientesEnMesa.length > 0) {
+                    data.ClientesEnMesa.forEach(c => {
+                        let estadoIcono = "";
+                        switch (c.EstadoPedido) {
+                            case "No ha ordenado aun":
+                                estadoIcono = "– ⏳ No ha ordenado aun";
+                                break;
+                            case "Pedido activo":
+                                estadoIcono = "– 🧾 Pedido activo";
+                                break;
+                            case "Por pagar":
+                                estadoIcono = "– 💰 Por pagar";
+                                break;
+                            default:
+                                estadoIcono = "";
+                        }
+
+                        const esYo = c.Id === usuarioIdActual;
+                        const nombreMostrar = esYo ? `${c.Nombre} (Yo)` : c.Nombre;
+
+                        const li = document.createElement("li");
+                        li.textContent = `${nombreMostrar} ${estadoIcono}`;
+                        ulClientes.appendChild(li);
+                    });
+                } else {
+                    const li = document.createElement("li");
+                    li.textContent = "No hay clientes en esta mesa.";
+                    ulClientes.appendChild(li);
+                }
+            });
+    }
+
+    setInterval(actualizarEstadoMesa, 1000);
+    </script>
+
+</body>
+</html>

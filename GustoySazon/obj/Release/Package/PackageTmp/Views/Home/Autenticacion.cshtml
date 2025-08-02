@@ -1,0 +1,84 @@
+﻿@{
+	Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Verificación de Código</title>
+	<style>
+		body {
+			margin: 0;
+			background: linear-gradient(to bottom right, #ffe0cd, #fbc69f);
+			font-family: 'Segoe UI', sans-serif;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			height: 100vh;
+		}
+
+		.verification-container {
+			width: 400px;
+			background-color: #fff;
+			padding: 30px;
+			border-radius: 12px;
+			box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+			text-align: center;
+		}
+
+		.verification-title {
+			font-size: 21px;
+			margin-bottom: 15px;
+			color: #333;
+		}
+
+		.verification-text {
+			font-size: 16px;
+			margin-bottom: 25px;
+			color: #555;
+		}
+
+		input[type="text"] {
+			width: 100%;
+			padding: 10px;
+			font-size: 16px;
+			margin-bottom: 15px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+		}
+
+		button {
+			background-color: #ff661f;
+			color: #fff;
+			border: none;
+			padding: 10px 20px;
+			font-size: 16px;
+			border-radius: 5px;
+			cursor: pointer;
+			transition: background-color 0.3s ease;
+		}
+
+			button:hover {
+				background-color: #e65c0c;
+			}
+	</style>
+</head>
+<body>
+	<div class="verification-container">
+		<div class="verification-title">Código de Verificación</div>
+		<div class="verification-text">Ingresa el código que fue enviado a su correo electrónico.</div>
+
+		<form method="post" action="/Home/ValidarCodigo">
+			<input type="text" name="codigoIngresado" placeholder="Código" required />
+			<button type="submit">Verificar Código</button>
+		</form>
+
+		@if (TempData["Error"] != null)
+		{
+			<div style="color: red; margin-top: 10px;">@TempData["Error"]</div>
+		}
+	</div>
+</body>
+</html>

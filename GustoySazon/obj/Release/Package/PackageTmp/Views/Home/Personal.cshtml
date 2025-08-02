@@ -1,0 +1,646 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Management System - Personal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link href="~/Content/personal.css" rel="stylesheet" />
+
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-toggle" onclick="toggleSidebar()">
+                <i class="fas fa-chevron-left" id="toggleIcon"></i>
+            </div>
+
+            <div class="sidebar-header">
+                <i class="fas fa-utensils sidebar-logo"></i>
+                <span class="sidebar-title">Restaurant Manager</span>
+            </div>
+
+            <div class="sidebar-nav">
+                <a href="/Home/VistaGeneral" class="nav-item">
+                    <i class="fas fa-home"></i>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+                <a href="/Home/analisis" class="nav-item">
+                    <i class="fas fa-chart-bar"></i>
+                    <span class="nav-text">Análisis</span>
+                </a>
+                <a href="/Home/Personal" class="nav-item">
+                    <i class="fas fa-users"></i>
+                    <span class="nav-text">Personal</span>
+                </a>
+                <a href="/Home/Ordenes" class="nav-item active">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="nav-text">Pedidos</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span class="nav-text">Configuración</span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div>
+                    <h1 class="header-title">Gestión de Personal</h1>
+                    <p class="header-subtitle">Administración por áreas y departamentos</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-primary" onclick="openModal('add-staff')">
+                        <i class="fas fa-plus"></i> Agregar Personal
+                    </button>
+                    <div class="time-badge" id="currentTime"></div>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <div class="content">
+                <!-- Department Overview -->
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-building section-icon"></i>
+                            Resumen por Departamentos
+                        </h2>
+                    </div>
+                    <div class="section-content">
+                        <div class="department-overview" id="departmentOverview">
+                            <!-- Dynamic content -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Staff by Department -->
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-users section-icon"></i>
+                            Personal por Área
+                        </h2>
+                    </div>
+                    <div class="section-content">
+                        <div class="department-tabs">
+                            <button class="tab-button active" onclick="switchTab('kitchen')">
+                                <i class="fas fa-fire"></i> Cocina
+                            </button>
+                            <button class="tab-button" onclick="switchTab('service')">
+                                <i class="fas fa-concierge-bell"></i> Servicio
+                            </button>
+                            <button class="tab-button" onclick="switchTab('bar')">
+                                <i class="fas fa-cocktail"></i> Bar
+                            </button>
+                            <button class="tab-button" onclick="switchTab('management')">
+                                <i class="fas fa-user-tie"></i> Administración
+                            </button>
+                            <button class="tab-button" onclick="switchTab('cleaning')">
+                                <i class="fas fa-broom"></i> Limpieza
+                            </button>
+                        </div>
+
+                        <div id="kitchen" class="tab-content active">
+                            <div class="staff-grid" id="kitchenStaff">
+                                <!-- Dynamic content -->
+                            </div>
+                        </div>
+
+                        <div id="service" class="tab-content">
+                            <div class="staff-grid" id="serviceStaff">
+                                <!-- Dynamic content -->
+                            </div>
+                        </div>
+
+                        <div id="bar" class="tab-content">
+                            <div class="staff-grid" id="barStaff">
+                                <!-- Dynamic content -->
+                            </div>
+                        </div>
+
+                        <div id="management" class="tab-content">
+                            <div class="staff-grid" id="managementStaff">
+                                <!-- Dynamic content -->
+                            </div>
+                        </div>
+
+                        <div id="cleaning" class="tab-content">
+                            <div class="staff-grid" id="cleaningStaff">
+                                <!-- Dynamic content -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">Agregar Personal</h3>
+                <p class="modal-description" id="modalDescription">Registrar nuevo empleado</p>
+            </div>
+            <div class="modal-content">
+                <form id="staffForm" onsubmit="submitStaff(event)">
+                    <div class="form-group">
+                        <label class="form-label" for="staffName">Nombre Completo</label>
+                        <input class="form-input" type="text" id="staffName" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="staffDepartment">Departamento</label>
+                        <select class="form-select" id="staffDepartment" required>
+                            <option value="">Seleccionar departamento</option>
+                            <option value="kitchen">Cocina</option>
+                            <option value="service">Servicio</option>
+                            <option value="bar">Bar</option>
+                            <option value="management">Administración</option>
+                            <option value="cleaning">Limpieza</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="staffRole">Cargo</label>
+                        <input class="form-input" type="text" id="staffRole" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="staffShift">Turno</label>
+                        <select class="form-select" id="staffShift" required>
+                            <option value="">Seleccionar turno</option>
+                            <option value="morning">Mañana (7:00 AM - 3:00 PM)</option>
+                            <option value="afternoon">Tarde (3:00 PM - 11:00 PM)</option>
+                            <option value="night">Noche (11:00 PM - 7:00 AM)</option>
+                            <option value="split">Partido (12:00 PM - 4:00 PM, 8:00 PM - 12:00 AM)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="staffSalary">Salario por Hora</label>
+                        <input class="form-input" type="number" id="staffSalary" step="0.01" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="staffPhone">Teléfono</label>
+                        <input class="form-input" type="tel" id="staffPhone" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="staffEmail">Email</label>
+                        <input class="form-input" type="email" id="staffEmail" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline" onclick="closeModal()">Cancelar</button>
+                <button type="submit" form="staffForm" class="btn btn-primary">Agregar Personal</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Staff Data by Department
+        const staffByDepartment = {
+            kitchen: [
+                {
+                    name: 'Ana Rodriguez',
+                    role: 'Chef Principal',
+                    shift: '7:00 AM - 3:00 PM',
+                    status: 'active',
+                    hours: '6h 30m',
+                    performance: 95,
+                    phone: '+1 234-567-8901',
+                    email: 'ana.rodriguez@restaurant.com'
+                },
+                {
+                    name: 'Maria Gonzalez',
+                    role: 'Sous Chef',
+                    shift: '9:00 AM - 5:00 PM',
+                    status: 'break',
+                    hours: '5h 45m',
+                    performance: 88,
+                    phone: '+1 234-567-8902',
+                    email: 'maria.gonzalez@restaurant.com'
+                },
+                {
+                    name: 'Diego Morales',
+                    role: 'Cocinero',
+                    shift: '8:00 AM - 4:00 PM',
+                    status: 'active',
+                    hours: '7h 45m',
+                    performance: 92,
+                    phone: '+1 234-567-8903',
+                    email: 'diego.morales@restaurant.com'
+                },
+                {
+                    name: 'Carmen Silva',
+                    role: 'Ayudante de Cocina',
+                    shift: '10:00 AM - 6:00 PM',
+                    status: 'active',
+                    hours: '4h 20m',
+                    performance: 85,
+                    phone: '+1 234-567-8904',
+                    email: 'carmen.silva@restaurant.com'
+                }
+            ],
+            service: [
+                {
+                    name: 'Carlos Mendez',
+                    role: 'Mesero Senior',
+                    shift: '11:00 AM - 7:00 PM',
+                    status: 'active',
+                    hours: '4h 15m',
+                    performance: 90,
+                    phone: '+1 234-567-8905',
+                    email: 'carlos.mendez@restaurant.com'
+                },
+                {
+                    name: 'Sofia Vargas',
+                    role: 'Hostess',
+                    shift: '10:00 AM - 6:00 PM',
+                    status: 'active',
+                    hours: '5h 20m',
+                    performance: 93,
+                    phone: '+1 234-567-8906',
+                    email: 'sofia.vargas@restaurant.com'
+                },
+                {
+                    name: 'Luis Herrera',
+                    role: 'Mesero',
+                    shift: '12:00 PM - 8:00 PM',
+                    status: 'absent',
+                    hours: '0h',
+                    performance: 0,
+                    phone: '+1 234-567-8907',
+                    email: 'luis.herrera@restaurant.com'
+                },
+                {
+                    name: 'Patricia Lopez',
+                    role: 'Mesera',
+                    shift: '5:00 PM - 1:00 AM',
+                    status: 'active',
+                    hours: '3h 10m',
+                    performance: 87,
+                    phone: '+1 234-567-8908',
+                    email: 'patricia.lopez@restaurant.com'
+                }
+            ],
+            bar: [
+                {
+                    name: 'Roberto Martinez',
+                    role: 'Bartender Principal',
+                    shift: '6:00 PM - 2:00 AM',
+                    status: 'active',
+                    hours: '2h 45m',
+                    performance: 96,
+                    phone: '+1 234-567-8909',
+                    email: 'roberto.martinez@restaurant.com'
+                },
+                {
+                    name: 'Isabella Torres',
+                    role: 'Bartender',
+                    shift: '4:00 PM - 12:00 AM',
+                    status: 'break',
+                    hours: '4h 30m',
+                    performance: 89,
+                    phone: '+1 234-567-8910',
+                    email: 'isabella.torres@restaurant.com'
+                }
+            ],
+            management: [
+                {
+                    name: 'Fernando Castro',
+                    role: 'Gerente General',
+                    shift: '9:00 AM - 6:00 PM',
+                    status: 'active',
+                    hours: '7h 15m',
+                    performance: 98,
+                    phone: '+1 234-567-8911',
+                    email: 'fernando.castro@restaurant.com'
+                },
+                {
+                    name: 'Alejandra Ruiz',
+                    role: 'Supervisora de Turno',
+                    shift: '2:00 PM - 10:00 PM',
+                    status: 'active',
+                    hours: '5h 30m',
+                    performance: 91,
+                    phone: '+1 234-567-8912',
+                    email: 'alejandra.ruiz@restaurant.com'
+                }
+            ],
+            cleaning: [
+                {
+                    name: 'Miguel Santos',
+                    role: 'Encargado de Limpieza',
+                    shift: '6:00 AM - 2:00 PM',
+                    status: 'active',
+                    hours: '6h 45m',
+                    performance: 94,
+                    phone: '+1 234-567-8913',
+                    email: 'miguel.santos@restaurant.com'
+                },
+                {
+                    name: 'Rosa Jimenez',
+                    role: 'Personal de Limpieza',
+                    shift: '10:00 PM - 6:00 AM',
+                    status: 'active',
+                    hours: '5h 20m',
+                    performance: 88,
+                    phone: '+1 234-567-8914',
+                    email: 'rosa.jimenez@restaurant.com'
+                }
+            ]
+        };
+
+        const departmentInfo = {
+            kitchen: { name: 'Cocina', icon: 'fas fa-fire', color: '#ef4444' },
+            service: { name: 'Servicio', icon: 'fas fa-concierge-bell', color: '#6366f1' },
+            bar: { name: 'Bar', icon: 'fas fa-cocktail', color: '#8b5cf6' },
+            management: { name: 'Administración', icon: 'fas fa-user-tie', color: '#10b981' },
+            cleaning: { name: 'Limpieza', icon: 'fas fa-broom', color: '#06b6d4' }
+        };
+
+        function renderDepartmentOverview() {
+            const container = document.getElementById('departmentOverview');
+            const overview = Object.keys(staffByDepartment).map(dept => {
+                const staff = staffByDepartment[dept];
+                const activeStaff = staff.filter(s => s.status === 'active').length;
+                const totalStaff = staff.length;
+                const info = departmentInfo[dept];
+
+                return {
+                    department: info.name,
+                    icon: info.icon,
+                    color: info.color,
+                    active: activeStaff,
+                    total: totalStaff,
+                    percentage: Math.round((activeStaff / totalStaff) * 100)
+                };
+            });
+
+            container.innerHTML = overview.map(item => `
+                    <div class="overview-card">
+                        <div class="overview-icon" style="background: ${item.color}">
+                            <i class="${item.icon}"></i>
+                        </div>
+                        <div class="overview-value">${item.active}/${item.total}</div>
+                        <div class="overview-label">${item.department}</div>
+                        <div style="margin-top: 8px; font-size: 12px; color: ${item.percentage >= 80 ? '#10b981' : item.percentage >= 60 ? '#f59e0b' : '#ef4444'};">
+                            ${item.percentage}% Activo
+                        </div>
+                    </div>
+                `).join('');
+        }
+
+        function renderStaffByDepartment(department) {
+            const container = document.getElementById(`${department}Staff`);
+            const staff = staffByDepartment[department] || [];
+
+            const statusLabels = {
+                active: 'En Servicio',
+                break: 'En Descanso',
+                absent: 'Ausente'
+            };
+
+            const statusClasses = {
+                active: 'status-active',
+                break: 'status-break',
+                absent: 'status-absent'
+            };
+
+            container.innerHTML = staff.map(person => `
+                    <div class="staff-card ${person.status}">
+                        <div class="staff-header">
+                            <div class="staff-avatar">
+                                ${person.name.split(' ').map(n => n[0]).join('')}
+                            </div>
+                            <div class="staff-info">
+                                <div class="staff-name">${person.name}</div>
+                                <div class="staff-role">${person.role}</div>
+                            </div>
+                            <div class="staff-status ${statusClasses[person.status]}">
+                                ${statusLabels[person.status]}
+                            </div>
+                        </div>
+                        <div class="staff-details">
+                            <div class="staff-detail">
+                                <strong>Turno:</strong> ${person.shift}
+                            </div>
+                            <div class="staff-detail">
+                                <strong>Horas:</strong> ${person.hours}
+                            </div>
+                            <div class="staff-detail">
+                                <strong>Teléfono:</strong> ${person.phone}
+                            </div>
+                            <div class="staff-detail">
+                                <strong>Email:</strong> ${person.email}
+                            </div>
+                        </div>
+                        <div class="staff-details" style="grid-template-columns: 1fr; margin-bottom: 0;">
+                            <div class="staff-detail">
+                                <strong>Rendimiento:</strong> ${person.performance}%
+                                <div style="width: 100%; height: 4px; background: #f1f5f9; border-radius: 2px; margin-top: 4px;">
+                                    <div style="width: ${Math.min(person.performance, 100)}%; height: 100%; background: ${person.performance >= 90 ? '#10b981' : person.performance >= 70 ? '#f59e0b' : '#ef4444'}; border-radius: 2px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="staff-actions">
+                            <button class="btn btn-sm btn-outline" onclick="editStaff('${person.name}', '${department}')">
+                                <i class="fas fa-edit"></i> Editar
+                            </button>
+                            <button class="btn btn-sm btn-success" onclick="contactStaff('${person.name}', '${person.phone}')">
+                                <i class="fas fa-phone"></i> Contactar
+                            </button>
+                            ${person.status === 'active' ?
+                    `<button class="btn btn-sm btn-warning" onclick="markBreak('${person.name}', '${department}')">
+                                    <i class="fas fa-pause"></i> Descanso
+                                </button>` :
+                    person.status === 'break' ?
+                        `<button class="btn btn-sm btn-success" onclick="markActive('${person.name}', '${department}')">
+                                    <i class="fas fa-play"></i> Activar
+                                </button>` :
+                        `<button class="btn btn-sm btn-danger" onclick="markAbsent('${person.name}', '${department}')">
+                                    <i class="fas fa-times"></i> Ausente
+                                </button>`
+                }
+                        </div>
+                    </div>
+                `).join('');
+        }
+
+        function switchTab(department) {
+            // Remove active class from all tabs and contents
+            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+            // Add active class to clicked tab and corresponding content
+            event.target.classList.add('active');
+            document.getElementById(department).classList.add('active');
+
+            // Render staff for this department
+            renderStaffByDepartment(department);
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const icon = document.getElementById('toggleIcon');
+
+            sidebar.classList.toggle('collapsed');
+
+            if (sidebar.classList.contains('collapsed')) {
+                icon.className = 'fas fa-chevron-right';
+            } else {
+                icon.className = 'fas fa-chevron-left';
+            }
+        }
+
+        function openModal(type, data = null) {
+            const modal = document.getElementById('modalOverlay');
+            const title = document.getElementById('modalTitle');
+            const description = document.getElementById('modalDescription');
+
+            if (type === 'add-staff') {
+                title.textContent = 'Agregar Personal';
+                description.textContent = 'Registrar nuevo empleado';
+            } else if (type === 'edit-staff') {
+                title.textContent = 'Editar Personal';
+                description.textContent = 'Modificar información del empleado';
+                // Pre-fill form with existing data
+                if (data) {
+                    document.getElementById('staffName').value = data.name;
+                    document.getElementById('staffRole').value = data.role;
+                    // ... fill other fields
+                }
+            }
+
+            modal.classList.add('show');
+        }
+
+        function closeModal(event) {
+            if (event && event.target !== event.currentTarget) return;
+
+            const modal = document.getElementById('modalOverlay');
+            modal.classList.remove('show');
+
+            // Reset form
+            document.getElementById('staffForm').reset();
+        }
+
+        function submitStaff(event) {
+            event.preventDefault();
+
+            const formData = new FormData(event.target);
+            const staffData = {
+                name: document.getElementById('staffName').value,
+                department: document.getElementById('staffDepartment').value,
+                role: document.getElementById('staffRole').value,
+                shift: document.getElementById('staffShift').value,
+                salary: document.getElementById('staffSalary').value,
+                phone: document.getElementById('staffPhone').value,
+                email: document.getElementById('staffEmail').value
+            };
+
+            // Add to staff data (in real app, this would be sent to server)
+            const newStaff = {
+                ...staffData,
+                status: 'active',
+                hours: '0h',
+                performance: 100
+            };
+
+            if (!staffByDepartment[staffData.department]) {
+                staffByDepartment[staffData.department] = [];
+            }
+
+            staffByDepartment[staffData.department].push(newStaff);
+
+            // Refresh displays
+            renderDepartmentOverview();
+            renderStaffByDepartment(staffData.department);
+
+            alert(`Personal agregado: ${staffData.name} - ${staffData.role}`);
+            closeModal();
+        }
+
+        function editStaff(name, department) {
+            const staff = staffByDepartment[department].find(s => s.name === name);
+            if (staff) {
+                openModal('edit-staff', staff);
+            }
+        }
+
+        function contactStaff(name, phone) {
+            alert(`Contactando a ${name} al ${phone}`);
+        }
+
+        function markBreak(name, department) {
+            const staff = staffByDepartment[department].find(s => s.name === name);
+            if (staff) {
+                staff.status = 'break';
+                renderStaffByDepartment(department);
+                renderDepartmentOverview();
+                alert(`${name} marcado en descanso`);
+            }
+        }
+
+        function markActive(name, department) {
+            const staff = staffByDepartment[department].find(s => s.name === name);
+            if (staff) {
+                staff.status = 'active';
+                renderStaffByDepartment(department);
+                renderDepartmentOverview();
+                alert(`${name} marcado como activo`);
+            }
+        }
+
+        function markAbsent(name, department) {
+            const staff = staffByDepartment[department].find(s => s.name === name);
+            if (staff) {
+                staff.status = 'absent';
+                staff.hours = '0h';
+                staff.performance = 0;
+                renderStaffByDepartment(department);
+                renderDepartmentOverview();
+                alert(`${name} marcado como ausente`);
+            }
+        }
+
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('currentTime').textContent =
+                now.toLocaleTimeString('es-ES', {
+                    hour12: false,
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function () {
+            renderDepartmentOverview();
+            renderStaffByDepartment('kitchen'); // Default tab
+
+            updateTime();
+            setInterval(updateTime, 1000);
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

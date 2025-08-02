@@ -1,0 +1,140 @@
+﻿@model GustoySazon.Models.FilaEsperaViewModel
+
+@{
+    ViewBag.Title = "Fila de Espera - Gusto y Sazón";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/ClienteFilaEspera.css" rel="stylesheet" />
+
+    
+</head>
+<body>
+    <div class="pagina">
+        <div class="tablas">
+
+            <div class="tabla-espera">
+                <h2 class="table-title">Lista de Espera</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre Cliente</th>
+                            <th>Tiempo en sesión (s)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-clientes">
+                        @foreach (var cliente in Model.ClientesEnEspera)
+                        {
+                            <tr>
+                                <td>@cliente.Nombre</td>
+                                <td class="tiempo-espera" data-horaregistro="@cliente.HoraRegistro.ToString("o")">0</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="tabla-mesas">
+                <h2 class="table-title">Mesas Disponibles</h2>
+
+                <div class="mesas-contenedor">
+                    @foreach (var mesa in Model.MesasDisponibles)
+                    {
+                        <div class="mesa-tarjeta">
+                            <div class="mesa-tarjeta">
+                                <div class="icono-mesa"></div>
+
+                                <div class="info-mesa">
+                                    <p><strong>Mesa:</strong> @mesa.NumeroMesa</p>
+                                    <p><strong>Capacidad:</strong> @mesa.Sillas</p>
+                                    <p><strong>Ubicación:</strong> @mesa.Ubicacion</p>
+                                    <p><strong>Estado:</strong> @mesa.Estado</p>
+                                    <p><strong>Sillas disponibles:</strong> @(mesa.Sillas - mesa.Ocupantes) / @mesa.Sillas</p>
+                                </div>
+
+
+
+
+                                <!--unirse o no a mesas con clientes-->
+                                <div class="botones-mesa">
+                                    @if (mesa.Estado == "Libre" || (mesa.Estado == "Ocupada" && mesa.Ocupantes < mesa.Sillas))
+                                    {
+                                        <form method="post" action="@Url.Action("AsignarMesa", "Home")">
+                                            <input type="hidden" name="usuarioId" value="@Model.UsuarioIdActual" />
+                                            <input type="hidden" name="mesaId" value="@mesa.Id" />
+                                            <button type="submit" class="btn">Unirse</button>
+                                        </form>
+                                    }
+                                    else
+                                    {
+                                        <button class="btn" disabled>No disponible</button>
+                                    }
+                                    <button class="btn info-btn" data-mesaid="@mesa.Id">¡</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Actualizar tiempo en espera cada segundo
+        function actualizarTiempos() {
+            $('.tiempo-espera').each(function () {
+                var horaRegistro = new Date($(this).data('horaregistro'));
+                var ahora = new Date();
+                var diffSegundos = Math.floor((ahora - horaRegistro) / 1000);
+                $(this).text(diffSegundos >= 0 ? diffSegundos : 0);
+            });
+        }
+
+
+        actualizarTiempos();
+        setInterval(actualizarTiempos, 1000);
+
+
+        //mostrar usuarios en la mesa
+        $('.info-btn').click(function () {
+            var mesaId = $(this).data('mesaid');
+
+            $.ajax({
+                url: '@Url.Action("ObtenerClientesMesa", "Home")',
+                data: { mesaId: mesaId },
+                success: function (data) {
+                    if (data.length === 0) {
+                        alert('No hay nadie sentado en esta mesa.');
+                        return;
+                    }
+
+                    var mensaje = 'Usuarios en la mesa:\n';
+                    data.forEach(function (cliente) {
+                        mensaje += cliente.Nombre + '\n';
+                    });
+
+                    alert(mensaje);
+                },
+                error: function () {
+                    alert('Error al obtener datos de la mesa.');
+                }
+            });
+        });
+
+
+    </script>
+</body>
+</html>
+
+

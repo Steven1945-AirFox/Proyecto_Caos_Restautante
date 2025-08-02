@@ -1,0 +1,537 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Management System - Análisis</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link href="~/Content/analisis.css" rel="stylesheet" />
+
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-toggle" onclick="toggleSidebar()">
+                <i class="fas fa-chevron-left" id="toggleIcon"></i>
+            </div>
+
+            <div class="sidebar-header">
+                <i class="fas fa-utensils sidebar-logo"></i>
+                <span class="sidebar-title">Restaurant Manager</span>
+            </div>
+
+            <div class="sidebar-nav">
+                <a href="/Home/VistaGeneral" class="nav-item">
+                    <i class="fas fa-home"></i>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+                <a href="/Home/analisis" class="nav-item">
+                    <i class="fas fa-chart-bar"></i>
+                    <span class="nav-text">Análisis</span>
+                </a>
+                <a href="/Home/Personal" class="nav-item">
+                    <i class="fas fa-users"></i>
+                    <span class="nav-text">Personal</span>
+                </a>
+                <a href="/Home/Ordenes" class="nav-item active">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="nav-text">Pedidos</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span class="nav-text">Configuración</span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div>
+                    <h1 class="header-title">Análisis Financiero</h1>
+                    <p class="header-subtitle">Ingresos, gastos y rendimiento del restaurante</p>
+                </div>
+                <div class="header-actions">
+                    <div class="date-filter">
+                        <select id="periodFilter" onchange="updatePeriod()">
+                            <option value="today">Hoy</option>
+                            <option value="week" selected>Esta Semana</option>
+                            <option value="month">Este Mes</option>
+                            <option value="quarter">Trimestre</option>
+                            <option value="year">Año</option>
+                        </select>
+                    </div>
+                    <div class="time-badge" id="currentTime"></div>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <div class="content">
+                <!-- Financial Overview -->
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-dollar-sign section-icon"></i>
+                            Resumen Financiero
+                        </h2>
+                        <div>
+                            <button class="btn btn-outline" onclick="exportReport()">
+                                <i class="fas fa-download"></i> Exportar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="section-content">
+                        <div class="stats-grid" id="financialStats">
+                            <!-- Dynamic content -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Revenue vs Expenses Chart -->
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-chart-line section-icon"></i>
+                            Ingresos vs Gastos
+                        </h2>
+                    </div>
+                    <div class="section-content">
+                        <div class="chart-container">
+                            <canvas id="revenueExpensesChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Performance Charts -->
+                <div class="chart-grid">
+                    <div class="chart-card">
+                        <div class="chart-title">
+                            <i class="fas fa-chart-pie"></i>
+                            Distribución de Ingresos
+                        </div>
+                        <div class="chart-container" style="height: 300px;">
+                            <canvas id="revenueDistributionChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <div class="chart-title">
+                            <i class="fas fa-chart-bar"></i>
+                            Gastos por Categoría
+                        </div>
+                        <div class="chart-container" style="height: 300px;">
+                            <canvas id="expensesChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Daily Performance -->
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-calendar-day section-icon"></i>
+                            Rendimiento Diario
+                        </h2>
+                    </div>
+                    <div class="section-content">
+                        <div class="chart-container">
+                            <canvas id="dailyPerformanceChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top Products -->
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-star section-icon"></i>
+                            Productos Más Vendidos
+                        </h2>
+                    </div>
+                    <div class="section-content">
+                        <div class="table-container">
+                            <table class="table" id="topProductsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Producto</th>
+                                        <th>Ventas</th>
+                                        <th>Ingresos</th>
+                                        <th>Margen</th>
+                                        <th>Tendencia</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="topProductsBody">
+                                    <!-- Dynamic content -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Financial Health -->
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-heartbeat section-icon"></i>
+                            Salud Financiera
+                        </h2>
+                    </div>
+                    <div class="section-content">
+                        <div class="stats-grid" id="healthMetrics">
+                            <!-- Dynamic content -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Financial Data
+        const financialData = {
+            revenue: 45680,
+            expenses: 32450,
+            profit: 13230,
+            profitMargin: 28.9,
+            avgOrderValue: 34.50,
+            totalOrders: 1324,
+            costPerOrder: 24.50,
+            revenueGrowth: 12.5
+        };
+
+        const revenueExpensesData = {
+            labels: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'],
+            revenue: [6500, 7200, 6800, 7500, 8200, 9500, 8800],
+            expenses: [4200, 4800, 4500, 5100, 5400, 6200, 5800]
+        };
+
+        const revenueDistribution = {
+            labels: ['Comida', 'Bebidas', 'Postres', 'Especiales'],
+            data: [65, 20, 10, 5],
+            colors: ['#6366f1', '#10b981', '#f59e0b', '#ef4444']
+        };
+
+        const expensesData = {
+            labels: ['Personal', 'Ingredientes', 'Servicios', 'Alquiler', 'Otros'],
+            data: [45, 30, 10, 10, 5],
+            colors: ['#ef4444', '#f59e0b', '#06b6d4', '#8b5cf6', '#64748b']
+        };
+
+        const topProducts = [
+            { name: 'Pizza Margherita', sales: 156, revenue: 4680, margin: 65, trend: 'up' },
+            { name: 'Pasta Carbonara', sales: 134, revenue: 4020, margin: 58, trend: 'up' },
+            { name: 'Ensalada César', sales: 98, revenue: 2450, margin: 72, trend: 'down' },
+            { name: 'Hamburguesa Clásica', sales: 87, revenue: 2610, margin: 55, trend: 'up' },
+            { name: 'Salmón Grillado', sales: 76, revenue: 3800, margin: 68, trend: 'stable' }
+        ];
+
+        const healthMetrics = [
+            { label: 'Liquidez', value: '2.4', status: 'good', icon: 'fas fa-tint' },
+            { label: 'ROI', value: '18.5%', status: 'excellent', icon: 'fas fa-chart-line' },
+            { label: 'Punto de Equilibrio', value: '78%', status: 'warning', icon: 'fas fa-balance-scale' },
+            { label: 'Eficiencia Operativa', value: '85%', status: 'good', icon: 'fas fa-cogs' }
+        ];
+
+        // Chart instances
+        let revenueExpensesChart, revenueDistributionChart, expensesChart, dailyPerformanceChart;
+
+        function renderFinancialStats() {
+            const container = document.getElementById('financialStats');
+            const stats = [
+                {
+                    label: 'Ingresos Totales',
+                    value: `$${financialData.revenue.toLocaleString()}`,
+                    change: `+${financialData.revenueGrowth}%`,
+                    changeType: 'positive',
+                    icon: 'fas fa-arrow-up',
+                    color: '#10b981'
+                },
+                {
+                    label: 'Gastos Totales',
+                    value: `$${financialData.expenses.toLocaleString()}`,
+                    change: '-5.2%',
+                    changeType: 'positive',
+                    icon: 'fas fa-arrow-down',
+                    color: '#ef4444'
+                },
+                {
+                    label: 'Ganancia Neta',
+                    value: `$${financialData.profit.toLocaleString()}`,
+                    change: `+${(financialData.revenueGrowth * 1.5).toFixed(1)}%`,
+                    changeType: 'positive',
+                    icon: 'fas fa-dollar-sign',
+                    color: '#6366f1'
+                },
+                {
+                    label: 'Margen de Ganancia',
+                    value: `${financialData.profitMargin}%`,
+                    change: '+2.1%',
+                    changeType: 'positive',
+                    icon: 'fas fa-percentage',
+                    color: '#f59e0b'
+                },
+                {
+                    label: 'Valor Promedio Orden',
+                    value: `$${financialData.avgOrderValue}`,
+                    change: '+8.3%',
+                    changeType: 'positive',
+                    icon: 'fas fa-receipt',
+                    color: '#06b6d4'
+                },
+                {
+                    label: 'Total Órdenes',
+                    value: financialData.totalOrders.toLocaleString(),
+                    change: '+15.7%',
+                    changeType: 'positive',
+                    icon: 'fas fa-shopping-cart',
+                    color: '#8b5cf6'
+                }
+            ];
+
+            container.innerHTML = stats.map(stat => `
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: ${stat.color}">
+                            <i class="${stat.icon}"></i>
+                        </div>
+                        <div class="stat-value">${stat.value}</div>
+                        <div class="stat-label">${stat.label}</div>
+                        <div class="stat-change ${stat.changeType}">
+                            <i class="fas fa-arrow-${stat.changeType === 'positive' ? 'up' : 'down'}"></i>
+                            ${stat.change}
+                        </div>
+                    </div>
+                `).join('');
+        }
+
+        function renderTopProducts() {
+            const tbody = document.getElementById('topProductsBody');
+            tbody.innerHTML = topProducts.map(product => `
+                    <tr>
+                        <td><strong>${product.name}</strong></td>
+                        <td>${product.sales}</td>
+                        <td>$${product.revenue.toLocaleString()}</td>
+                        <td>${product.margin}%</td>
+                        <td>
+                            <i class="fas fa-arrow-${product.trend === 'up' ? 'up' : product.trend === 'down' ? 'down' : 'right'}"
+                               style="color: ${product.trend === 'up' ? '#10b981' : product.trend === 'down' ? '#ef4444' : '#64748b'}"></i>
+                        </td>
+                    </tr>
+                `).join('');
+        }
+
+        function renderHealthMetrics() {
+            const container = document.getElementById('healthMetrics');
+            const statusColors = {
+                excellent: '#10b981',
+                good: '#06b6d4',
+                warning: '#f59e0b',
+                critical: '#ef4444'
+            };
+
+            container.innerHTML = healthMetrics.map(metric => `
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: ${statusColors[metric.status]}">
+                            <i class="${metric.icon}"></i>
+                        </div>
+                        <div class="stat-value">${metric.value}</div>
+                        <div class="stat-label">${metric.label}</div>
+                        <div class="stat-change ${metric.status === 'excellent' || metric.status === 'good' ? 'positive' : 'negative'}">
+                            ${metric.status.toUpperCase()}
+                        </div>
+                    </div>
+                `).join('');
+        }
+
+        function initializeCharts() {
+            // Revenue vs Expenses Chart
+            const ctx1 = document.getElementById('revenueExpensesChart').getContext('2d');
+            revenueExpensesChart = new Chart(ctx1, {
+                type: 'line',
+                data: {
+                    labels: revenueExpensesData.labels,
+                    datasets: [{
+                        label: 'Ingresos',
+                        data: revenueExpensesData.revenue,
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }, {
+                        label: 'Gastos',
+                        data: revenueExpensesData.expenses,
+                        borderColor: '#ef4444',
+                        backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function (value) {
+                                    return '$' + value.toLocaleString();
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Revenue Distribution Chart
+            const ctx2 = document.getElementById('revenueDistributionChart').getContext('2d');
+            revenueDistributionChart = new Chart(ctx2, {
+                type: 'doughnut',
+                data: {
+                    labels: revenueDistribution.labels,
+                    datasets: [{
+                        data: revenueDistribution.data,
+                        backgroundColor: revenueDistribution.colors,
+                        borderWidth: 2,
+                        borderColor: '#ffffff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                        }
+                    }
+                }
+            });
+
+            // Expenses Chart
+            const ctx3 = document.getElementById('expensesChart').getContext('2d');
+            expensesChart = new Chart(ctx3, {
+                type: 'bar',
+                data: {
+                    labels: expensesData.labels,
+                    datasets: [{
+                        data: expensesData.data,
+                        backgroundColor: expensesData.colors,
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function (value) {
+                                    return value + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Daily Performance Chart
+            const ctx4 = document.getElementById('dailyPerformanceChart').getContext('2d');
+            dailyPerformanceChart = new Chart(ctx4, {
+                type: 'bar',
+                data: {
+                    labels: ['00:00', '03:00', '06:00', '09:00', '12:00', '15:00', '18:00', '21:00'],
+                    datasets: [{
+                        label: 'Ventas por Hora',
+                        data: [120, 80, 200, 450, 800, 650, 900, 750],
+                        backgroundColor: '#6366f1',
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function (value) {
+                                    return '$' + value;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const icon = document.getElementById('toggleIcon');
+
+            sidebar.classList.toggle('collapsed');
+
+            if (sidebar.classList.contains('collapsed')) {
+                icon.className = 'fas fa-chevron-right';
+            } else {
+                icon.className = 'fas fa-chevron-left';
+            }
+        }
+
+        function updatePeriod() {
+            const period = document.getElementById('periodFilter').value;
+            // Here you would update the data based on the selected period
+            console.log('Updating data for period:', period);
+            // For demo purposes, we'll just show an alert
+            alert(`Actualizando datos para: ${period}`);
+        }
+
+        function exportReport() {
+            alert('Exportando reporte financiero...');
+        }
+
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('currentTime').textContent =
+                now.toLocaleTimeString('es-ES', {
+                    hour12: false,
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function () {
+            renderFinancialStats();
+            renderTopProducts();
+            renderHealthMetrics();
+
+            // Initialize charts after a short delay to ensure canvas elements are ready
+            setTimeout(initializeCharts, 100);
+
+            updateTime();
+            setInterval(updateTime, 1000);
+        });
+    </script>
+</body>
+</html>
+
+

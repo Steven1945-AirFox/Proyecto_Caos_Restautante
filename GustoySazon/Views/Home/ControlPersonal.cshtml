@@ -1,0 +1,355 @@
+﻿
+@{
+    Layout = null;
+
+    var empleados = new List<dynamic>();
+    var connString = System.Configuration.ConfigurationManager.ConnectionStrings["GustoySazonDB"].ConnectionString;
+
+    void CargarEmpleados()
+    {
+        using (var conn = new System.Data.SqlClient.SqlConnection(connString))
+        {
+            conn.Open();
+            var sql = "SELECT Nombre, Cedula, Correo, Rol FROM Empleados";
+
+            using (var cmd = new System.Data.SqlClient.SqlCommand(sql, conn))
+            {
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        empleados.Add(new
+                        {
+                            Nombre = reader["Nombre"].ToString(),
+                            Cedula = reader["Cedula"].ToString(),
+                            Correo = reader["Correo"].ToString(),
+                            Rol = reader["Rol"].ToString()
+                        });
+                    }
+                }
+            }
+        }
+    }
+
+    string ActualizarEmpleado(string cedula, string nombre, string correo, string rol)
+    {
+        try
+        {
+            using (var conn = new System.Data.SqlClient.SqlConnection(connString))
+            {
+                conn.Open();
+
+                var campos = new List<string>();
+                var parametros = new List<System.Data.SqlClient.SqlParameter>();
+
+                if (!string.IsNullOrWhiteSpace(nombre))
+                {
+                    campos.Add("Nombre = @Nombre");
+                    parametros.Add(new System.Data.SqlClient.SqlParameter("@Nombre", nombre));
+                }
+                if (!string.IsNullOrWhiteSpace(correo))
+                {
+                    campos.Add("Correo = @Correo");
+                    parametros.Add(new System.Data.SqlClient.SqlParameter("@Correo", correo));
+                }
+                if (!string.IsNullOrWhiteSpace(rol))
+                {
+                    campos.Add("Rol = @Rol");
+                    parametros.Add(new System.Data.SqlClient.SqlParameter("@Rol", rol));
+                }
+
+                if (campos.Count == 0) return "No hay campos para actualizar.";
+
+                string sql = $"UPDATE Empleados SET {string.Join(", ", campos)} WHERE Cedula = @Cedula";
+
+                using (var cmd = new System.Data.SqlClient.SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddRange(parametros.ToArray());
+                    cmd.Parameters.AddWithValue("@Cedula", cedula);
+
+                    int filasAfectadas = cmd.ExecuteNonQuery();
+                    if (filasAfectadas > 0) return "Empleado actualizado correctamente.";
+                    else return "No se encontró empleado con esa cédula.";
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            return "Error al actualizar empleado: " + ex.Message;
+        }
+    }
+
+    string EliminarEmpleado(string cedula)
+    {
+        try
+        {
+            using (var conn = new System.Data.SqlClient.SqlConnection(connString))
+            {
+                conn.Open();
+                string sql = "DELETE FROM Empleados WHERE Cedula = @Cedula";
+
+                using (var cmd = new System.Data.SqlClient.SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Cedula", cedula);
+                    int filas = cmd.ExecuteNonQuery();
+                    return filas > 0 ? "Empleado eliminado correctamente." : "No se encontró empleado con esa cédula.";
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            return "Error al eliminar: " + ex.Message;
+        }
+    }
+
+    if (IsPost)
+    {
+        if (Request.Form["accion"] == "editar")
+        {
+            string cedulaEditar = Request.Form["cedula"];
+            string nombreEditar = Request.Form["nombre"];
+            string correoEditar = Request.Form["correo"];
+            string rolEditar = Request.Form["rol"];
+
+            var resultado = ActualizarEmpleado(cedulaEditar, nombreEditar, correoEditar, rolEditar);
+
+            Response.ContentType = "text/plain";
+            Response.Write(resultado);
+            Response.End();
+        }
+        else if (Request.Form["accion"] == "eliminar")
+        {
+            string cedulaEliminar = Request.Form["cedula"];
+            var resultado = EliminarEmpleado(cedulaEliminar);
+
+            Response.ContentType = "text/plain";
+            Response.Write(resultado);
+            Response.End();
+        }
+    }
+
+    CargarEmpleados();
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>Gestión de Empleados</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f2f7fb;
+            padding: 2rem;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .acciones {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        input, button {
+            padding: 0.6rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        input {
+            border: 1px solid #ccc;
+            background: #fff;
+        }
+
+        button {
+            background: #77c2f0;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+            button:hover {
+                background: #5db3e6;
+            }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            background: #cdeeff;
+            color: #333;
+        }
+
+        tr:hover {
+            background: #f0f8ff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gestión de Empleados</h1>
+
+    <div class="acciones">
+        <input type="text" id="cedulaBuscar" placeholder="Cédula del empleado" />
+        <button onclick="buscarEmpleado()">Buscar</button>
+        <button onclick="recargarPagina()">Recargar</button>
+        <button onclick="editarEmpleado()">Editar</button>
+        <button onclick="eliminarEmpleado()">Eliminar</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Cédula</th>
+                <th>Correo</th>
+                <th>Rol</th>
+            </tr>
+        </thead>
+        <tbody id="tablaEmpleados">
+            @foreach (var e in empleados)
+            {
+                <tr>
+                    <td>@e.Nombre</td>
+                    <td>@e.Cedula</td>
+                    <td>@e.Correo</td>
+                    <td>@e.Rol</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <script>
+		function recargarPagina() {
+			location.reload();
+		}
+
+		async function buscarEmpleado() {
+			const cedula = document.getElementById("cedulaBuscar").value.trim();
+			if (!cedula) return alert("Ingrese una cédula.");
+
+			try {
+				const res = await fetch(`https://apisitios.onrender.com/buscar/${cedula}`);
+				if (!res.ok) throw new Error("Error en la respuesta del servidor.");
+				const data = await res.json();
+
+				if (data.success && data.empleado) {
+					mostrarEmpleadosAPI([data.empleado]);
+				} else {
+					alert("Empleado no encontrado.");
+					mostrarEmpleadosAPI([]);
+				}
+			} catch (error) {
+				alert("Error al buscar: " + error.message);
+			}
+		}
+
+		function mostrarEmpleadosAPI(empleados) {
+			const tabla = document.getElementById("tablaEmpleados");
+			tabla.innerHTML = "";
+
+			if (!empleados || empleados.length === 0) {
+				tabla.innerHTML = "<tr><td colspan='4'>No se encontraron empleados.</td></tr>";
+				return;
+			}
+
+			empleados.forEach(e => {
+				tabla.innerHTML += `
+						<tr>
+							<td>${e.Nombre}</td>
+							<td>${e.Cedula}</td>
+							<td>${e.Correo}</td>
+							<td>${e.Rol}</td>
+						</tr>`;
+			});
+		}
+
+		async function eliminarEmpleado() {
+			const cedula = document.getElementById("cedulaBuscar").value.trim();
+			if (!cedula) {
+				alert("Ingrese una cédula para eliminar.");
+				return;
+			}
+
+			if (!confirm("¿Está seguro de eliminar este empleado?")) return;
+
+			const formData = new FormData();
+			formData.append("accion", "eliminar");
+			formData.append("cedula", cedula);
+
+			try {
+				const res = await fetch("", {
+					method: "POST",
+					body: formData
+				});
+				const text = await res.text();
+				alert(text);
+				location.reload();
+			} catch (err) {
+				alert("Error al eliminar: " + err.message);
+			}
+		}
+
+		async function editarEmpleado() {
+			const cedula = document.getElementById("cedulaBuscar").value.trim();
+			if (!cedula) return alert("Ingrese la cédula del empleado a editar.");
+
+			const filas = document.querySelectorAll("#tablaEmpleados tr");
+			let fila = null;
+			filas.forEach(tr => {
+				if (tr.cells[1].innerText.trim() === cedula) fila = tr;
+			});
+
+			if (!fila) return alert("Empleado no encontrado para edición.");
+
+			const nombreActual = fila.cells[0].innerText.trim();
+			const correoActual = fila.cells[2].innerText.trim();
+			const rolActual = fila.cells[3].innerText.trim();
+
+			const nuevoNombre = prompt("Nuevo nombre (deje vacío para no cambiar):", nombreActual);
+			const nuevoCorreo = prompt("Nuevo correo (deje vacío para no cambiar):", correoActual);
+			const nuevoRol = prompt("Nuevo rol (deje vacío para no cambiar):", rolActual);
+
+			if ((nuevoNombre === null || nuevoNombre.trim() === nombreActual) &&
+				(nuevoCorreo === null || nuevoCorreo.trim() === correoActual) &&
+				(nuevoRol === null || nuevoRol.trim() === rolActual)) {
+				return alert("No se modificó ningún campo.");
+			}
+
+			const formData = new FormData();
+			formData.append("accion", "editar");
+			formData.append("cedula", cedula);
+			if (nuevoNombre && nuevoNombre.trim() !== nombreActual) formData.append("nombre", nuevoNombre.trim());
+			if (nuevoCorreo && nuevoCorreo.trim() !== correoActual) formData.append("correo", nuevoCorreo.trim());
+			if (nuevoRol && nuevoRol.trim() !== rolActual) formData.append("rol", nuevoRol.trim());
+
+			try {
+				const res = await fetch("", { method: "POST", body: formData });
+				const text = await res.text();
+				alert(text);
+				location.reload();
+			} catch (err) {
+				alert("Error al editar: " + err);
+			}
+		}
+    </script>
+</body>
+</html>

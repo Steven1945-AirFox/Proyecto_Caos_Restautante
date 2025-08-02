@@ -1,0 +1,614 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Management System - Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="~/Content/visgen.css" rel="stylesheet" />
+
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-toggle" onclick="toggleSidebar()">
+                <i class="fas fa-chevron-left" id="toggleIcon"></i>
+            </div>
+            <div class="sidebar-header">
+                <i class="fas fa-utensils sidebar-logo"></i>
+                <span class="sidebar-title">Restaurant Manager</span>
+            </div>
+            <div class="sidebar-nav">
+                <a href="/Home/VistaGeneral" class="nav-item">
+                    <i class="fas fa-home"></i>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+                <a href="/Home/analisis" class="nav-item">
+                    <i class="fas fa-chart-bar"></i>
+                    <span class="nav-text">Análisis</span>
+                </a>
+                <a href="/Home/Personal" class="nav-item">
+                    <i class="fas fa-users"></i>
+                    <span class="nav-text">Personal</span>
+                </a>
+                <a href="/Home/Ordenes" class="nav-item active">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="nav-text">Pedidos</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span class="nav-text">Configuración</span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div>
+                    <h1 class="header-title">Centro de Control Operacional</h1>
+                    <p class="header-subtitle">Sistema de gestión y respuesta en tiempo real</p>
+                </div>
+                <div class="header-actions">
+                    <div class="time-badge" id="currentTime"></div>
+                </div>
+            </header>
+
+            <!-- Alert -->
+            <div class="alert" id="alert">
+                <i class="fas fa-info-circle"></i>
+                <span id="alertMessage"></span>
+                <button class="alert-close" onclick="hideAlert()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <!-- Content -->
+            <div class="content">
+                <!-- Executive Summary -->
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-chart-line section-icon"></i>
+                            Resumen Ejecutivo
+                        </h2>
+                        <div class="section-actions">
+                            <button class="btn btn-outline" onclick="openModal('executive-summary')">
+                                <i class="fas fa-plus"></i> Acción
+                            </button>
+                            <button class="btn btn-outline" onclick="refreshMetrics()">
+                                <i class="fas fa-sync-alt"></i> Actualizar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="section-content">
+                        <div class="cards-grid" id="executiveSummary">
+                            <!-- Dynamic content -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Key Performance Indicators -->
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-tachometer-alt section-icon"></i>
+                            Indicadores Clave de Rendimiento
+                        </h2>
+                        <div class="section-actions">
+                            <button class="btn btn-outline" onclick="openModal('kpi')">
+                                <i class="fas fa-plus"></i> Acción
+                            </button>
+                        </div>
+                    </div>
+                    <div class="section-content">
+                        <div class="cards-grid" id="kpiMetrics">
+                            <!-- Dynamic content -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Staff Status -->
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-users section-icon"></i>
+                            Estado del Personal
+                        </h2>
+                        <div class="section-actions">
+                            <button class="btn btn-outline" onclick="openModal('staff')">
+                                <i class="fas fa-plus"></i> Acción
+                            </button>
+                            <span style="color: var(--text-muted); font-size: 12px;">
+                                <i class="fas fa-clock"></i> Actualizado hace 2 min
+                            </span>
+                        </div>
+                    </div>
+                    <div class="section-content">
+                        <div class="cards-grid" id="staffStatus">
+                            <!-- Dynamic content -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Management Command Center -->
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-cogs section-icon"></i>
+                            Centro de Comando de Gestión
+                        </h2>
+                        <div class="section-actions">
+                            <button class="btn btn-outline" onclick="openModal('command-center')">
+                                <i class="fas fa-plus"></i> Nueva Acción
+                            </button>
+                        </div>
+                    </div>
+                    <div class="section-content">
+                        <div class="command-grid" id="commandCenter">
+                            <!-- Dynamic content -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">Nueva Acción</h3>
+                <p class="modal-description" id="modalDescription">Crear una nueva acción</p>
+            </div>
+            <div class="modal-content">
+                <form id="actionForm">
+                    <div class="form-group">
+                        <label class="form-label" for="actionType">Tipo de Acción</label>
+                        <select class="form-select" id="actionType" required>
+                            <option value="">Seleccionar acción</option>
+                            <option value="immediate">Acción Inmediata</option>
+                            <option value="scheduled">Programar</option>
+                            <option value="monitor">Monitorear</option>
+                            <option value="escalate">Escalar</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="priority">Prioridad</label>
+                        <select class="form-select" id="priority" required>
+                            <option value="low">Baja</option>
+                            <option value="medium" selected>Media</option>
+                            <option value="high">Alta</option>
+                            <option value="critical">Crítica</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="description">Descripción</label>
+                        <textarea class="form-textarea" id="description" placeholder="Describe la acción a tomar..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="assignedTo">Asignar a</label>
+                        <input class="form-input" type="text" id="assignedTo" placeholder="Nombre del responsable" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="deadline">Fecha límite</label>
+                        <input class="form-input" type="datetime-local" id="deadline" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline" onclick="closeModal()">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="submitAction()">Crear Acción</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data
+        const executiveSummaryData = [
+            {
+                label: 'Personal Activo',
+                value: '4',
+                target: '6',
+                progress: 67,
+                status: 'warning',
+                icon: 'fas fa-users'
+            },
+            {
+                label: 'Problemas Críticos',
+                value: '2',
+                target: '0',
+                progress: 100,
+                status: 'critical',
+                icon: 'fas fa-exclamation-triangle'
+            },
+            {
+                label: 'Tiempo de Espera',
+                value: '18 min',
+                target: '12 min',
+                progress: 75,
+                status: 'warning',
+                icon: 'fas fa-clock'
+            },
+            {
+                label: 'Rendimiento',
+                value: '85%',
+                target: '100%',
+                progress: 85,
+                status: 'warning',
+                icon: 'fas fa-chart-line'
+            }
+        ];
+
+        const kpiData = [
+            {
+                label: 'Tiempo Promedio de Servicio',
+                value: '18 min',
+                target: '12 min',
+                progress: 67,
+                status: 'warning',
+                icon: 'fas fa-stopwatch'
+            },
+            {
+                label: 'Satisfacción del Cliente',
+                value: '3.8/5',
+                target: '4.5/5',
+                progress: 84,
+                status: 'warning',
+                icon: 'fas fa-smile'
+            },
+            {
+                label: 'Rotación de Mesas',
+                value: '2.1/h',
+                target: '2.5/h',
+                progress: 84,
+                status: 'warning',
+                icon: 'fas fa-sync'
+            },
+            {
+                label: 'Eficiencia de Cocina',
+                value: '82%',
+                target: '90%',
+                progress: 91,
+                status: 'success',
+                icon: 'fas fa-fire'
+            }
+        ];
+
+        const staffData = [
+            {
+                name: 'Ana Rodriguez',
+                role: 'Chef Principal',
+                shift: '7:00 AM - 3:00 PM',
+                performance: 92,
+                status: 'active',
+                hours: '6h 30m'
+            },
+            {
+                name: 'Carlos Mendez',
+                role: 'Mesero Senior',
+                shift: '11:00 AM - 7:00 PM',
+                performance: 88,
+                status: 'active',
+                hours: '4h 15m'
+            },
+            {
+                name: 'Maria Gonzalez',
+                role: 'Sous Chef',
+                shift: '9:00 AM - 5:00 PM',
+                performance: 85,
+                status: 'break',
+                hours: '5h 45m'
+            },
+            {
+                name: 'Luis Herrera',
+                role: 'Mesero',
+                shift: '12:00 PM - 8:00 PM',
+                performance: 0,
+                status: 'absent',
+                hours: '0h'
+            }
+        ];
+
+        const commandActions = [
+            {
+                id: 'callStaff',
+                title: 'Llamar Personal Extra',
+                description: 'Contactar personal de respaldo para apoyo inmediato',
+                icon: 'fas fa-phone',
+                color: '#3b82f6'
+            },
+            {
+                id: 'emergency',
+                title: 'Alerta de Emergencia',
+                description: 'Transmitir notificación de emergencia a todo el personal',
+                icon: 'fas fa-bullhorn',
+                color: '#ef4444'
+            },
+            {
+                id: 'limitedMenu',
+                title: 'Menú Limitado',
+                description: 'Activar menú de emergencia para reducir complejidad',
+                icon: 'fas fa-list',
+                color: '#f59e0b'
+            },
+            {
+                id: 'redistribute',
+                title: 'Redistribuir Tareas',
+                description: 'Reorganizar responsabilidades y carga de trabajo',
+                icon: 'fas fa-exchange-alt',
+                color: '#8b5cf6'
+            },
+            {
+                id: 'discounts',
+                title: 'Aplicar Descuentos',
+                description: 'Compensar a clientes por retrasos en el servicio',
+                icon: 'fas fa-percent',
+                color: '#10b981'
+            }
+        ];
+
+        // Functions
+        function renderExecutiveSummary() {
+            const container = document.getElementById('executiveSummary');
+            container.innerHTML = executiveSummaryData.map(item => `
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <div class="metric-label">${item.label}</div>
+                            <div class="metric-icon">
+                                <i class="${item.icon}"></i>
+                            </div>
+                        </div>
+                        <div class="metric-value">${item.value}</div>
+                        <div class="metric-target">Objetivo: ${item.target}</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${item.progress}%"></div>
+                        </div>
+                        <div class="metric-actions">
+                            <div class="metric-status status-${item.status}">
+                                <i class="fas fa-circle" style="font-size: 8px;"></i>
+                                ${item.status === 'critical' ? 'CRÍTICO' :
+                    item.status === 'warning' ? 'ADVERTENCIA' : 'ÓPTIMO'}
+                            </div>
+                            <button class="btn btn-sm btn-outline" onclick="openModal('metric', '${item.label}')">
+                                Acción
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+        }
+
+        function renderKPIMetrics() {
+            const container = document.getElementById('kpiMetrics');
+            container.innerHTML = kpiData.map(item => `
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <div class="metric-label">${item.label}</div>
+                            <div class="metric-icon">
+                                <i class="${item.icon}"></i>
+                            </div>
+                        </div>
+                        <div class="metric-value">${item.value}</div>
+                        <div class="metric-target">Objetivo: ${item.target}</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${item.progress}%"></div>
+                        </div>
+                        <div class="metric-actions">
+                            <div class="metric-status status-${item.status}">
+                                <i class="fas fa-circle" style="font-size: 8px;"></i>
+                                ${item.status === 'critical' ? 'CRÍTICO' :
+                    item.status === 'warning' ? 'ADVERTENCIA' : 'ÓPTIMO'}
+                            </div>
+                            <button class="btn btn-sm btn-outline" onclick="openModal('kpi', '${item.label}')">
+                                Acción
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+        }
+
+        function renderStaffStatus() {
+            const container = document.getElementById('staffStatus');
+            const statusLabels = {
+                active: 'En Servicio',
+                break: 'En Descanso',
+                absent: 'Ausente'
+            };
+
+            container.innerHTML = staffData.map(staff => `
+                    <div class="staff-card ${staff.status}">
+                        <div class="staff-header">
+                            <div>
+                                <div class="staff-name">${staff.name}</div>
+                                <div class="staff-role">${staff.role}</div>
+                            </div>
+                            <div class="metric-status status-${staff.status === 'active' ? 'success' : staff.status === 'break' ? 'warning' : 'critical'}">
+                                <i class="fas fa-circle" style="font-size: 8px;"></i>
+                                ${statusLabels[staff.status]}
+                            </div>
+                        </div>
+                        <div class="staff-details">
+                            <div class="staff-detail">
+                                <strong>Turno:</strong> ${staff.shift}
+                            </div>
+                            <div class="staff-detail">
+                                <strong>Horas:</strong> ${staff.hours}
+                            </div>
+                        </div>
+                        <div class="performance-section">
+                            <div class="performance-label">
+                                <span><strong>Rendimiento</strong></span>
+                                <span>${staff.performance}%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${Math.min(staff.performance, 100)}%"></div>
+                            </div>
+                        </div>
+                        <div class="metric-actions" style="margin-top: 16px;">
+                            <button class="btn btn-sm btn-outline" onclick="openModal('staff', '${staff.name}')" style="width: 100%;">
+                                Gestionar
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+        }
+
+        function renderCommandCenter() {
+            const container = document.getElementById('commandCenter');
+            container.innerHTML = commandActions.map(action => `
+                    <div class="command-button" onclick="executeCommand('${action.id}')">
+                        <div class="command-icon" style="background: ${action.color}">
+                            <i class="${action.icon}"></i>
+                        </div>
+                        <div class="command-content">
+                            <div class="command-title">${action.title}</div>
+                            <div class="command-description">${action.description}</div>
+                        </div>
+                    </div>
+                `).join('');
+        }
+
+        function executeCommand(commandId) {
+            const command = commandActions.find(cmd => cmd.id === commandId);
+            if (command) {
+                showAlert(`Ejecutando: ${command.title}`, 'success');
+            }
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const icon = document.getElementById('toggleIcon');
+            sidebar.classList.toggle('collapsed');
+
+            if (sidebar.classList.contains('collapsed')) {
+                icon.className = 'fas fa-chevron-right';
+            } else {
+                icon.className = 'fas fa-chevron-left';
+            }
+        }
+
+        function openModal(type, item = '') {
+            const modal = document.getElementById('modalOverlay');
+            const title = document.getElementById('modalTitle');
+            const description = document.getElementById('modalDescription');
+
+            const titles = {
+                'executive-summary': 'Nueva Acción - Resumen Ejecutivo',
+                'kpi': 'Nueva Acción - KPI',
+                'staff': 'Nueva Acción - Personal',
+                'command-center': 'Nueva Acción - Centro de Comando',
+                'metric': `Acción - ${item}`
+            };
+
+            const descriptions = {
+                'executive-summary': 'Crear una nueva acción para el resumen ejecutivo',
+                'kpi': 'Crear una nueva acción para los indicadores clave',
+                'staff': 'Crear una nueva acción para la gestión del personal',
+                'command-center': 'Crear una nueva acción personalizada',
+                'metric': `Crear acción específica para ${item}`
+            };
+
+            title.textContent = titles[type] || 'Nueva Acción';
+            description.textContent = descriptions[type] || 'Crear una nueva acción';
+
+            modal.classList.add('show');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('modalOverlay');
+            modal.classList.remove('show');
+
+            // Reset form
+            document.getElementById('actionForm').reset();
+        }
+
+        function submitAction() {
+            const actionData = {
+                type: document.getElementById('actionType').value,
+                priority: document.getElementById('priority').value,
+                description: document.getElementById('description').value,
+                assignedTo: document.getElementById('assignedTo').value,
+                deadline: document.getElementById('deadline').value
+            };
+
+            if (!actionData.type || !actionData.description || !actionData.assignedTo || !actionData.deadline) {
+                showAlert('Por favor completa todos los campos requeridos', 'warning');
+                return;
+            }
+
+            showAlert(`Acción creada: ${actionData.type} - ${actionData.description}`, 'success');
+            closeModal();
+        }
+
+        function showAlert(message, type = 'success') {
+            const alert = document.getElementById('alert');
+            const alertMessage = document.getElementById('alertMessage');
+
+            alertMessage.textContent = message;
+            alert.className = `alert show ${type}`;
+
+            setTimeout(() => {
+                alert.classList.remove('show');
+            }, 4000);
+        }
+
+        function hideAlert() {
+            document.getElementById('alert').classList.remove('show');
+        }
+
+        function refreshMetrics() {
+            showAlert('Actualizando métricas...', 'success');
+
+            setTimeout(() => {
+                renderExecutiveSummary();
+                renderKPIMetrics();
+                showAlert('Métricas actualizadas correctamente', 'success');
+            }, 2000);
+        }
+
+        function updateTime() {
+            const now = new Date();
+            const timeElement = document.getElementById('currentTime');
+            if (timeElement) {
+                timeElement.textContent = now.toLocaleTimeString('es-ES', {
+                    hour12: false,
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                });
+            }
+        }
+
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', function () {
+            renderExecutiveSummary();
+            renderKPIMetrics();
+            renderStaffStatus();
+            renderCommandCenter();
+            updateTime();
+            setInterval(updateTime, 1000);
+
+            setTimeout(() => {
+                showAlert('Sistema inicializado. Todos los módulos en línea.', 'success');
+            }, 1000);
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Close modal when clicking overlay
+        document.getElementById('modalOverlay').addEventListener('click', function (event) {
+            if (event.target === this) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

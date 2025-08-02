@@ -1,0 +1,283 @@
+﻿
+@{
+    ViewBag.Title = "GerenteFinanciero";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>Panel Financiero - Gerente</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+        }
+
+        .navbar {
+            display: flex;
+            background-color: #f0fafa;
+            padding: 10px;
+            justify-content: space-around;
+            border-bottom: 1px solid #ccc;
+        }
+
+            .navbar button {
+                background: none;
+                border: none;
+                font-weight: bold;
+                font-size: 14px;
+                cursor: pointer;
+                padding: 10px;
+            }
+
+                .navbar button.active {
+                    border-bottom: 2px solid #ff4081;
+                    color: #ff4081;
+                }
+
+        .summary {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+        }
+
+        .summary-box {
+            border: 1px solid #eee;
+            border-radius: 10px;
+            padding: 15px;
+            width: 20%;
+            text-align: center;
+        }
+
+            .summary-box.red {
+                border-color: #ffcccc;
+                color: #e60000;
+            }
+
+            .summary-box.orange {
+                border-color: #ffddaa;
+                color: #ff9900;
+            }
+
+            .summary-box.blue {
+                border-color: #b3d9ff;
+                color: #0077cc;
+            }
+
+            .summary-box.green {
+                border-color: #cceedd;
+                color: #00aa66;
+            }
+
+        .content-container {
+            display: flex;
+            padding: 20px;
+            gap: 20px;
+        }
+
+        .financial-impact {
+            width: 50%;
+            padding: 15px;
+        }
+
+            .financial-impact h1 {
+                color: #333;
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .metric-box {
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+            .metric-box h2 {
+                font-size: 16px;
+                margin: 0 0 10px 0;
+                color: #555;
+            }
+
+            .metric-box p {
+                font-size: 24px;
+                font-weight: bold;
+                margin: 0;
+            }
+
+        .income {
+            background-color: #e6f7e6; /* Verde pastel */
+            border: 1px solid #c8e6c9;
+        }
+
+        .costs {
+            background-color: #ffebee; /* Rosado/salmón pastel */
+            border: 1px solid #ffcdd2;
+        }
+
+        .profit {
+            background-color: #e3f2fd; /* Celeste pastel */
+            border: 1px solid #bbdefb;
+        }
+
+        .loss {
+            background-color: #fff3e0; /* Naranja pastel */
+            border: 1px solid #ffe0b2;
+        }
+
+        .emergency-measures {
+            width: 50%;
+            padding: 15px;
+        }
+
+            .emergency-measures h2 {
+                font-size: 20px;
+                color: #333;
+                margin-bottom: 15px;
+            }
+
+        .measures-list {
+            margin-bottom: 20px;
+        }
+
+        .measure-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+
+            .measure-item input[type="checkbox"] {
+                margin-right: 15px;
+                transform: scale(1.3);
+            }
+
+            .measure-item label {
+                font-size: 15px;
+                flex-grow: 1;
+            }
+
+        .accept-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+
+            .accept-button:hover {
+                background-color: #45a049;
+            }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <button onclick="location.href='@Url.Action("GerenteCrisis", "Home")'">🌸 Crisis</button>
+        <button onclick="location.href='@Url.Action("GerentePersonal", "Home")'">👥 Personal</button>
+        <button onclick="location.href='@Url.Action("GerenteResenas", "Home")'">💬 Reseñas</button>
+        <button class="active" onclick="location.href='@Url.Action("GerenteFinanciero", "Home")'">🔥 Financiero</button>
+        <button onclick="location.href='@Url.Action("GerenteComunicacion", "Home")'">📅 Comunicaciones</button>
+    </div>
+
+    <!-- Resumen -->
+    <div class="summary">
+        <div class="summary-box red">
+            <div>❗ Quejas Activas</div>
+            <h2>0</h2>
+        </div>
+        <div class="summary-box orange">
+            <div>💰 Ingresos Totales</div>
+            <h2>₡0</h2>
+        </div>
+        <div class="summary-box blue">
+            <div>👤 Personal Activo</div>
+            <h2>0</h2>
+        </div>
+        <div class="summary-box green">
+            <div>🛡️ Protocolos Activos</div>
+            <h2>0</h2>
+        </div>
+    </div>
+
+    <!-- Contenido principal dividido en dos columnas -->
+    <div class="content-container">
+        <!-- Columna izquierda - Impacto Financiero -->
+        <div class="financial-impact">
+            <h1>Impacto Financiero de la Crisis</h1>
+
+            <div class="metrics-grid">
+                <div class="metric-box income">
+                    <h2>Ingresos Actuales</h2>
+                    <p>₡0</p>
+                </div>
+                <div class="metric-box costs">
+                    <h2>Costos de Crisis</h2>
+                    <p>₡0</p>
+                </div>
+                <div class="metric-box profit">
+                    <h2>Ganancia Neta</h2>
+                    <p>₡0</p>
+                </div>
+                <div class="metric-box loss">
+                    <h2>Pérdida Proyectada</h2>
+                    <p>₡0</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Columna derecha - Medidas de Emergencia -->
+        <div class="emergency-measures">
+            <h2>⚡ Medidas Financieras de Emergencia</h2>
+
+            <div class="measures-list">
+                <div class="measure-item">
+                    <input type="checkbox" id="measure1">
+                    <label for="measure1">Activar Descuentos de Emergencia (20-50%)</label>
+                </div>
+
+                <div class="measure-item">
+                    <input type="checkbox" id="measure2" checked>
+                    <label for="measure2">Ofrecer Comida Gratis a Clientes Afectados</label>
+                </div>
+
+                <div class="measure-item">
+                    <input type="checkbox" id="measure3">
+                    <label for="measure3">Autorizar Compensaciones Monetarias</label>
+                </div>
+
+                <div class="measure-item">
+                    <input type="checkbox" id="measure4" checked>
+                    <label for="measure4">Generar Reporte de Pérdidas</label>
+                </div>
+
+                <div class="measure-item">
+                    <input type="checkbox" id="measure5">
+                    <label for="measure5">Activar Seguro de Responsabilidad</label>
+                </div>
+            </div>
+
+            <button class="accept-button">ACEPTAR MEDIDAS SELECCIONADAS</button>
+        </div>
+    </div>
+
+</body>
+</html>
+

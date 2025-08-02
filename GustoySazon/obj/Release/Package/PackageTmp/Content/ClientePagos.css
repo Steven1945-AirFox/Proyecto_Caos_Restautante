@@ -1,0 +1,244 @@
+﻿
+
+
+/* Estilo general */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 30px;
+    background: linear-gradient(to right, #fdfcfb, #e2d1c3);
+    background-image: url("https://images.unsplash.com/photo-1556742205-e10c9486e506?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"); 
+    color: #333;
+}
+
+/* Contenedor principal */
+.container {
+    max-width: 1000px;
+    margin: auto;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+}
+
+/* Título principal */
+h1 {
+    font-size: 2.2em;
+    color: #4b2e2e;
+    text-align: center;
+    margin-bottom: 35px;
+    border-bottom: 2px solid #e4c9a3;
+    padding-bottom: 10px;
+}
+
+/* Tabla de resumen */
+.resumen-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 35px;
+    font-size: 1em;
+}
+
+    .resumen-table th {
+        background-color: #a67c52;
+        color: white;
+        padding: 15px;
+    }
+
+    .resumen-table td {
+        padding: 14px;
+        border: 1px solid #ddd;
+    }
+
+    .resumen-table tr:nth-child(even) {
+        background-color: #f9f4ef;
+    }
+
+/* Títulos de sección */
+.section-title {
+    font-size: 1.4em;
+    color: #4b2e2e;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #e4c9a3;
+    padding-bottom: 5px;
+}
+
+/* Tarjetas de pago */
+.payment-methods {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.payment-card {
+    background: #f8f5f2;
+    border: 2px solid #d1bfa4;
+    border-radius: 10px;
+    padding: 15px;
+    width: 220px;
+    cursor: pointer;
+    transition: transform 0.3s ease, border-color 0.3s;
+}
+
+    .payment-card:hover {
+        transform: scale(1.03);
+        border-color: #a67c52;
+    }
+
+    .payment-card.selected {
+        background: #a67c52;
+        color: white;
+        border-color: #a67c52;
+        box-shadow: 0 0 10px rgba(166, 124, 82, 0.4);
+    }
+
+/* Botones de propina */
+.tip-options {
+    display: flex;
+    gap: 12px;
+    margin: 15px 0;
+    flex-wrap: wrap;
+}
+
+.tip-btn {
+    padding: 10px 20px;
+    border: 2px solid #d1bfa4;
+    background: #f8f5f2;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+    .tip-btn:hover,
+    .tip-btn.selected {
+        background: #a67c52;
+        color: white;
+        border-color: #a67c52;
+    }
+
+/* Propina personalizada */
+.custom-tip input {
+    width: 220px;
+    padding: 10px;
+    margin-top: 10px;
+    border: 2px solid #d1bfa4;
+    border-radius: 8px;
+    font-size: 1em;
+    background: #fffaf5;
+}
+
+/* Totales */
+.total-section {
+    background: #f4ede7;
+    padding: 25px;
+    border-radius: 15px;
+    margin: 30px 0;
+}
+
+.total-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.1em;
+    margin-bottom: 12px;
+}
+
+.final-total {
+    font-weight: bold;
+    font-size: 1.3em;
+    border-top: 2px solid #d1bfa4;
+    margin-top: 20px;
+    padding-top: 12px;
+}
+
+/* Botón de pago */
+.pay-btn {
+    background: #4b2e2e;
+    color: white;
+    border: none;
+    padding: 14px 25px;
+    font-size: 1.2em;
+    font-weight: bold;
+    border-radius: 10px;
+    width: 100%;
+    margin-top: 20px;
+    transition: background 0.3s ease;
+    box-shadow: 0 5px 15px rgba(75, 46, 46, 0.3);
+}
+
+    .pay-btn:hover {
+        background: #5f3b3b;
+    }
+
+/* Comentario reseña */
+#comentarioResena {
+    width: 100%;
+    min-height: 150px;
+    padding: 15px;
+    border: 2px solid #d1bfa4;
+    border-radius: 10px;
+    font-size: 1em;
+    background: #fffaf5;
+    margin-top: 10px;
+    box-sizing: border-box;
+}
+
+/* Reseña sección */
+.review-section {
+    background: #f9f4ef;
+    padding: 25px;
+    border-radius: 15px;
+    margin-top: 40px;
+    border: 1px solid #d1bfa4;
+}
+
+/* Botón enviar reseña */
+.submit-review {
+    background: #a67c52;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    margin-top: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+    .submit-review:hover {
+        background: #8c6239;
+    }
+
+/* Estrellas */
+#star-rating .star {
+    font-size: 2rem;
+    color: #c2b280;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+    #star-rating .star:hover,
+    #star-rating .star:hover ~ .star {
+        color: #e0c061;
+    }
+
+/* Mensajes */
+.mensaje-exito {
+    color: #2e7d32;
+    background: #e8f5e9;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 10px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.mensaje-error {
+    color: #c62828;
+    background: #ffebee;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 10px;
+    text-align: center;
+    font-weight: bold;
+}

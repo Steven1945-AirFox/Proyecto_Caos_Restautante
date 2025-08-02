@@ -1,0 +1,712 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Management System - Pedidos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+    <link href="~/Content/Ordenvg.css" rel="stylesheet" />
+
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-toggle" onclick="toggleSidebar()">
+                <i class="fas fa-chevron-left" id="toggleIcon"></i>
+            </div>
+
+            <div class="sidebar-header">
+                <i class="fas fa-utensils sidebar-logo"></i>
+                <span class="sidebar-title">Restaurant Manager</span>
+            </div>
+
+            <div class="sidebar-nav">
+                <a href="/Home/VistaGeneral" class="nav-item">
+                    <i class="fas fa-home"></i>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+                <a href="/Home/analisis" class="nav-item">
+                    <i class="fas fa-chart-bar"></i>
+                    <span class="nav-text">Análisis</span>
+                </a>
+                <a href="/Home/Personal" class="nav-item">
+                    <i class="fas fa-users"></i>
+                    <span class="nav-text">Personal</span>
+                </a>
+                <a href="/Home/Ordenes" class="nav-item active">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="nav-text">Pedidos</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span class="nav-text">Configuración</span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div>
+                    <h1 class="header-title">Gestión de Pedidos</h1>
+                    <p class="header-subtitle">Control de pedidos por áreas y estados</p>
+                </div>
+                <div class="header-actions">
+                    <div class="order-stats" id="orderStats">
+                        <!-- Dynamic content -->
+                    </div>
+                    <div class="view-toggle">
+                        <button class="active" onclick="switchView('kanban')">
+                            <i class="fas fa-columns"></i> Kanban
+                        </button>
+                        <button onclick="switchView('list')">
+                            <i class="fas fa-list"></i> Lista
+                        </button>
+                    </div>
+                    <div class="time-badge" id="currentTime"></div>
+                </div>
+            </header>
+
+            <!-- Alert -->
+            <div class="alert" id="alert">
+                <i class="fas fa-info-circle"></i>
+                <span id="alertMessage"></span>
+                <button class="alert-close" onclick="hideAlert()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <!-- Content -->
+            <div class="content">
+                <!-- Filters -->
+                <div class="filters">
+                    <div class="filter-group">
+                        <label for="statusFilter">Estado:</label>
+                        <select class="filter-select" id="statusFilter" onchange="applyFilters()">
+                            <option value="">Todos</option>
+                            <option value="pending">Pendiente</option>
+                            <option value="preparing">Preparando</option>
+                            <option value="ready">Listo</option>
+                            <option value="delivered">Entregado</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="priorityFilter">Prioridad:</label>
+                        <select class="filter-select" id="priorityFilter" onchange="applyFilters()">
+                            <option value="">Todas</option>
+                            <option value="high">Alta</option>
+                            <option value="medium">Media</option>
+                            <option value="low">Baja</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="tableFilter">Mesa:</label>
+                        <select class="filter-select" id="tableFilter" onchange="applyFilters()">
+                            <option value="">Todas</option>
+                            <option value="1">Mesa 1</option>
+                            <option value="2">Mesa 2</option>
+                            <option value="3">Mesa 3</option>
+                            <option value="4">Mesa 4</option>
+                            <option value="5">Mesa 5</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-outline btn-sm" onclick="clearFilters()">
+                        <i class="fas fa-times"></i> Limpiar
+                    </button>
+                    <button class="btn btn-primary btn-sm" onclick="refreshOrders()">
+                        <i class="fas fa-sync-alt"></i> Actualizar
+                    </button>
+                </div>
+
+                <!-- Area Tabs -->
+                <div class="area-tabs">
+                    <button class="tab-button active" onclick="switchArea('all')">
+                        <i class="fas fa-globe"></i> Todos los Pedidos
+                    </button>
+                    <button class="tab-button" onclick="switchArea('kitchen')">
+                        <i class="fas fa-fire"></i> Vista Cocina
+                    </button>
+                    <button class="tab-button" onclick="switchArea('service')">
+                        <i class="fas fa-concierge-bell"></i> Vista Meseros
+                    </button>
+                    <button class="tab-button" onclick="switchArea('bar')">
+                        <i class="fas fa-cocktail"></i> Vista Bar
+                    </button>
+                    <button class="tab-button" onclick="switchArea('management')">
+                        <i class="fas fa-user-tie"></i> Vista Gerencia
+                    </button>
+                </div>
+
+                <!-- Kanban View -->
+                <div id="kanbanView" class="kanban-view">
+                    <div class="kanban-board" id="kanbanBoard">
+                        <!-- Dynamic content -->
+                    </div>
+                </div>
+
+                <!-- List View -->
+                <div id="listView" class="order-list">
+                    <div class="section">
+                        <div class="section-content">
+                            <table class="order-table" id="orderTable">
+                                <thead>
+                                    <tr>
+                                        <th>Pedido</th>
+                                        <th>Mesa</th>
+                                        <th>Cliente</th>
+                                        <th>Items</th>
+                                        <th>Total</th>
+                                        <th>Estado</th>
+                                        <th>Tiempo</th>
+                                        <th>Prioridad</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="orderTableBody">
+                                    <!-- Dynamic content -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Detail Modal -->
+    <div class="modal-overlay" id="orderModal" onclick="closeModal(event)">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">Detalles del Pedido</h3>
+            </div>
+            <div class="modal-content" id="modalContent">
+                <!-- Dynamic content -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline" onclick="closeModal()">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="modalActionBtn" onclick="performOrderAction()">Acción</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Order Data
+        let orders = [
+            {
+                id: 'ORD-001',
+                table: 3,
+                customer: 'Juan Pérez',
+                items: [
+                    { name: 'Pizza Margherita', quantity: 2, price: 15.99 },
+                    { name: 'Coca Cola', quantity: 2, price: 2.50 }
+                ],
+                total: 36.98,
+                status: 'pending',
+                priority: 'high',
+                time: new Date(Date.now() - 5 * 60000), // 5 minutes ago
+                notes: 'Sin cebolla en la pizza',
+                assignedTo: 'kitchen',
+                waiter: 'Carlos Mendez'
+            },
+            {
+                id: 'ORD-002',
+                table: 1,
+                customer: 'María García',
+                items: [
+                    { name: 'Ensalada César', quantity: 1, price: 12.99 },
+                    { name: 'Agua', quantity: 1, price: 1.50 }
+                ],
+                total: 14.49,
+                status: 'preparing',
+                priority: 'medium',
+                time: new Date(Date.now() - 12 * 60000), // 12 minutes ago
+                notes: '',
+                assignedTo: 'kitchen',
+                waiter: 'Sofia Vargas'
+            },
+            {
+                id: 'ORD-003',
+                table: 5,
+                customer: 'Roberto Silva',
+                items: [
+                    { name: 'Mojito', quantity: 2, price: 8.99 },
+                    { name: 'Whisky Sour', quantity: 1, price: 12.99 }
+                ],
+                total: 30.97,
+                status: 'ready',
+                priority: 'low',
+                time: new Date(Date.now() - 8 * 60000), // 8 minutes ago
+                notes: 'Mojito con poco hielo',
+                assignedTo: 'bar',
+                waiter: 'Patricia Lopez'
+            },
+            {
+                id: 'ORD-004',
+                table: 2,
+                customer: 'Ana Martínez',
+                items: [
+                    { name: 'Hamburguesa Clásica', quantity: 1, price: 18.99 },
+                    { name: 'Papas Fritas', quantity: 1, price: 5.99 },
+                    { name: 'Cerveza', quantity: 1, price: 4.50 }
+                ],
+                total: 29.48,
+                status: 'delivered',
+                priority: 'medium',
+                time: new Date(Date.now() - 25 * 60000), // 25 minutes ago
+                notes: 'Término medio',
+                assignedTo: 'kitchen',
+                waiter: 'Carlos Mendez'
+            },
+            {
+                id: 'ORD-005',
+                table: 4,
+                customer: 'Luis Rodríguez',
+                items: [
+                    { name: 'Salmón Grillado', quantity: 1, price: 24.99 },
+                    { name: 'Vino Tinto', quantity: 1, price: 15.99 }
+                ],
+                total: 40.98,
+                status: 'preparing',
+                priority: 'high',
+                time: new Date(Date.now() - 18 * 60000), // 18 minutes ago
+                notes: 'Salmón bien cocido',
+                assignedTo: 'kitchen',
+                waiter: 'Sofia Vargas'
+            }
+        ];
+
+        let currentArea = 'all';
+        let currentView = 'kanban';
+        let filteredOrders = [...orders];
+
+        const statusConfig = {
+            pending: { label: 'Pendiente', color: '#f59e0b', icon: 'fas fa-clock' },
+            preparing: { label: 'Preparando', color: '#3b82f6', icon: 'fas fa-fire' },
+            ready: { label: 'Listo', color: '#10b981', icon: 'fas fa-check' },
+            delivered: { label: 'Entregado', color: '#6b7280', icon: 'fas fa-check-double' }
+        };
+
+        const priorityConfig = {
+            high: { label: 'Alta', color: '#ef4444' },
+            medium: { label: 'Media', color: '#f59e0b' },
+            low: { label: 'Baja', color: '#10b981' }
+        };
+
+        function renderOrderStats() {
+            const stats = {
+                pending: orders.filter(o => o.status === 'pending').length,
+                preparing: orders.filter(o => o.status === 'preparing').length,
+                ready: orders.filter(o => o.status === 'ready').length,
+                delivered: orders.filter(o => o.status === 'delivered').length
+            };
+
+            const container = document.getElementById('orderStats');
+            container.innerHTML = Object.entries(stats).map(([status, count]) => `
+                <div class="stat-badge ${status}">
+                    <i class="${statusConfig[status].icon}"></i>
+                    <span>${statusConfig[status].label}: ${count}</span>
+                </div>
+            `).join('');
+        }
+
+        function renderKanbanBoard() {
+            const container = document.getElementById('kanbanBoard');
+            const columns = ['pending', 'preparing', 'ready', 'delivered'];
+
+            container.innerHTML = columns.map(status => {
+                const columnOrders = filteredOrders.filter(order => order.status === status);
+
+                return `
+                    <div class="kanban-column">
+                        <div class="kanban-header">
+                            <div class="kanban-title">
+                                <i class="${statusConfig[status].icon}"></i>
+                                ${statusConfig[status].label}
+                            </div>
+                            <div class="kanban-count">${columnOrders.length}</div>
+                        </div>
+                        ${columnOrders.map(order => renderOrderCard(order)).join('')}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderOrderCard(order) {
+            const timeDiff = Math.floor((Date.now() - order.time.getTime()) / 60000);
+            const timeClass = timeDiff > 20 ? 'timer-danger' : timeDiff > 10 ? 'timer-warning' : '';
+
+            return `
+                <div class="order-card priority-${order.priority}" onclick="openOrderModal('${order.id}')">
+                    <div class="order-header">
+                        <div class="order-number">${order.id}</div>
+                        <div class="order-time">${timeDiff}m</div>
+                    </div>
+                    <div class="order-customer">Mesa ${order.table} - ${order.customer}</div>
+                    ${order.notes ? `<div class="order-notes"><i class="fas fa-sticky-note"></i> ${order.notes}</div>` : ''}
+                    <div class="order-timer ${timeClass}">
+                        <i class="fas fa-clock"></i>
+                        Hace ${timeDiff} minutos
+                    </div>
+                    <div class="order-items">
+                        ${order.items.slice(0, 2).map(item => `
+                            <div class="order-item">
+                                <span class="item-name">${item.name}</span>
+                                <span class="item-quantity">x${item.quantity}</span>
+                            </div>
+                        `).join('')}
+                        ${order.items.length > 2 ? `<div class="order-item"><span class="item-name">+${order.items.length - 2} más...</span></div>` : ''}
+                    </div>
+                    <div class="order-total">
+                        <span>Total:</span>
+                        <span>$${order.total.toFixed(2)}</span>
+                    </div>
+                    <div class="order-actions">
+                        ${getOrderActions(order)}
+                    </div>
+                </div>
+            `;
+        }
+
+        function getOrderActions(order) {
+            switch (order.status) {
+                case 'pending':
+                    return `
+                        <button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); updateOrderStatus('${order.id}', 'preparing')">
+                            <i class="fas fa-play"></i> Iniciar
+                        </button>
+                    `;
+                case 'preparing':
+                    return `
+                        <button class="btn btn-success btn-sm" onclick="event.stopPropagation(); updateOrderStatus('${order.id}', 'ready')">
+                            <i class="fas fa-check"></i> Listo
+                        </button>
+                    `;
+                case 'ready':
+                    return `
+                        <button class="btn btn-warning btn-sm" onclick="event.stopPropagation(); updateOrderStatus('${order.id}', 'delivered')">
+                            <i class="fas fa-truck"></i> Entregar
+                        </button>
+                    `;
+                case 'delivered':
+                    return `
+                        <button class="btn btn-outline btn-sm" onclick="event.stopPropagation(); archiveOrder('${order.id}')">
+                            <i class="fas fa-archive"></i> Archivar
+                        </button>
+                    `;
+                default:
+                    return '';
+            }
+        }
+
+        function renderOrderTable() {
+            const tbody = document.getElementById('orderTableBody');
+            tbody.innerHTML = filteredOrders.map(order => {
+                const timeDiff = Math.floor((Date.now() - order.time.getTime()) / 60000);
+
+                return `
+                    <tr onclick="openOrderModal('${order.id}')" style="cursor: pointer;">
+                        <td><strong>${order.id}</strong></td>
+                        <td>Mesa ${order.table}</td>
+                        <td>${order.customer}</td>
+                        <td>${order.items.length} items</td>
+                        <td>$${order.total.toFixed(2)}</td>
+                        <td>
+                            <span style="color: ${statusConfig[order.status].color}; font-weight: 500;">
+                                <i class="${statusConfig[order.status].icon}"></i>
+                                ${statusConfig[order.status].label}
+                            </span>
+                        </td>
+                        <td>${timeDiff}m</td>
+                        <td>
+                            <span style="color: ${priorityConfig[order.priority].color}; font-weight: 500;">
+                                ${priorityConfig[order.priority].label}
+                            </span>
+                        </td>
+                        <td>
+                            ${getOrderActions(order)}
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function switchView(view) {
+            currentView = view;
+
+            // Update toggle buttons
+            document.querySelectorAll('.view-toggle button').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Show/hide views
+            if (view === 'kanban') {
+                document.getElementById('kanbanView').style.display = 'block';
+                document.getElementById('listView').style.display = 'none';
+                renderKanbanBoard();
+            } else {
+                document.getElementById('kanbanView').style.display = 'none';
+                document.getElementById('listView').style.display = 'block';
+                renderOrderTable();
+            }
+        }
+
+        function switchArea(area) {
+            currentArea = area;
+
+            // Update tab buttons
+            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Filter orders based on area
+            applyFilters();
+        }
+
+        function applyFilters() {
+            let filtered = [...orders];
+
+            // Area filter
+            if (currentArea !== 'all') {
+                if (currentArea === 'kitchen') {
+                    filtered = filtered.filter(order =>
+                        order.assignedTo === 'kitchen' ||
+                        order.items.some(item => ['Pizza', 'Hamburguesa', 'Salmón', 'Ensalada'].some(food => item.name.includes(food)))
+                    );
+                } else if (currentArea === 'bar') {
+                    filtered = filtered.filter(order =>
+                        order.assignedTo === 'bar' ||
+                        order.items.some(item => ['Mojito', 'Whisky', 'Cerveza', 'Vino', 'Cocktail'].some(drink => item.name.includes(drink)))
+                    );
+                } else if (currentArea === 'service') {
+                    filtered = filtered.filter(order => order.status === 'ready' || order.status === 'delivered');
+                } else if (currentArea === 'management') {
+                    filtered = filtered.filter(order => order.priority === 'high' || order.total > 30);
+                }
+            }
+
+            // Status filter
+            const statusFilter = document.getElementById('statusFilter').value;
+            if (statusFilter) {
+                filtered = filtered.filter(order => order.status === statusFilter);
+            }
+
+            // Priority filter
+            const priorityFilter = document.getElementById('priorityFilter').value;
+            if (priorityFilter) {
+                filtered = filtered.filter(order => order.priority === priorityFilter);
+            }
+
+            // Table filter
+            const tableFilter = document.getElementById('tableFilter').value;
+            if (tableFilter) {
+                filtered = filtered.filter(order => order.table.toString() === tableFilter);
+            }
+
+            filteredOrders = filtered;
+
+            // Re-render current view
+            if (currentView === 'kanban') {
+                renderKanbanBoard();
+            } else {
+                renderOrderTable();
+            }
+
+            renderOrderStats();
+        }
+
+        function clearFilters() {
+            document.getElementById('statusFilter').value = '';
+            document.getElementById('priorityFilter').value = '';
+            document.getElementById('tableFilter').value = '';
+            applyFilters();
+        }
+
+        function updateOrderStatus(orderId, newStatus) {
+            const order = orders.find(o => o.id === orderId);
+            if (order) {
+                order.status = newStatus;
+                applyFilters();
+                showAlert(`Pedido ${orderId} actualizado a ${statusConfig[newStatus].label}`, 'success');
+            }
+        }
+
+        function archiveOrder(orderId) {
+            const orderIndex = orders.findIndex(o => o.id === orderId);
+            if (orderIndex !== -1) {
+                orders.splice(orderIndex, 1);
+                applyFilters();
+                showAlert(`Pedido ${orderId} archivado`, 'success');
+            }
+        }
+
+        function openOrderModal(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (!order) return;
+
+            const modal = document.getElementById('orderModal');
+            const title = document.getElementById('modalTitle');
+            const content = document.getElementById('modalContent');
+            const actionBtn = document.getElementById('modalActionBtn');
+
+            title.textContent = `Pedido ${order.id}`;
+
+            const timeDiff = Math.floor((Date.now() - order.time.getTime()) / 60000);
+
+            content.innerHTML = `
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                    <div>
+                        <h4 style="margin-bottom: 8px; color: var(--text-secondary);">Información del Pedido</h4>
+                        <p><strong>Mesa:</strong> ${order.table}</p>
+                        <p><strong>Cliente:</strong> ${order.customer}</p>
+                        <p><strong>Mesero:</strong> ${order.waiter}</p>
+                        <p><strong>Tiempo:</strong> Hace ${timeDiff} minutos</p>
+                    </div>
+                    <div>
+                        <h4 style="margin-bottom: 8px; color: var(--text-secondary);">Estado</h4>
+                        <p><strong>Estado:</strong> <span style="color: ${statusConfig[order.status].color}">${statusConfig[order.status].label}</span></p>
+                        <p><strong>Prioridad:</strong> <span style="color: ${priorityConfig[order.priority].color}">${priorityConfig[order.priority].label}</span></p>
+                        <p><strong>Asignado a:</strong> ${order.assignedTo}</p>
+                        <p><strong>Total:</strong> $${order.total.toFixed(2)}</p>
+                    </div>
+                </div>
+
+                ${order.notes ? `
+                    <div style="background: #fffbeb; border: 1px solid #fbbf24; border-radius: 6px; padding: 12px; margin-bottom: 20px;">
+                        <h4 style="margin-bottom: 8px; color: #92400e;"><i class="fas fa-sticky-note"></i> Notas Especiales</h4>
+                        <p style="color: #92400e; margin: 0;">${order.notes}</p>
+                    </div>
+                ` : ''}
+
+                <div>
+                    <h4 style="margin-bottom: 12px; color: var(--text-secondary);">Items del Pedido</h4>
+                    <div style="border: 1px solid var(--border); border-radius: 6px; overflow: hidden;">
+                        ${order.items.map(item => `
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; border-bottom: 1px solid var(--border);">
+                                <div>
+                                    <strong>${item.name}</strong>
+                                    <div style="font-size: 12px; color: var(--text-muted);">Cantidad: ${item.quantity}</div>
+                                </div>
+                                <div style="text-align: right;">
+                                    <div>$${item.price.toFixed(2)}</div>
+                                    <div style="font-size: 12px; color: var(--text-muted);">c/u</div>
+                                </div>
+                            </div>
+                        `).join('')}
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: var(--gray-50); font-weight: 600;">
+                            <span>Total:</span>
+                            <span>$${order.total.toFixed(2)}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Configure action button
+            const nextStatus = getNextStatus(order.status);
+            if (nextStatus) {
+                actionBtn.textContent = `Marcar como ${statusConfig[nextStatus].label}`;
+                actionBtn.onclick = () => {
+                    updateOrderStatus(order.id, nextStatus);
+                    closeModal();
+                };
+                actionBtn.style.display = 'inline-flex';
+            } else {
+                actionBtn.style.display = 'none';
+            }
+
+            modal.classList.add('show');
+        }
+
+        function getNextStatus(currentStatus) {
+            const statusFlow = {
+                'pending': 'preparing',
+                'preparing': 'ready',
+                'ready': 'delivered',
+                'delivered': null
+            };
+            return statusFlow[currentStatus];
+        }
+
+        function closeModal(event) {
+            if (event && event.target !== event.currentTarget) return;
+            document.getElementById('orderModal').classList.remove('show');
+        }
+
+        function performOrderAction() {
+            // This function is dynamically set in openOrderModal
+        }
+
+        function refreshOrders() {
+            // Simulate new orders or updates
+            showAlert('Pedidos actualizados', 'success');
+            applyFilters();
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const icon = document.getElementById('toggleIcon');
+
+            sidebar.classList.toggle('collapsed');
+
+            if (sidebar.classList.contains('collapsed')) {
+                icon.className = 'fas fa-chevron-right';
+            } else {
+                icon.className = 'fas fa-chevron-left';
+            }
+        }
+
+        function showAlert(message, type = 'success') {
+            const alert = document.getElementById('alert');
+            const alertMessage = document.getElementById('alertMessage');
+
+            alertMessage.textContent = message;
+            alert.className = `alert show ${type}`;
+
+            setTimeout(() => {
+                alert.classList.remove('show');
+            }, 4000);
+        }
+
+        function hideAlert() {
+            document.getElementById('alert').classList.remove('show');
+        }
+
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('currentTime').textContent =
+                now.toLocaleTimeString('es-ES', {
+                    hour12: false,
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            renderOrderStats();
+            renderKanbanBoard();
+
+            updateTime();
+            setInterval(updateTime, 1000);
+
+            // Update order times every minute
+            setInterval(() => {
+                if (currentView === 'kanban') {
+                    renderKanbanBoard();
+                } else {
+                    renderOrderTable();
+                }
+            }, 60000);
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

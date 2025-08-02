@@ -1,0 +1,6 @@
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon.BLL\obj\Debug\net8.0\GustoySazon.BLL.csproj.AssemblyReference.cache
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon.BLL\obj\Debug\net8.0\GustoySazon.BLL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon.BLL\obj\Debug\net8.0\GustoySazon.BLL.AssemblyInfoInputs.cache
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon.BLL\obj\Debug\net8.0\GustoySazon.BLL.AssemblyInfo.cs
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon.BLL\obj\Debug\net8.0\GustoySazon.BLL.csproj.CoreCompileInputs.cache
+C:\Users\zhado\OneDrive\Escritorio\GustoySazon\Gusto y Sazon\GustoySazon.BLL\obj\Debug\net8.0\GustoySazon.BLL.sourcelink.json

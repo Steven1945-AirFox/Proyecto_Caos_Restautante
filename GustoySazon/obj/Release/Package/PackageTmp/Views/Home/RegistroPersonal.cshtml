@@ -1,0 +1,128 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Personal</title>
+    <link href="~/Content/RegistroPersonal.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Registro de Personal</h1>
+            <p>Complete todos los campos para registrar un nuevo empleado</p>
+        </div>
+
+        <form class="registration-form" action="#" method="POST">
+            <div class="form-grid">
+                <div class="form-group full-width">
+                    <label for="nombreCompleto">
+                        Nombre Completo <span class="required">*</span>
+                    </label>
+                    <input type="text"
+                           id="nombreCompleto"
+                           name="nombreCompleto"
+                           placeholder="Ingrese el nombre completo"
+                           required
+                           minlength="2"
+                           maxlength="100">
+                </div>
+
+                <div class="form-group">
+                    <label for="identificacion">
+                        Identificación <span class="required">*</span>
+                    </label>
+                    <input type="text"
+                           id="identificacion"
+                           name="identificacion"
+                           placeholder="Número de identificación"
+                           required
+                           pattern="[0-9]{8,15}"
+                           title="Ingrese un número de identificación válido (8-15 dígitos)">
+                </div>
+
+                <div class="form-group">
+                    <label for="correo">
+                        Correo Electrónico <span class="required">*</span>
+                    </label>
+                    <input type="email"
+                           id="correo"
+                           name="correo"
+                           placeholder="ejemplo@correo.com"
+                           required>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="contrasena">
+                        Contraseña <span class="required">*</span>
+                    </label>
+                    <input type="password"
+                           id="contrasena"
+                           name="contrasena"
+                           placeholder="Contraseña segura"
+                           required
+                           minlength="8"
+                           title="Mínimo 8 caracteres">
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="rol">
+                        Rol <span class="required">*</span>
+                    </label>
+                    <select id="rol" name="rol" required>
+                        <option value="">Seleccione un rol</option>
+                        <option value="gerente">Gerente</option>
+                        <option value="Chef">Chef</option>        
+                        <option value="Mesero">Mesero</option>
+
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn">
+                Registrar Personal
+            </button>
+        </form>
+    </div>
+
+    <script>
+        // Validación adicional con JavaScript
+        document.querySelector('.registration-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Aquí puedes agregar validaciones adicionales
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+
+            // Ejemplo de validación
+            if (data.contrasena.length < 8) {
+                alert('La contraseña debe tener al menos 8 caracteres');
+                return;
+            }
+
+            // Simular envío exitoso
+            alert('Personal registrado exitosamente!');
+            console.log('Datos del formulario:', data);
+
+            // Aquí normalmente enviarías los datos al servidor
+            // this.submit();
+        });
+
+        // Validación en tiempo real para el campo de usuario
+        document.getElementById('usuario').addEventListener('input', function (e) {
+            const value = e.target.value;
+            const isValid = /^[a-zA-Z0-9_]+$/.test(value);
+
+            if (!isValid && value.length > 0) {
+                e.target.style.borderColor = '#e74c3c';
+            } else {
+                e.target.style.borderColor = '#e1e5e9';
+            }
+        });
+    </script>
+</body>
+</html>

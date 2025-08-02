@@ -1,0 +1,246 @@
+﻿
+@{
+    ViewBag.Title = "GerentePersonal";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>Panel de Personal - Gerente</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+        }
+
+        .navbar {
+            display: flex;
+            background-color: #f0fafa;
+            padding: 10px;
+            justify-content: space-around;
+            border-bottom: 1px solid #ccc;
+        }
+
+            .navbar button {
+                background: none;
+                border: none;
+                font-weight: bold;
+                font-size: 14px;
+                cursor: pointer;
+                padding: 10px;
+            }
+
+                .navbar button.active {
+                    border-bottom: 2px solid #6b46c1;
+                    color: #6b46c1;
+                }
+
+        .summary {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+        }
+
+        .summary-box {
+            border: 1px solid #eee;
+            border-radius: 10px;
+            padding: 15px;
+            width: 20%;
+            text-align: center;
+        }
+
+            .summary-box.red {
+                border-color: #ffcccc;
+                color: #e60000;
+            }
+
+            .summary-box.orange {
+                border-color: #ffddaa;
+                color: #ff9900;
+            }
+
+            .summary-box.blue {
+                border-color: #b3d9ff;
+                color: #0077cc;
+            }
+
+            .summary-box.green {
+                border-color: #cceedd;
+                color: #00aa66;
+            }
+
+        .content {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        .estado-personal {
+            width: 60%;
+        }
+
+        .controles {
+            width: 35%;
+        }
+
+        .estado-card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+        }
+
+            .estado-card h3 {
+                margin: 0;
+                font-size: 18px;
+            }
+
+            .estado-card .rol {
+                color: #777;
+                font-size: 14px;
+            }
+
+            .estado-card .estado {
+                font-size: 14px;
+                margin-top: 5px;
+            }
+
+        .barra-estres {
+            height: 10px;
+            background-color: #eee;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+
+        .nivel-estres {
+            height: 100%;
+            border-radius: 5px;
+        }
+
+        .estres-bajo {
+            background-color: #00cc66;
+        }
+
+        .estres-medio {
+            background-color: #ffcc00;
+        }
+
+        .estres-alto {
+            background-color: #ff6666;
+        }
+
+        .controles h2 {
+            margin-bottom: 10px;
+        }
+
+        .controles button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .secundario {
+            background-color: #f1f1f1;
+        }
+
+        .primario {
+            background-color: #e6005c;
+            color: white;
+        }
+
+        .icono {
+            margin-right: 5px;
+        }
+
+        .grupo-controles {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <button onclick="location.href='@Url.Action("GerenteCrisis", "Home")'">🌸 Crisis</button>
+        <button class="active" onclick="location.href='@Url.Action("GerentePersonal", "Home")'">👥 Personal</button>
+        <button onclick="location.href='@Url.Action("GerenteResenas", "Home")'">💬 Reseñas</button>
+        <button onclick="location.href='@Url.Action("GerenteFinanciero", "Home")'">🔥 Financiero</button>
+        <button onclick="location.href='@Url.Action("GerenteComunicacion", "Home")'">📅 Comunicaciones</button>
+    </div>
+
+    <!-- Resumen -->
+    <div class="summary">
+        <div class="summary-box red">
+            <div>❗ Quejas Activas</div>
+            <h2>0</h2>
+        </div>
+        <div class="summary-box orange">
+            <div>💰 Ingresos Totales</div>
+            <h2>₡0</h2>
+        </div>
+        <div class="summary-box blue">
+            <div>👤 Personal Activo</div>
+            <h2>0</h2>
+        </div>
+        <div class="summary-box green">
+            <div>🛡️ Protocolos Activos</div>
+            <h2>0</h2>
+        </div>
+    </div>
+
+    <!-- Contenido -->
+    <div class="content">
+
+        <!-- Estado del Personal -->
+        <div class="estado-personal">
+            <h2>🧑‍🍳 Estado del Personal</h2>
+
+            @* Iterar sobre lista de empleados desde base de datos *@
+            @* Ejemplo:
+                @foreach (var p in Model.Personal)
+                {
+                    var color = p.Estrés < 40 ? "estres-bajo" : p.Estrés < 70 ? "estres-medio" : "estres-alto";
+                <div class="estado-card">
+                    <h3><span style="color:@p.Color">●</span> @p.Nombre</h3>
+                    <div class="rol">@p.Rol - @p.Horario</div>
+                    <div class="estado">Estado: @p.Estado</div>
+                    <div class="estado">Nivel de Estrés</div>
+                    <div class="barra-estres">
+                        <div class="nivel-estres @color" style="width:@p.Estrés%"></div>
+                    </div>
+                    <div class="estado">@p.Estrés%</div>
+                </div>
+                }
+            *@
+
+        </div>
+
+        <!-- Controles -->
+        <div class="controles">
+            <h2>⚙️ Controles de Personal</h2>
+
+            <div class="grupo-controles">
+                <button class="secundario">👥 Llamar Refuerzos</button>
+                <button class="secundario">⏰ Autorizar Horas Extra</button>
+                <button class="secundario">⛔ Suspender Descansos</button>
+                <button class="secundario">🎯 Redistribuir Tareas</button>
+            </div>
+
+            <h3 style="margin-top: 20px;">Acciones Rápidas</h3>
+            <button class="primario">👑 Activar Protocolo "Todos a Trabajar"</button>
+            <button class="secundario">📞 Llamar a Todo el Personal Disponible</button>
+        </div>
+    </div>
+
+</body>
+</html>

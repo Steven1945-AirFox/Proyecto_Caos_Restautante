@@ -1,0 +1,191 @@
+﻿
+@{
+    ViewBag.Title = "GerenteResenas";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>Reseñas del Cliente - Gerente</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+        }
+
+        .navbar {
+            display: flex;
+            background-color: #f0fafa;
+            padding: 10px;
+            justify-content: space-around;
+            border-bottom: 1px solid #ccc;
+        }
+
+            .navbar button {
+                background: none;
+                border: none;
+                font-weight: bold;
+                font-size: 14px;
+                cursor: pointer;
+                padding: 10px;
+            }
+
+                .navbar button.active {
+                    border-bottom: 2px solid #d63384;
+                    color: #d63384;
+                }
+
+        .summary {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+        }
+
+        .summary-box {
+            border: 1px solid #eee;
+            border-radius: 10px;
+            padding: 15px;
+            width: 20%;
+            text-align: center;
+        }
+
+            .summary-box.red {
+                border-color: #ffcccc;
+                color: #e60000;
+            }
+
+            .summary-box.orange {
+                border-color: #ffddaa;
+                color: #ff9900;
+            }
+
+            .summary-box.blue {
+                border-color: #b3d9ff;
+                color: #0077cc;
+            }
+
+            .summary-box.green {
+                border-color: #cceedd;
+                color: #00aa66;
+            }
+
+        .contenido {
+            padding: 20px;
+        }
+
+        .titulo-resenas {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .reseña {
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+        }
+
+            .reseña.negativa {
+                background-color: #ffe6e6;
+            }
+
+            .reseña.positiva {
+                background-color: #eaffea;
+            }
+
+        .reseña-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .mesa {
+            font-weight: bold;
+        }
+
+        .estrella {
+            color: gold;
+            margin-left: 5px;
+        }
+
+        .boton-informe {
+            display: block;
+            margin: 30px auto;
+            padding: 10px 20px;
+            background-color: #ffeeba;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <button onclick="location.href='@Url.Action("GerenteCrisis", "Home")'">🌸 Crisis</button>
+        <button onclick="location.href='@Url.Action("GerentePersonal", "Home")'">👥 Personal</button>
+        <button class="active" onclick="location.href='@Url.Action("GerenteResenas", "Home")'">💬 Reseñas</button>
+        <button onclick="location.href='@Url.Action("GerenteFinanciero", "Home")'">🔥 Financiero</button>
+        <button onclick="location.href='@Url.Action("GerenteComunicacion", "Home")'">📅 Comunicaciones</button>
+    </div>
+
+    <!-- Resumen -->
+    <div class="summary">
+        <div class="summary-box red">
+            <div>❗ Quejas Activas</div>
+            <h2>0</h2>
+        </div>
+        <div class="summary-box orange">
+            <div>💰 Ingresos Totales</div>
+            <h2>₡0</h2>
+        </div>
+        <div class="summary-box blue">
+            <div>👤 Personal Activo</div>
+            <h2>0</h2>
+        </div>
+        <div class="summary-box green">
+            <div>🛡️ Protocolos Activos</div>
+            <h2>0</h2>
+        </div>
+    </div>
+
+    <!-- Contenido -->
+    <div class="contenido">
+        <div class="titulo-resenas">
+            <h2>💬 Gestión de Reseñas del Cliente</h2>
+            <div>Promedio: <strong>0/5</strong> ⭐</div>
+        </div>
+
+        @* Iteración dinámica: Cuando tengas datos, descomenta este bloque *@
+        @*
+            @foreach (var r in Model.Resenas) {
+                var clase = r.Calificacion >= 4 ? "reseña positiva" : "reseña negativa";
+            <div class="@clase reseña">
+                <div class="reseña-header">
+                    <span class="mesa" style="color:@(r.Calificacion >= 4 ? "green" : "red")">● Mesa @r.Numero</span>
+                    <span>@r.Hora</span>
+                </div>
+                <div>Calificación de la mesa:
+                    @for (int i = 1; i <= 5; i++) {
+                        <span class="estrella">@((i <= r.Calificacion) ? "★" : "☆")</span>
+                    }
+                </div>
+                <p>@r.Comentario</p>
+            </div>
+            }
+        *@
+
+        <!-- Botón para informe -->
+        <button class="boton-informe">📄 Crear Informe de Reseñas</button>
+    </div>
+
+</body>
+</html>

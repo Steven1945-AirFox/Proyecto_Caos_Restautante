@@ -1,0 +1,230 @@
+﻿
+@{
+    ViewBag.Title = "GerenteCrisis";
+}
+
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>Panel de Crisis - Gerente</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+        }
+
+        .navbar {
+            display: flex;
+            background-color: #f0fafa;
+            padding: 10px;
+            justify-content: space-around;
+            border-bottom: 1px solid #ccc;
+        }
+
+            .navbar button {
+                background: none;
+                border: none;
+                font-weight: bold;
+                font-size: 14px;
+                cursor: pointer;
+                padding: 10px;
+            }
+
+                .navbar button.active {
+                    border-bottom: 2px solid #ff4081;
+                    color: #ff4081;
+                }
+
+        .summary {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+        }
+
+        .summary-box {
+            border: 1px solid #eee;
+            border-radius: 10px;
+            padding: 15px;
+            width: 20%;
+            text-align: center;
+        }
+
+            .summary-box.red {
+                border-color: #ffcccc;
+                color: #e60000;
+            }
+
+            .summary-box.orange {
+                border-color: #ffddaa;
+                color: #ff9900;
+            }
+
+            .summary-box.blue {
+                border-color: #b3d9ff;
+                color: #0077cc;
+            }
+
+            .summary-box.green {
+                border-color: #cceedd;
+                color: #00aa66;
+            }
+
+        .content {
+            display: flex;
+            padding: 20px;
+            justify-content: space-between;
+        }
+
+        .acciones, .notificaciones {
+            width: 48%;
+        }
+
+            .acciones h2, .notificaciones h2 {
+                margin-bottom: 10px;
+            }
+
+        .accion-card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+            .accion-card h3 {
+                margin: 0;
+            }
+
+            .accion-card .estado {
+                float: right;
+                background-color: #000;
+                color: white;
+                padding: 3px 8px;
+                border-radius: 10px;
+                font-size: 12px;
+            }
+
+            .accion-card .descripcion {
+                margin: 10px 0;
+                font-size: 14px;
+            }
+
+            .accion-card .beneficio {
+                color: green;
+                font-size: 13px;
+            }
+
+            .accion-card button {
+                background-color: #000;
+                color: white;
+                border: none;
+                padding: 10px;
+                width: 100%;
+                border-radius: 5px;
+                cursor: pointer;
+                font-weight: bold;
+            }
+
+        .notificacion {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+        }
+
+            .notificacion .icono {
+                margin-right: 8px;
+            }
+
+            .notificacion span:last-child {
+                color: #888;
+                font-size: 12px;
+            }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <button class="active" onclick="location.href='@Url.Action("GerenteCrisis", "Home")'">🌸 Crisis</button>
+        <button onclick="location.href='@Url.Action("GerentePersonal", "Home")'">👥 Personal</button>
+        <button onclick="location.href='@Url.Action("GerenteResenas", "Home")'">💬 Reseñas</button>
+        <button onclick="location.href='@Url.Action("GerenteFinanciero", "Home")'">🔥 Financiero</button>
+        <button onclick="location.href='@Url.Action("GerenteComunicacion", "Home")'">📅 Comunicaciones</button>
+    </div>
+
+    <!-- Resumen -->
+    <div class="summary">
+        <div class="summary-box red">
+            <div>❗ Quejas Activas</div>
+            <h2>@* Aquí irá el número de quejas desde la base de datos *@ 0</h2>
+        </div>
+        <div class="summary-box orange">
+            <div>💰 Ingresos Totales</div>
+            <h2>@* Aquí irá el ingreso total desde la base de datos *@ ₡0</h2>
+        </div>
+        <div class="summary-box blue">
+            <div>👤 Personal Activo</div>
+            <h2>@* Aquí irá el número de empleados activos *@ 0</h2>
+        </div>
+        <div class="summary-box green">
+            <div>🛡️ Protocolos Activos</div>
+            <h2>@* Aquí irá el número de protocolos activos *@ 0</h2>
+        </div>
+    </div>
+
+    <!-- Contenido -->
+    <div class="content">
+        <!-- Acciones -->
+        <div class="acciones">
+            <h2>⚡ Acciones de Crisis Disponibles</h2>
+
+            <div class="accion-card">
+                <h3>Contratar Personal Temporal <span class="estado">Disponible</span></h3>
+                <div class="descripcion">
+                    Llamar a 3 empleados de emergencia<br>
+                    Costo: ₡500 <span style="float: right;">Duración: 120min</span>
+                </div>
+                <div class="beneficio">Reduce tiempo de espera en 40%</div>
+                <button>EJECUTAR</button>
+            </div>
+
+            <div class="accion-card">
+                <h3>Cerrar Sección del Restaurante <span class="estado">Disponible</span></h3>
+                <div class="descripcion">
+                    Cerrar 30% de las mesas para concentrar servicio<br>
+                    Costo: ₡0 <span style="float: right;">Duración: 60min</span>
+                </div>
+                <div class="beneficio">Mejora eficiencia del personal en 60%</div>
+                <button>EJECUTAR</button>
+            </div>
+        </div>
+
+        <!-- Notificaciones -->
+        <div class="notificaciones">
+            <h2>🔔 Notificaciones en Tiempo Real</h2>
+
+            @* Aquí se mostrarán las notificaciones cargadas desde la base de datos *@
+            @* Ejemplo de iteración futura:
+                @foreach (var noti in Model.Notificaciones)
+                {
+                    <div class="notificacion">
+                        <span>@noti.Mensaje</span>
+                        <span>@noti.Hora</span>
+                    </div>
+                }
+            *@
+
+        </div>
+    </div>
+
+</body>
+</html>

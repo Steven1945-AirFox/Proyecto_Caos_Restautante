@@ -1,0 +1,379 @@
+﻿:root {
+    --crema-claro: rgb(246, 242, 242, 0.55);
+    --crema-medio: #ffe8c3;
+    --crema-oscuro: #d7b98e;
+    --texto-principal: #5a4631;
+    --texto-secundario: #7a684f;
+    --input-bg: #fff4e1;
+    --input-border: #d7b98e;
+    --input-focus: #b98e4f;
+    --btn-bg: linear-gradient(90deg, #f6d365, #fda085);
+    --btn-hover: linear-gradient(90deg, #fda085, #f6d365);
+    --btn-focus: #fda085; 
+    --sombra: rgba(0, 0, 0, 0.12);
+    --radio: 10px;
+    --transition: all 0.3s ease;
+    --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--font-main);
+    color: var(--texto-principal);
+    text-align: center;
+}
+
+body {
+    margin: 0;
+    font-family: var(--font-main);
+    background-color: var(--crema-claro);
+    background-image: url("https://images.unsplash.com/photo-1543353071-10c8ba85a904?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 70px;
+}
+
+
+.body-content {
+    margin-top: 0;
+}
+
+
+/* Navbar / banner superior */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    background-color: var(--crema-claro);
+    border-bottom: 2px solid var(--crema-oscuro);
+    box-shadow: 0 2px 8px var(--sombra);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    z-index: 1000;
+}
+
+    .navbar .logo {
+        font-weight: 900;
+        font-size: 1.8rem;
+        color: var(--texto-principal);
+        user-select: none;
+        cursor: default;
+    }
+
+    .navbar nav {
+        display: flex;
+        gap: 1.4rem;
+        font-weight: 600;
+        font-size: 1rem;
+    }
+
+        .navbar nav a {
+            color: var(--texto-secundario);
+            text-decoration: none;
+            padding: 0.6rem 0.8rem;
+            border-radius: var(--radio);
+            transition: var(--transition);
+            user-select: none;
+        }
+
+            .navbar nav a:hover,
+            .navbar nav a:focus {
+                background: var(--crema-medio);
+                color: var(--texto-principal);
+                outline: none;
+            }
+
+/* Contenedor principal */
+.body-content {
+    background-color: rgb(255, 249, 249, 0.88);
+    padding: 3rem 4rem;
+    border-radius: var(--radio);
+    box-shadow: 0 6px 20px var(--sombra);
+    max-width: 700px;
+    margin: 2rem auto 3rem auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Para centrar el contenido interno */
+}
+
+    /* Título */
+    .body-content > h1 {
+        margin-bottom: 2rem;
+        font-weight: 700;
+        font-size: 2rem;
+        color: var(--texto-principal);
+        text-align: center;
+    }
+
+/* Formulario */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.8rem;
+    width: 100%;
+    max-width: 500px; /* Limita ancho total del form para inputs y botones */
+    align-items: center;
+}
+
+/* Labels */
+label {
+    display: block;
+    margin-bottom: 0.6rem;
+    font-weight: 600;
+    color: var(--texto-secundario);
+    text-align: center; /* Centrar textos */
+    width: 100%;
+}
+
+/* Inputs y selects */
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="password"], 
+select {
+    width: 100%;
+    padding: 0.7rem 1rem;
+    border: 1.8px solid var(--input-border);
+    border-radius: var(--radio);
+    background-color: var(--input-bg);
+    color: var(--texto-principal);
+    font-size: 1rem;
+    transition: var(--transition);
+    text-align: center;
+    box-sizing: border-box;
+}
+
+    input[type="text"]:focus,
+    input[type="number"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus,
+    select:focus {
+        border-color: var(--input-focus);
+        outline: none;
+        box-shadow: 0 0 6px var(--input-focus);
+    }
+
+
+/* Selector de asientos */
+.seats-selector {
+    position: relative;
+    width: 100%;
+}
+
+.seats-toggle {
+    cursor: pointer;
+    padding: 0.7rem 1rem;
+    border: 1.8px solid var(--input-border);
+    border-radius: var(--radio);
+    background-color: var(--input-bg);
+    color: var(--texto-principal);
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: var(--transition);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+    .seats-toggle:hover {
+        background-color: var(--crema-medio);
+    }
+
+.seats-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 0.3rem);
+    left: 0;
+    width: 100%;
+    background: rgb(255, 249, 249, 0.88);
+    border: 1.8px solid var(--input-border);
+    border-radius: var(--radio);
+    box-shadow: 0 5px 15px var(--sombra);
+    z-index: 10;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+    .seats-dropdown.show {
+        display: block;
+    }
+
+    .seats-dropdown div {
+        padding: 0.7rem 1rem;
+        cursor: pointer;
+        color: var(--texto-principal);
+        font-weight: 500;
+        transition: background-color 0.2s ease;
+    }
+
+        .seats-dropdown div:hover {
+            background-color: var(--crema-medio);
+        }
+
+/* Botones Añadir Tarjeta y Enviar */
+.add-card-btn,
+.submit-btn {
+    background: var(--btn-bg);
+    border: none;
+    color: white;
+    padding: 1rem;
+    border-radius: var(--radio);
+    cursor: pointer;
+    font-weight: 700;
+    width: 100%;
+    font-size: 1rem;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-sizing: border-box;
+}
+
+    .add-card-btn:hover,
+    .submit-btn:hover {
+        background: var(--btn-hover);
+    }
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(90, 70, 49, 0.75);
+    z-index: 1500;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: rgb(255, 249, 249, 0.88);
+    padding: 2rem 2.5rem;
+    border-radius: var(--radio);
+    max-width: 450px;
+    width: 90%;
+    box-shadow: 0 8px 20px var(--sombra);
+    text-align: center;
+}
+
+/* Título modal */
+.modal-title {
+    font-weight: 700;
+    font-size: 1.6rem;
+    margin-bottom: 1.5rem;
+    color: var(--texto-principal);
+}
+
+/* Tipos de tarjeta */
+.card-types {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    justify-content: center;
+}
+
+.card-type {
+    border: 2.5px solid transparent;
+    border-radius: var(--radio);
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    background-color: var(--input-bg);
+    user-select: none;
+    filter: brightness(0.85);
+}
+
+    .card-type img {
+        height: 30px;
+        user-select: none;
+    }
+
+    .card-type.selected {
+        border-color: var(--btn-focus);
+        background-color: var(--btn-hover);
+        color: white;
+        filter: brightness(1);
+        box-shadow: 0 0 12px var(--btn-bg);
+    }
+
+/* Inputs del modal */
+.modal-content input[type="text"] {
+    margin-bottom: 1.2rem;
+    padding: 0.6rem 1rem;
+    border: 1.5px solid var(--input-border);
+    border-radius: var(--radio);
+    background: var(--input-bg);
+    color: var(--texto-principal);
+    font-size: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+    .modal-content input[type="text"]:focus {
+        border-color: var(--input-focus);
+        outline: none;
+        box-shadow: 0 0 6px var(--input-focus);
+    }
+
+/* Botones modal */
+.modal-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.modal-btn {
+    padding: 0.6rem 1.5rem;
+    border-radius: var(--radio);
+    cursor: pointer;
+    border: none;
+    font-weight: 700;
+    transition: var(--transition);
+}
+
+    .modal-btn.cancel {
+        background: var(--crema-medio);
+        color: var(--texto-principal);
+    }
+
+        .modal-btn.cancel:hover {
+            background: var(--crema-oscuro);
+            color: white;
+        }
+
+    .modal-btn.add {
+        background: var(--btn-bg);
+        color: white;
+    }
+
+        .modal-btn.add:hover {
+            background: var(--btn-hover);
+        }
+
+/* Iconos */
+.fas,
+.far {
+    pointer-events: none;
+}
