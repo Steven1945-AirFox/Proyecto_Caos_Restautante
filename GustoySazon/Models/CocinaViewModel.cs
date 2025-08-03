@@ -22,6 +22,12 @@ namespace GustoySazon.Models
         // Listas para la vista
         public List<OrdenModel> Ordenes { get; set; } = new List<OrdenModel>();
         public List<EquipoViewModel> Equipos { get; set; } = new List<EquipoViewModel>();
+
+
+
+        //Para las ordenes de la cocina
+
+        public List<OrdenModelcocina> Ordenescocina { get; set; }
     }
 
     public class EquipoViewModel
@@ -31,4 +37,22 @@ namespace GustoySazon.Models
         public int Capacidad { get; set; } // 0 a 5
         public int Temperatura { get; set; } // en °C
     }
+
+
+
+
+
+
+    public class OrdenModelcocina
+    {
+        public int Id { get; set; }
+        public int MesaId { get; set; }
+        public string NombreComida { get; set; }
+        public int Cantidad { get; set; }
+        public decimal PrecioTotal { get; set; }
+        public string Estado { get; set; }
+    }
+
+
+
 }

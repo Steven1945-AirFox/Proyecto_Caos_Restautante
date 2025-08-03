@@ -218,6 +218,150 @@
                 color: #00796b;
                 font-weight: bold;
             }
+
+
+
+
+
+
+
+
+
+
+        /* Estilo mejorado para la tabla de órdenes */
+        .tabla-ordenes-cocina {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 20px 0;
+            font-size: 14px;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+            /* Encabezados con color pastel suave */
+            .tabla-ordenes-cocina thead {
+                background: linear-gradient(135deg, #a8e6cf, #dcedc1);
+                color: #2c3e50;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                font-weight: 600;
+            }
+
+            .tabla-ordenes-cocina th {
+                padding: 15px;
+                text-align: left;
+                font-weight: 600;
+                border-bottom: 2px solid #fff;
+            }
+
+            /* Efecto hover para filas */
+            .tabla-ordenes-cocina tbody tr {
+                transition: all 0.2s ease;
+            }
+
+                .tabla-ordenes-cocina tbody tr:hover {
+                    background-color: #f5f9f7;
+                }
+
+            .tabla-ordenes-cocina td {
+                padding: 12px 15px;
+                border-bottom: 1px solid #e8f4ea;
+                vertical-align: middle;
+            }
+
+            .tabla-ordenes-cocina tbody tr:last-child td {
+                border-bottom: none;
+            }
+
+        /* Estilos mejorados para los estados */
+        .estado-pendiente {
+            background-color: #fff8e1;
+            color: #ff8f00;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: 500;
+            display: inline-block;
+            font-size: 13px;
+        }
+
+        .estado-preparacion {
+            background-color: #e3f2fd;
+            color: #1976d2;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: 500;
+            display: inline-block;
+            font-size: 13px;
+        }
+
+        .estado-listo {
+            background-color: #e8f5e9;
+            color: #388e3c;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: 500;
+            display: inline-block;
+            font-size: 13px;
+        }
+
+        /* Botón con color pastel armónico */
+        .btn-marcar-listo {
+            background-color: #b2dfdb;
+            color: #00695c;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            font-size: 13px;
+        }
+
+            .btn-marcar-listo:hover {
+                background-color: #80cbc4;
+                transform: translateY(-1px);
+                box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            .btn-marcar-listo:active {
+                transform: translateY(0);
+            }
+
+        /* Ícono de listo */
+        .icono-listo {
+            color: #4caf50;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        /* Mensaje cuando no hay órdenes */
+        .sin-ordenes {
+            text-align: center;
+            padding: 25px;
+            color: #78909c;
+            font-style: italic;
+            background-color: #fafafa;
+        }
+
+        /* Efecto sutil para filas pares */
+        .tabla-ordenes-cocina tbody tr:nth-child(even) {
+            background-color: #f8fbfa;
+        }
+
+
+
+
+
+
+
+
+
+
     </style>
     @*PARTE AGREGADA POR MARLON NO TOCAR*@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
@@ -232,13 +376,7 @@
             <h2>Chef: Josue Waterhouse</h2>
             <img src="https://cdn-icons-png.flaticon.com/512/2922/2922065.png" width="50" />
         </div>
-        <div class="tabs">
-            <button onclick="showTab('ordenes')">Órdenes</button>
-            <button onclick="showTab('equipos')">Equipos</button>
-            <button onclick="showTab('ingredientes')">Ingredientes</button>
-            <button onclick="showTab('comunicacion')">Comunicación</button>
-            <button onclick="showTab('emergencia')">Emergencia</button>
-        </div>
+
 
         <div class="alertas">
             <div class="alerta">
@@ -289,10 +427,89 @@
             <button onclick="showTab('emergencia')">Emergencia</button>
         </div>
 
+
+
+
+
+
+
+
+
+
+        <!-- ÓRDENES -->
+        <!--Modificado por Steven -->
         <!-- ÓRDENES -->
         <div id="ordenesSection" class="cards active">
-            <div class="card vacio">No hay órdenes activas por ahora.</div>
+            <table class="tabla-ordenes-cocina">
+                <thead>
+                    <tr>
+                        <th>Mesa</th>
+                        <th>Platillo</th>
+                        <th>Cantidad</th>
+                        <th>Precio Total</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Ordenes != null && Model.Ordenescocina.Any())
+                    {
+                        foreach (var orden in Model.Ordenescocina)
+                        {
+                            <tr>
+                                <td>@orden.MesaId</td>
+                                <td>@orden.NombreComida</td>
+                                <td>@orden.Cantidad</td>
+                                <td>@orden.PrecioTotal.ToString("C")</td>
+                                <td>
+                                    @if (orden.Estado == "Pendiente")
+                                    {
+                                        <span class="estado-pendiente">@orden.Estado</span>
+                                    }
+                                    else if (orden.Estado == "En preparación")
+                                    {
+                                        <span class="estado-preparacion">@orden.Estado</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="estado-listo">@orden.Estado</span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (orden.Estado != "Platillo Listo")
+                                    {
+                                        <button class="btn-marcar-listo" onclick="marcarComoListo(@orden.Id)">Marcar como listo</button>
+                                    }
+                                    else
+                                    {
+                                        <span class="icono-listo">✅ Listo</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="6" class="sin-ordenes">No hay órdenes activas por ahora.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         <!-- EQUIPOS -->
         <div id="equiposSection" class="cards">
@@ -422,7 +639,7 @@
                 card.innerHTML = `
             <h3 style="color: #007bff; margin-bottom: 8px;">🚨 ${titulo}</h3>
             <p><strong>${s.severity?.toUpperCase() || ''}</strong>: ${s.text || ''}</p>
-            <button onclick="confirmarSolucion('${eventoId}', '${s.severity}')" 
+            <button onclick="confirmarSolucion('${eventoId}', '${s.severity}')"
                     style="margin-top: 10px; background: #007bff; color: white; padding: 8px 12px; border: none; border-radius: 5px; cursor: pointer;">
                 Aplicar Solución
             </button>
@@ -445,6 +662,34 @@
                 });
         }
     @*ACA TERMINA LO DE MARLON*@
+
+
+
+
+        /* Script de Steven para las Ordenes del cliente */
+
+
+    function marcarComoListo(ordenId) {
+    $.ajax({
+        url: '@Url.Action("MarcarOrdenComoLista", "Home")',
+        type: 'POST',
+        data: { id: ordenId },
+        success: function (response) {
+            if (response.success) {
+                // Recargar la página para ver los cambios
+                location.reload();
+            } else {
+                alert('Error al actualizar el estado: ' + response.message);
+            }
+        },
+        error: function () {
+            alert('Error al comunicarse con el servidor');
+        }
+            });
+     }
+
+
+
 
     </script>
 </body>

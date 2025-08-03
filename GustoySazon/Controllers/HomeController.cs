@@ -28,7 +28,7 @@ namespace GustoySazon.Controllers
     {
 
         private string connectionString = ConfigurationManager.ConnectionStrings["GustoySazonDB"].ConnectionString;
-        
+
 
 
         public ActionResult Index()
@@ -36,7 +36,7 @@ namespace GustoySazon.Controllers
             return View();
         }
 
-       
+
         public ActionResult Clientes()
         {
             return View();
@@ -47,31 +47,7 @@ namespace GustoySazon.Controllers
             return View();
         }
 
-        public ActionResult Cocina()
-        {
-            var rnd = new Random();
-
-            var model = new CocinaViewModel
-            {
-                Estres = rnd.Next(30, 100),
-                Energia = rnd.Next(30, 100),
-                Concentracion = rnd.Next(40, 100),
-                RiesgoQuemado = rnd.Next(10, 90),
-                Calidad = rnd.Next(50, 100),
-                Temperatura = Math.Round(rnd.NextDouble() * 60, 1),
-                Humo = Math.Round(rnd.NextDouble() * 100, 1),
-                Ordenes = new List<OrdenModel>(),
-
-                Equipos = new List<EquipoViewModel>
-        {
-            new EquipoViewModel { Nombre = "Parrilla Principal", Estado = "Funcionando", Capacidad = 2, Temperatura = 200 },
-            new EquipoViewModel { Nombre = "Freidora", Estado = "Funcionando", Capacidad = 4, Temperatura = 180 },
-            new EquipoViewModel { Nombre = "Parrilla Principal", Estado = "Roto", Capacidad = 0, Temperatura = 0 },
-        }
-            };
-
-            return View(model);
-        }
+        
 
         public ActionResult GenCaos()
         {
@@ -255,7 +231,7 @@ namespace GustoySazon.Controllers
                             // Si ya tiene mesa, redirigir directamente a la mesa
                             return RedirectToAction("Mesa");
                         }
-                        
+
                     }
                 }
             }
@@ -508,7 +484,7 @@ namespace GustoySazon.Controllers
                 string comandoEstadoOrdenes = @"SELECT TOP 1 m.Id AS MesaId, o.Estado FROM Usuarios u JOIN Mesas m ON u.MesaId = m.Id
                                      LEFT JOIN Ordenes o ON o.UsuarioId = u.Id WHERE u.Id = @UsuarioId ORDER BY o.Fecha DESC";
 
-                using (var comandoOrdenPorID= new SqlCommand(comandoEstadoOrdenes, conexion))
+                using (var comandoOrdenPorID = new SqlCommand(comandoEstadoOrdenes, conexion))
                 {
                     comandoOrdenPorID.Parameters.AddWithValue("@UsuarioId", usuarioId.Value);
                     using (var lector = comandoOrdenPorID.ExecuteReader())
@@ -551,7 +527,7 @@ namespace GustoySazon.Controllers
                 // Obtener todos clientes en la mesa
                 if (mesaId > 0)
                 {
-                    string comandoClientesEnMesa= @"SELECT u.Id, u.Nombre FROM Usuarios u WHERE u.MesaId = @MesaId";
+                    string comandoClientesEnMesa = @"SELECT u.Id, u.Nombre FROM Usuarios u WHERE u.MesaId = @MesaId";
 
                     var usuariosMesa = new List<(int Id, string Nombre)>();
                     using (var comandoClienteSentados = new SqlCommand(comandoClientesEnMesa, conexion))
@@ -1006,7 +982,7 @@ namespace GustoySazon.Controllers
                     return RedirectToAction("Menu");
                 }
 
- 
+
 
                 // Insertar cada pedido en una fila de la tabla
                 using (var transaccion = conexion.BeginTransaction())
@@ -1228,7 +1204,7 @@ namespace GustoySazon.Controllers
             if (Session["Nombre"] != null)
                 return Session["Nombre"].ToString();
 
-            return "Anonimo"; 
+            return "Anonimo";
         }
 
 
@@ -1255,67 +1231,67 @@ namespace GustoySazon.Controllers
             {
                 conexion.Open();
 
-                
+
                 using (var accion = conexion.BeginTransaction())
                 {
-                    
-                        // eliminar las ordenes entregadas al cliente
-                        string eliminarOrdenesEntregadas = @"delete from Ordenes where UsuarioId = @UsuarioId and Estado = 'Entregado'";
+
+                    // eliminar las ordenes entregadas al cliente
+                    string eliminarOrdenesEntregadas = @"delete from Ordenes where UsuarioId = @UsuarioId and Estado = 'Entregado'";
 
 
-                        using (var comando = new SqlCommand(eliminarOrdenesEntregadas, conexion, accion))
-                        {
-                            comando.Parameters.AddWithValue("@UsuarioId", modelo.UsuarioId);
-                            comando.ExecuteNonQuery();
-                        }
+                    using (var comando = new SqlCommand(eliminarOrdenesEntregadas, conexion, accion))
+                    {
+                        comando.Parameters.AddWithValue("@UsuarioId", modelo.UsuarioId);
+                        comando.ExecuteNonQuery();
+                    }
 
-                        // asignar al platillo como pagado
-                        string actualizarPagos = @" UPDATE Pagos SET Estado = 'Pagado' WHERE UsuarioId = @UsuarioId AND GrupoOrdenId IN ( SELECT DISTINCT GrupoOrdenId FROM Pagos
+                    // asignar al platillo como pagado
+                    string actualizarPagos = @" UPDATE Pagos SET Estado = 'Pagado' WHERE UsuarioId = @UsuarioId AND GrupoOrdenId IN ( SELECT DISTINCT GrupoOrdenId FROM Pagos
                                                  WHERE UsuarioId = @UsuarioId AND Estado = 'Por Pagar' )";
-                        using (var comando2 = new SqlCommand(actualizarPagos, conexion, accion))
-                        {
-                            comando2.Parameters.AddWithValue("@UsuarioId", modelo.UsuarioId);
-                            comando2.ExecuteNonQuery();
-                        }
+                    using (var comando2 = new SqlCommand(actualizarPagos, conexion, accion))
+                    {
+                        comando2.Parameters.AddWithValue("@UsuarioId", modelo.UsuarioId);
+                        comando2.ExecuteNonQuery();
+                    }
 
-                        accion.Commit();
+                    accion.Commit();
 
                 }
 
 
 
-                        // sacar al cliente de la mesa despues de pagar
-                
+                // sacar al cliente de la mesa despues de pagar
 
-                        // Quitar la mesa al usuario
-                        string actualizarMesaUsuario = "UPDATE Usuarios SET MesaId = NULL WHERE Id = @UsuarioId";
-                        using (SqlCommand comandoQuitarMesa = new SqlCommand(actualizarMesaUsuario, conexion))
-                        {
-                            comandoQuitarMesa.Parameters.AddWithValue("@UsuarioId", modelo.UsuarioId);
-                            comandoQuitarMesa.ExecuteNonQuery();
-                        }
 
-                        // Ver si hay otros clientes
-                        string contarOcupantes = "SELECT COUNT(*) FROM Usuarios WHERE MesaId = @MesaId";
-                        int ocupantes = 0;
-                        using (SqlCommand comandoContarPersonas = new SqlCommand(contarOcupantes, conexion))
-                        {
-                            comandoContarPersonas.Parameters.AddWithValue("@MesaId", modelo.MesaId);
-                            ocupantes = (int)comandoContarPersonas.ExecuteScalar();
-                        }
+                // Quitar la mesa al usuario
+                string actualizarMesaUsuario = "UPDATE Usuarios SET MesaId = NULL WHERE Id = @UsuarioId";
+                using (SqlCommand comandoQuitarMesa = new SqlCommand(actualizarMesaUsuario, conexion))
+                {
+                    comandoQuitarMesa.Parameters.AddWithValue("@UsuarioId", modelo.UsuarioId);
+                    comandoQuitarMesa.ExecuteNonQuery();
+                }
 
-                        // Liberar mesa si ya esta vacia
-                        if (ocupantes == 0)
-                        {
-                            string actualizarMesa = "UPDATE Mesas SET Estado = 'Libre' WHERE Id = @MesaId";
-                            using (SqlCommand comandoactualizarmesa = new SqlCommand(actualizarMesa, conexion))
-                            {
-                                comandoactualizarmesa.Parameters.AddWithValue("@MesaId", modelo.MesaId);
-                                comandoactualizarmesa.ExecuteNonQuery();
-                            }
-                        }
-                    
-                
+                // Ver si hay otros clientes
+                string contarOcupantes = "SELECT COUNT(*) FROM Usuarios WHERE MesaId = @MesaId";
+                int ocupantes = 0;
+                using (SqlCommand comandoContarPersonas = new SqlCommand(contarOcupantes, conexion))
+                {
+                    comandoContarPersonas.Parameters.AddWithValue("@MesaId", modelo.MesaId);
+                    ocupantes = (int)comandoContarPersonas.ExecuteScalar();
+                }
+
+                // Liberar mesa si ya esta vacia
+                if (ocupantes == 0)
+                {
+                    string actualizarMesa = "UPDATE Mesas SET Estado = 'Libre' WHERE Id = @MesaId";
+                    using (SqlCommand comandoactualizarmesa = new SqlCommand(actualizarMesa, conexion))
+                    {
+                        comandoactualizarmesa.Parameters.AddWithValue("@MesaId", modelo.MesaId);
+                        comandoactualizarmesa.ExecuteNonQuery();
+                    }
+                }
+
+
 
                 conexion.Close();
 
@@ -1607,7 +1583,7 @@ namespace GustoySazon.Controllers
                     }
                 }
 
-                
+
             }
 
             return View(model);
@@ -1620,10 +1596,123 @@ namespace GustoySazon.Controllers
         private void CargarDetallesMesa(MesaInfo mesa, SqlConnection conexion)
         {
             // Implementación para cargar pedidos y clientes de la mesa
-            
+
         }
 
 
+
+
+
+
+
+
+
+
+
+        //Parte Ordenes Cocina
+
+
+        public ActionResult Cocina()
+        {
+            var rnd = new Random();
+            var model = new CocinaViewModel
+            {
+                Estres = rnd.Next(30, 100),
+                Energia = rnd.Next(30, 100),
+                Concentracion = rnd.Next(40, 100),
+                RiesgoQuemado = rnd.Next(10, 90),
+                Calidad = rnd.Next(50, 100),
+                Temperatura = Math.Round(rnd.NextDouble() * 60, 1),
+                Humo = Math.Round(rnd.NextDouble() * 100, 1),
+                Equipos = new List<EquipoViewModel>
+        {
+            new EquipoViewModel { Nombre = "Parrilla Principal", Estado = "Funcionando", Capacidad = 2, Temperatura = 200 },
+            new EquipoViewModel { Nombre = "Freidora", Estado = "Funcionando", Capacidad = 4, Temperatura = 180 },
+            new EquipoViewModel { Nombre = "Parrilla Principal", Estado = "Roto", Capacidad = 0, Temperatura = 0 },
+        }
+            };
+
+
+
+
+
+            // Obtener las órdenes pendientes de la base de datos
+            using (SqlConnection conexion = new SqlConnection(connectionString))
+            {
+                conexion.Open();
+
+                string query = @"SELECT o.Id, m.NumeroMesa, o.NombreComida, o.Cantidad, o.PrecioTotal, o.Estado 
+                        FROM Ordenes o
+                        JOIN Mesas m ON o.MesaId = m.Id
+                        WHERE o.Estado IN ('Preparando', 'Platillo Listo')
+                        ORDER BY o.Fecha";
+
+                using (SqlCommand cmd = new SqlCommand(query, conexion))
+                {
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        model.Ordenescocina = new List<OrdenModelcocina>();
+                        while (reader.Read())
+                        {
+                            model.Ordenescocina.Add(new OrdenModelcocina
+                            {
+                                Id = (int)reader["Id"],
+                                MesaId = (int)reader["NumeroMesa"],
+                                NombreComida = reader["NombreComida"].ToString(),
+                                Cantidad = (int)reader["Cantidad"],
+                                PrecioTotal = (decimal)reader["PrecioTotal"],
+                                Estado = reader["Estado"].ToString()
+                            });
+                        }
+                    }
+                }
+            }
+
+            return View(model);
+        }
+
+
+
+
+
+
+
+
+
+
+
+        [HttpPost]
+        public ActionResult MarcarOrdenComoLista(int id)
+        {
+            try
+            {
+                using (SqlConnection conexion = new SqlConnection(connectionString))
+                {
+                    conexion.Open();
+
+                    string query = "UPDATE Ordenes SET Estado = 'Platillo Listo' WHERE Id = @Id";
+
+                    using (SqlCommand cmd = new SqlCommand(query, conexion))
+                    {
+                        cmd.Parameters.AddWithValue("@Id", id);
+                        int rowsAffected = cmd.ExecuteNonQuery();
+
+                        if (rowsAffected > 0)
+                        {
+                            return Json(new { success = true });
+                        }
+                        else
+                        {
+                            return Json(new { success = false, message = "Orden no encontrada" });
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
 
 
 

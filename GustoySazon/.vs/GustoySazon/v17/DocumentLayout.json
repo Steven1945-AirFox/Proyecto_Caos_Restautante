@@ -3,16 +3,36 @@
   "WorkspaceRootPath": "S:\\Proyectos\\RestauranteFinalFinalFinalisimo\\Proyecto_Caos_Restautante\\GustoySazon\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{984E46FC-5E7D-49A8-BB80-94AAE16F54E9}|GustoySazon.csproj|S:\\Proyectos\\RestauranteFinalFinalFinalisimo\\Proyecto_Caos_Restautante\\GustoySazon\\controllers\\hamecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{984E46FC-5E7D-49A8-BB80-94AAE16F54E9}|GustoySazon.csproj|solutionrelative:controllers\\hamecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{984E46FC-5E7D-49A8-BB80-94AAE16F54E9}|GustoySazon.csproj|s:\\proyectos\\restaurantefinalfinalfinalisimo\\proyecto_caos_restautante\\gustoysazon\\views\\home\\mesero.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{984E46FC-5E7D-49A8-BB80-94AAE16F54E9}|GustoySazon.csproj|solutionrelative:views\\home\\mesero.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{984E46FC-5E7D-49A8-BB80-94AAE16F54E9}|GustoySazon.csproj|s:\\proyectos\\restaurantefinalfinalfinalisimo\\proyecto_caos_restautante\\gustoysazon\\controllers\\hamecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{984E46FC-5E7D-49A8-BB80-94AAE16F54E9}|GustoySazon.csproj|solutionrelative:controllers\\hamecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{984E46FC-5E7D-49A8-BB80-94AAE16F54E9}|GustoySazon.csproj|s:\\proyectos\\restaurantefinalfinalfinalisimo\\proyecto_caos_restautante\\gustoysazon\\views\\home\\cocina.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{984E46FC-5E7D-49A8-BB80-94AAE16F54E9}|GustoySazon.csproj|solutionrelative:views\\home\\cocina.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{984E46FC-5E7D-49A8-BB80-94AAE16F54E9}|GustoySazon.csproj|s:\\proyectos\\restaurantefinalfinalfinalisimo\\proyecto_caos_restautante\\gustoysazon\\content\\meserodiseno.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{984E46FC-5E7D-49A8-BB80-94AAE16F54E9}|GustoySazon.csproj|solutionrelative:content\\meserodiseno.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+      "AbsoluteMoniker": "D:0:0:{984E46FC-5E7D-49A8-BB80-94AAE16F54E9}|GustoySazon.csproj|s:\\proyectos\\restaurantefinalfinalfinalisimo\\proyecto_caos_restautante\\gustoysazon\\models\\cocinaviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{984E46FC-5E7D-49A8-BB80-94AAE16F54E9}|GustoySazon.csproj|solutionrelative:models\\cocinaviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{984E46FC-5E7D-49A8-BB80-94AAE16F54E9}|GustoySazon.csproj|s:\\proyectos\\restaurantefinalfinalfinalisimo\\proyecto_caos_restautante\\gustoysazon\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{984E46FC-5E7D-49A8-BB80-94AAE16F54E9}|GustoySazon.csproj|solutionrelative:controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{984E46FC-5E7D-49A8-BB80-94AAE16F54E9}|GustoySazon.csproj|s:\\proyectos\\restaurantefinalfinalfinalisimo\\proyecto_caos_restautante\\gustoysazon\\views\\home\\vistageneral.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{984E46FC-5E7D-49A8-BB80-94AAE16F54E9}|GustoySazon.csproj|solutionrelative:views\\home\\vistageneral.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{984E46FC-5E7D-49A8-BB80-94AAE16F54E9}|GustoySazon.csproj|s:\\proyectos\\restaurantefinalfinalfinalisimo\\proyecto_caos_restautante\\gustoysazon\\views\\home\\registropersonal.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{984E46FC-5E7D-49A8-BB80-94AAE16F54E9}|GustoySazon.csproj|solutionrelative:views\\home\\registropersonal.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{984E46FC-5E7D-49A8-BB80-94AAE16F54E9}|GustoySazon.csproj|s:\\proyectos\\restaurantefinalfinalfinalisimo\\proyecto_caos_restautante\\gustoysazon\\views\\home\\controlpersonal.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{984E46FC-5E7D-49A8-BB80-94AAE16F54E9}|GustoySazon.csproj|solutionrelative:views\\home\\controlpersonal.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,8 +42,34 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 12,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "S:\\Proyectos\\RestauranteFinalFinalFinalisimo\\Proyecto_Caos_Restautante\\GustoySazon\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "Controllers\\HomeController.cs",
+              "ToolTip": "S:\\Proyectos\\RestauranteFinalFinalFinalisimo\\Proyecto_Caos_Restautante\\GustoySazon\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "Controllers\\HomeController.cs",
+              "ViewState": "AgIAACkGAAAAAAAAAAAIwLQGAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-03T20:16:34.709Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "CocinaViewModel.cs",
+              "DocumentMoniker": "S:\\Proyectos\\RestauranteFinalFinalFinalisimo\\Proyecto_Caos_Restautante\\GustoySazon\\Models\\CocinaViewModel.cs",
+              "RelativeDocumentMoniker": "Models\\CocinaViewModel.cs",
+              "ToolTip": "S:\\Proyectos\\RestauranteFinalFinalFinalisimo\\Proyecto_Caos_Restautante\\GustoySazon\\Models\\CocinaViewModel.cs",
+              "RelativeToolTip": "Models\\CocinaViewModel.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAswDoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-03T20:14:44.556Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{eefa5220-e298-11d0-8f78-00a0c9110057}"
@@ -50,39 +96,78 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "MeseroDiseno.css",
-              "DocumentMoniker": "S:\\Proyectos\\RestauranteFinalFinalFinalisimo\\Proyecto_Caos_Restautante\\GustoySazon\\Content\\MeseroDiseno.css",
-              "RelativeDocumentMoniker": "Content\\MeseroDiseno.css",
-              "ToolTip": "S:\\Proyectos\\RestauranteFinalFinalFinalisimo\\Proyecto_Caos_Restautante\\GustoySazon\\Content\\MeseroDiseno.css",
-              "RelativeToolTip": "Content\\MeseroDiseno.css",
-              "ViewState": "AgIAANUFAAAAAAAAAAAuwOkFAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-08-02T22:03:24.557Z",
+              "DocumentIndex": 5,
+              "Title": "VistaGeneral.cshtml",
+              "DocumentMoniker": "S:\\Proyectos\\RestauranteFinalFinalFinalisimo\\Proyecto_Caos_Restautante\\GustoySazon\\Views\\Home\\VistaGeneral.cshtml",
+              "RelativeDocumentMoniker": "Views\\Home\\VistaGeneral.cshtml",
+              "ToolTip": "S:\\Proyectos\\RestauranteFinalFinalFinalisimo\\Proyecto_Caos_Restautante\\GustoySazon\\Views\\Home\\VistaGeneral.cshtml",
+              "RelativeToolTip": "Views\\Home\\VistaGeneral.cshtml",
+              "ViewState": "AgIAAFEAAAAAAAAAAAAAAJcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-03T19:44:32.826Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 6,
+              "Title": "RegistroPersonal.cshtml",
+              "DocumentMoniker": "S:\\Proyectos\\RestauranteFinalFinalFinalisimo\\Proyecto_Caos_Restautante\\GustoySazon\\Views\\Home\\RegistroPersonal.cshtml",
+              "RelativeDocumentMoniker": "Views\\Home\\RegistroPersonal.cshtml",
+              "ToolTip": "S:\\Proyectos\\RestauranteFinalFinalFinalisimo\\Proyecto_Caos_Restautante\\GustoySazon\\Views\\Home\\RegistroPersonal.cshtml",
+              "RelativeToolTip": "Views\\Home\\RegistroPersonal.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-03T19:20:44.227Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "ControlPersonal.cshtml",
+              "DocumentMoniker": "S:\\Proyectos\\RestauranteFinalFinalFinalisimo\\Proyecto_Caos_Restautante\\GustoySazon\\Views\\Home\\ControlPersonal.cshtml",
+              "RelativeDocumentMoniker": "Views\\Home\\ControlPersonal.cshtml",
+              "ToolTip": "S:\\Proyectos\\RestauranteFinalFinalFinalisimo\\Proyecto_Caos_Restautante\\GustoySazon\\Views\\Home\\ControlPersonal.cshtml",
+              "RelativeToolTip": "Views\\Home\\ControlPersonal.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-03T19:20:40.097Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Cocina.cshtml",
+              "DocumentMoniker": "S:\\Proyectos\\RestauranteFinalFinalFinalisimo\\Proyecto_Caos_Restautante\\GustoySazon\\Views\\Home\\Cocina.cshtml",
+              "RelativeDocumentMoniker": "Views\\Home\\Cocina.cshtml",
+              "ToolTip": "S:\\Proyectos\\RestauranteFinalFinalFinalisimo\\Proyecto_Caos_Restautante\\GustoySazon\\Views\\Home\\Cocina.cshtml",
+              "RelativeToolTip": "Views\\Home\\Cocina.cshtml",
+              "ViewState": "AgIAAAECAAAAAAAAAAAAAGEBAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-03T17:13:34.499Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "HameController.cs",
               "DocumentMoniker": "S:\\Proyectos\\RestauranteFinalFinalFinalisimo\\Proyecto_Caos_Restautante\\GustoySazon\\Controllers\\HameController.cs",
               "RelativeDocumentMoniker": "Controllers\\HameController.cs",
               "ToolTip": "S:\\Proyectos\\RestauranteFinalFinalFinalisimo\\Proyecto_Caos_Restautante\\GustoySazon\\Controllers\\HameController.cs",
               "RelativeToolTip": "Controllers\\HameController.cs",
-              "ViewState": "AgIAAEsGAAAAAAAAAAAYwFYGAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAE8EAAAAAAAAAAAqwK8DAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-08-02T21:57:04.964Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Mesero.cshtml",
               "DocumentMoniker": "S:\\Proyectos\\RestauranteFinalFinalFinalisimo\\Proyecto_Caos_Restautante\\GustoySazon\\Views\\Home\\Mesero.cshtml",
               "RelativeDocumentMoniker": "Views\\Home\\Mesero.cshtml",
               "ToolTip": "S:\\Proyectos\\RestauranteFinalFinalFinalisimo\\Proyecto_Caos_Restautante\\GustoySazon\\Views\\Home\\Mesero.cshtml",
               "RelativeToolTip": "Views\\Home\\Mesero.cshtml",
-              "ViewState": "AgIAAEkDAAAAAAAAAAAuwGQDAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAM0EAAAAAAAAAAAUwAUFAAAHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-08-02T21:44:01.552Z",
               "EditorCaption": ""

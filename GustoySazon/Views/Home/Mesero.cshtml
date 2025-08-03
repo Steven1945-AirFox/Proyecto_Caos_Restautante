@@ -396,7 +396,7 @@
                                 </button>
                                 <div class="detalles-contenedor"></div>
 
-                               +
+                                +
                             </div>
                         </div>
                     }
@@ -579,7 +579,7 @@
                 </div>
 
 
-                
+
 
                 <div class="task-card task-low">
                     <div class="task-header">
@@ -1010,7 +1010,7 @@
 
                     // Actualizar el botón
                     if (botonClickeado) {
-                        botonClickeado.textContent = '👁‍🗨 Ver Pedido (20s)';
+                        botonClickeado.textContent = '👁‍🗨 Ver Pedido';
                         botonClickeado.classList.remove('btn-info');
                         botonClickeado.classList.add('btn-warning');
                     }
@@ -1098,7 +1098,7 @@
             setInterval(actualizarPropinas, 30000);
 
             // Agrega esta línea para actualizar cada 3 segundos (3000 ms)
-            setInterval(actualizarEstadoMesas, 3000);
+            setInterval(actualizarEstadoMesas, 20000);
 
             actualizarUIIndicadores();
             actualizarPropinas();
