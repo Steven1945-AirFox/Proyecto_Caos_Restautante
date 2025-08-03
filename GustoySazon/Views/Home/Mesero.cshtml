@@ -8,6 +8,309 @@
     <title>Restaurante Caos - Dashboard Mesero Avanzado</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="~/Content/MeseroDiseno.css" rel="stylesheet" />
+
+    <style>
+        /* CONTENEDOR PRINCIPAL */
+        .content-section {
+            padding: 20px;
+            background-color: aliceblue;
+            border-radius: 12px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* CONTENEDOR DE MESAS - 2 COLUMNAS */
+        .listado-mesas {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(350px, 1fr)); /* Ancho mínimo de 350px */
+            gap: 25px; /* Más espacio entre mesas */
+            padding: 15px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* TARJETA DE MESA */
+        .mesa-card {
+            background-color: white;
+            border-radius: 12px;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.05);
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            min-height: 200px;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+            .mesa-card:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            }
+
+        /* CABECERA DE MESA */
+        .mesa-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+            .mesa-header h3 {
+                margin: 0;
+                font-size: 1.2rem;
+                color: #2c3e50;
+                font-weight: 600;
+            }
+
+        /* ESTADO DE MESA */
+        .estado-mesa {
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .mesa-header.ocupada .estado-mesa {
+            background-color: #ffebee;
+            color: #c62828;
+            border: 1px solid #ef9a9a;
+        }
+
+        .mesa-header.libre .estado-mesa {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #a5d6a7;
+        }
+
+        /* CUERPO DE MESA */
+        .mesa-body {
+            margin-top: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex-grow: 1;
+        }
+
+        /* BOTONES */
+        .btn-detalles, .btn-entregar {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .btn-detalles {
+            background-color: #3498db;
+            color: white;
+        }
+
+            .btn-detalles:hover {
+                background-color: #2980b9;
+                transform: translateY(-1px);
+            }
+
+        .btn-entregar {
+            background-color: #2ecc71;
+            color: white;
+            margin-top: 8px;
+        }
+
+            .btn-entregar:hover {
+                background-color: #27ae60;
+                transform: translateY(-1px);
+            }
+
+        /* CONTENEDOR DE DETALLES */
+        .detalles-contenedor {
+            margin-top: 15px;
+            width: 100%;
+        }
+
+        /* TABLA DE PEDIDOS */
+        .detalles-adicionales {
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .pedido-detalle-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            table-layout: fixed;
+        }
+
+            .pedido-detalle-table th {
+                background-color: #f8f9fa;
+                padding: 12px 10px;
+                text-align: left;
+                font-weight: 600;
+                color: #34495e;
+                border-bottom: 2px solid #e0e0e0;
+            }
+
+            .pedido-detalle-table td {
+                padding: 10px;
+                border-bottom: 1px solid #eee;
+                vertical-align: top;
+            }
+
+            .pedido-detalle-table tr:last-child td {
+                border-bottom: none;
+            }
+
+            .pedido-detalle-table tr:hover td {
+                background-color: #f9f9f9;
+            }
+
+            /* Columnas específicas */
+            .pedido-detalle-table td:nth-child(2),
+            .pedido-detalle-table th:nth-child(2) {
+                text-align: center;
+                width: 15%;
+            }
+
+            .pedido-detalle-table td:nth-child(3),
+            .pedido-detalle-table th:nth-child(3) {
+                text-align: right;
+                width: 20%;
+                font-weight: 500;
+                color: #2c3e50;
+            }
+
+        /* RESPONSIVO - 1 COLUMNA EN MÓVIL */
+        @@media (max-width: 992px) {
+            .listado-mesas {
+                grid-template-columns: 1fr;
+            }
+
+            .mesa-card {
+                min-height: auto;
+            }
+        }
+
+        .loading {
+            padding: 10px;
+            text-align: center;
+            font-style: italic;
+            color: #666;
+        }
+
+        .detalles-adicionales {
+            transition: all 0.3s ease;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .estado-pedido {
+            padding: 5px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            background-color: white;
+            cursor: pointer;
+        }
+
+            .estado-pedido option[value="Pendiente"] {
+                background-color: #fff3cd;
+            }
+
+            .estado-pedido option[value="En preparación"] {
+                background-color: #cce5ff;
+            }
+
+            .estado-pedido option[value="Listo"] {
+                background-color: #d4edda;
+            }
+
+            .estado-pedido option[value="Entregado"] {
+                background-color: #f8d7da;
+            }
+
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            color: white;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+            .notification.success {
+                background-color: #28a745;
+            }
+
+            .notification.error {
+                background-color: #dc3545;
+            }
+
+            .notification.fade-out {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+
+
+        .btn-tomar-orden {
+            background-color: #ffc107;
+            color: #212529;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+            .btn-tomar-orden:hover {
+                background-color: #e0a800;
+            }
+
+        .btn-entregar-orden {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+            .btn-entregar-orden:hover {
+                background-color: #218838;
+            }
+
+        .loading {
+            padding: 10px;
+            text-align: center;
+            font-style: italic;
+            color: #666;
+        }
+
+        .detalles-adicionales {
+            transition: all 0.3s ease;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+    </style>
+
+
+
+
 </head>
 <body>
     <main class="main-container">
@@ -91,16 +394,9 @@
                                         onclick="toggleDetallesAdicionales(@mesa.MesaId, this)">
                                     👀 Ver Pedido Completo
                                 </button>
-                                <div class="detalles-contenedor" style="margin-top:10px;"></div>
+                                <div class="detalles-contenedor"></div>
 
-                                <!-- Botones de gestión de órdenes con diseño elegante -->
-                                <div class="orden-actions">
-                                    <button class="btn btn-success btn-entregar"
-                                            onclick="entregarOrden(@mesa.MesaId)"
-                                            title="Entregar orden a cliente">
-                                        🍽️ Entregar Orden
-                                    </button>
-                                </div>
+                               +
                             </div>
                         </div>
                     }
@@ -281,6 +577,9 @@
                         </button>
                     </div>
                 </div>
+
+
+                
 
                 <div class="task-card task-low">
                     <div class="task-header">
@@ -534,110 +833,169 @@
 
         // Estado de mesas (colores, switches, fecha)
         function actualizarEstadoMesas() {
-            fetch('/Hame/ObtenerEstadoMesa')
+            fetch('/Hame/ObtenerEstadoMesa?_=' + Date.now())
                 .then(response => response.json())
                 .then(data => {
                     if (!data.success) return;
 
-                    document.querySelectorAll('.mesa-card').forEach(card => {
-                        let mesaId = parseInt(card.getAttribute('data-mesaid'));
-                        let cliente = data.ClientesEnMesa.find(c => c.Id === mesaId);
-                        if (cliente) {
-                            let estado = cliente.EstadoPedido;
-                            let prioridad = (estado === "Por pagar") ? "high" :
-                                            (estado === "Pedido activo") ? "medium" : "low";
-                            actualizarPrioridadCard(card, prioridad);
+                    // Actualizar el estado de cada mesa
+                    data.ClientesEnMesa.forEach(mesa => {
+                        const card = document.querySelector(`.mesa-card[data-mesaid="${mesa.Id}"]`);
+                        if (card) {
+                            // Actualizar estado de la mesa
+                            const estadoMesa = card.querySelector('.estado-mesa');
+                            if (estadoMesa) estadoMesa.textContent = mesa.EstadoPedido;
 
-                            const fechaElemento = card.querySelector('.time-value');
-                            if (fechaElemento && cliente.FechaAtencion) {
-                                fechaElemento.textContent = cliente.FechaAtencion;
+                            // Actualizar clases CSS según estado
+                            const header = card.querySelector('.mesa-header');
+                            if (header) {
+                                header.className = 'mesa-header ' +
+                                    (mesa.EstadoPedido === "Por pagar" ||
+                                        mesa.EstadoPedido === "Pedido activo" ? "ocupada" : "libre");
                             }
 
-                            const servida = document.getElementById(`mesa${mesaId}-comida`);
-                            const cuenta = document.getElementById(`mesa${mesaId}-cuenta`);
-                            if (servida) servida.checked = (estado === "Comida servida");
-                            if (cuenta) cuenta.checked = (estado === "Por pagar");
+                            // Si los detalles están visibles, actualizarlos
+                            const detalles = card.querySelector('.detalles-adicionales');
+                            if (detalles && detalles.style.display !== 'none') {
+                                const boton = card.querySelector('.btn-detalles');
+                                toggleDetallesAdicionales(mesa.Id, boton);
+                            }
                         }
                     });
-
-                    if (data.EstadoAtencion) {
-                        const estadoElemento = document.getElementById("estado-atencion");
-                        if (estadoElemento) estadoElemento.textContent = "Estado atención: " + data.EstadoAtencion;
-                    }
                 })
-                .catch(console.error);
+                .catch(error => {
+                    console.error("Error al actualizar mesas:", error);
+                });
         }
 
-        // Alternar detalles de pedido al hacer clic
+        // Variable global para controlar el tiempo de visualización
+        let tiempoVisualizacionOrden = null;
+
         function toggleDetallesAdicionales(mesaId, botonClickeado) {
             const mesaCard = botonClickeado.closest('.mesa-card');
             let detallesExistentes = mesaCard.querySelector('.detalles-adicionales');
 
-            if (detallesExistentes) {
-                const visible = detallesExistentes.style.display !== 'none';
-                detallesExistentes.style.display = visible ? 'none' : 'block';
-                botonClickeado.textContent = visible ? 'Ver Pedido' : 'Ocultar Detalles';
-                botonClickeado.classList.toggle('btn-warning', !visible);
-                botonClickeado.classList.toggle('btn-info', visible);
+            // Si ya está abierto y visible, no hacer nada
+            if (detallesExistentes && detallesExistentes.style.display !== 'none') {
                 return;
             }
 
-            // Evita agregar múltiples detalles si ya hay una carga en progreso
-            if (mesaCard.dataset.cargando === "true") return;
+            // Cancelar timeout anterior si existe
+            if (tiempoVisualizacionOrden) {
+                clearTimeout(tiempoVisualizacionOrden);
+            }
 
-            mesaCard.dataset.cargando = "true"; // Marcar como cargando
+            // Mostrar el contenedor si estaba oculto
+            if (detallesExistentes) {
+                detallesExistentes.style.display = 'block';
+            }
 
-            botonClickeado.textContent = 'Ocultar Detalles';
-            botonClickeado.classList.remove('btn-info');
-            botonClickeado.classList.add('btn-warning');
-
+            // Cargar datos inmediatamente
             cargarDatosAdicionalesDesdeApi(mesaId, mesaCard, botonClickeado);
+
+            // Configurar actualización periódica cada 3 segundos
+            const intervaloActualizacion = setInterval(() => {
+                const detalles = mesaCard.querySelector('.detalles-adicionales');
+                if (!detalles || detalles.style.display === 'none') {
+                    clearInterval(intervaloActualizacion);
+                    return;
+                }
+                console.log(`Actualizando automáticamente mesa ${mesaId}`);
+                cargarDatosAdicionalesDesdeApi(mesaId, mesaCard, botonClickeado);
+            }, 3000);
+
+            // Configurar cierre después de 20 segundos
+            tiempoVisualizacionOrden = setTimeout(() => {
+                const detalles = mesaCard.querySelector('.detalles-adicionales');
+                if (detalles) {
+                    detalles.style.display = 'none';
+                }
+                if (botonClickeado) {
+                    botonClickeado.textContent = '👀 Ver Pedido Completo';
+                    botonClickeado.classList.remove('btn-warning');
+                    botonClickeado.classList.add('btn-info');
+                }
+                clearInterval(intervaloActualizacion);
+            }, 20000);
         }
+
+
+
+
+
+
 
         function cargarDatosAdicionalesDesdeApi(mesaId, mesaCard, botonClickeado) {
             const detallesContainer = mesaCard.querySelector('.detalles-contenedor');
 
-            fetch(`/Hame/ObtenerOrdenesPorMesa?mesaId=${mesaId}`)
-                .then(response => response.json())
-                .then(data => {
-                    mesaCard.dataset.cargando = "false"; // Quitar marca de carga
+            // Mostrar indicador de carga mejorado
+            detallesContainer.innerHTML = `
+        <div class="loading">
+            <div class="spinner"></div>
+            <p>Cargando órdenes de la mesa ${mesaId}...</p>
+        </div>
+    `;
 
-                    if (!data.success || !data.data || data.data.length === 0) {
-                        detallesContainer.insertAdjacentHTML('beforeend', `
+            console.log(`Iniciando carga para mesa ${mesaId}`); // Debug
+
+            fetch(`/Hame/ObtenerOrdenesPorMesa?mesaId=${mesaId}&_=${Date.now()}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Error HTTP! estado: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Datos recibidos:', data); // Debug
+
+                    if (!data || !data.success) {
+                        throw new Error(data?.message || 'Respuesta inválida del servidor');
+                    }
+
+                    mesaCard.dataset.cargando = "false";
+
+                    if (!data.data || data.data.length === 0) {
+                        detallesContainer.innerHTML = `
                     <div class="detalles-adicionales" style="margin-top: 10px;">
-                        <em>Sin pedidos aún.</em>
+                        <em>No hay pedidos activos para esta mesa.</em>
                     </div>
-                `);
+                `;
                         return;
                     }
 
+                    // Construir la tabla HTML
                     let tablaHTML = `
                 <div class="detalles-adicionales" style="margin-top: 10px;">
                     <table class="pedido-detalle-table">
                         <thead>
                             <tr>
-                               <th style="border: 1px solid #ccc; padding: 5px;">Platillo</th>
-                                <th style="border: 1px solid #ccc; padding: 5px;">Cantidad</th>
-                                <th style="border: 1px solid #ccc; padding: 5px;">Precio Unitario</th>
-                                <th style="border: 1px solid #ccc; padding: 5px;">Precio Total</th>
-                                <th style="border: 1px solid #ccc; padding: 5px;">Estado</th>
-                                <th style="border: 1px solid #ccc; padding: 5px;">Fecha</th>
-                                <th style="border: 1px solid #ccc; padding: 5px;">Mesero ID</th>
+                                <th>Platillo</th>
+                                <th>Cantidad</th>
+                                <th>Precio Total</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
                         </thead>
                         <tbody>
             `;
 
                     data.data.forEach(p => {
-                        const fecha = new Date(p.Fecha).toLocaleString();
+                        const mostrarTomarOrden = p.Estado === 'Pendiente';
+                        const mostrarEntregarOrden = p.Estado === 'Platillo Listo';
+
                         tablaHTML += `
                     <tr>
-                        <td style="border: 1px solid #ccc; padding: 5px;">${p.NombreComida}</td>
-                        <td style="border: 1px solid #ccc; padding: 5px; text-align:center;">${p.Cantidad}</td>
-                        <td style="border: 1px solid #ccc; padding: 5px; text-align:right;">$${parseFloat(p.PrecioUnitario).toFixed(2)}</td>
-                        <td style="border: 1px solid #ccc; padding: 5px; text-align:right;">$${parseFloat(p.PrecioTotal).toFixed(2)}</td>
-                        <td style="border: 1px solid #ccc; padding: 5px;">${p.Estado}</td>
-                        <td style="border: 1px solid #ccc; padding: 5px;">${fecha}</td>
-                        <td style="border: 1px solid #ccc; padding: 5px; text-align:center;">${p.MeseroId ?? 'N/D'}</td>
+                        <td>${p.NombreComida}</td>
+                        <td style="text-align:center;">${p.Cantidad}</td>
+                        <td style="text-align:right;">$${parseFloat(p.PrecioTotal).toFixed(2)}</td>
+                        <td>${p.Estado}</td>
+                        <td>
+                            ${mostrarTomarOrden ?
+                                `<button class="btn-tomar-orden" onclick="tomarOrden(${p.Id}, ${mesaId})">Tomar Orden</button>` : ''}
+                            ${mostrarEntregarOrden ?
+                                `<button class="btn-entregar-orden" onclick="entregarOrden(${p.Id}, ${mesaId})">Entregar Orden</button>` : ''}
+                            ${!mostrarTomarOrden && !mostrarEntregarOrden ? 'Ninguna acción disponible' : ''}
+                        </td>
                     </tr>
                 `;
                     });
@@ -648,24 +1006,84 @@
                 </div>
             `;
 
-                    detallesContainer.insertAdjacentHTML('beforeend', tablaHTML);
+                    detallesContainer.innerHTML = tablaHTML;
+
+                    // Actualizar el botón
+                    if (botonClickeado) {
+                        botonClickeado.textContent = '👁‍🗨 Ver Pedido (20s)';
+                        botonClickeado.classList.remove('btn-info');
+                        botonClickeado.classList.add('btn-warning');
+                    }
+
+                    // Configurar el cierre automático después de 20 segundos
+                    if (tiempoVisualizacionOrden) {
+                        clearTimeout(tiempoVisualizacionOrden);
+                    }
+                    tiempoVisualizacionOrden = setTimeout(() => {
+                        const detalles = detallesContainer.querySelector('.detalles-adicionales');
+                        if (detalles) detalles.style.display = 'none';
+                        if (botonClickeado) {
+                            botonClickeado.textContent = '👀 Ver Pedido Completo';
+                            botonClickeado.classList.remove('btn-warning');
+                            botonClickeado.classList.add('btn-info');
+                        }
+                    }, 20000); // 20 segundos
+
                 })
                 .catch(error => {
-                    console.error("Error al cargar las órdenes:", error);
-                    mesaCard.dataset.cargando = "false";
-                    detallesContainer.insertAdjacentHTML('beforeend', `
-                <div class="detalles-adicionales" style="margin-top: 10px; color: red;">
-                    Error al cargar los pedidos.
+                    console.error(`Error al cargar órdenes para mesa ${mesaId}:`, error);
+                    detallesContainer.innerHTML = `
+                <div class="error-message">
+                    <h4>Error al cargar los pedidos</h4>
+                    <p>${error.message}</p>
+                    <button onclick="reintentarCarga(${mesaId}, this)">
+                        Reintentar
+                    </button>
                 </div>
-            `);
+            `;
                 });
         }
+
+        function reintentarCarga(mesaId, element) {
+            const container = element.closest('.detalles-contenedor');
+            const mesaCard = element.closest('.mesa-card');
+            const boton = mesaCard.querySelector('.btn-detalles');
+
+            container.innerHTML = '<div class="loading">Reintentando...</div>';
+            cargarDatosAdicionalesDesdeApi(mesaId, mesaCard, boton);
+        }
+
+
+
+
+
+
+
+
+
+
 
 
         // Notificaciones
         function mostrarNotificacion(tipo, titulo, mensaje) {
-            console.log(`${titulo}: ${mensaje}`); // Puedes personalizar esto con un sistema visual
+            // Puedes implementar toast notifications o usar alertas simples
+            const notification = document.createElement('div');
+            notification.className = `notification ${tipo}`;
+            notification.innerHTML = `
+        <strong>${titulo}</strong>
+        <span>${mensaje}</span>
+    `;
+
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.classList.add('fade-out');
+                setTimeout(() => notification.remove(), 500);
+            }, 3000);
         }
+
+
+
 
         // Prioridad de color o estilo
         function actualizarPrioridadCard(card, prioridad) {
@@ -678,6 +1096,9 @@
 
             setInterval(actualizarIndicadoresSimulados, 1000);
             setInterval(actualizarPropinas, 30000);
+
+            // Agrega esta línea para actualizar cada 3 segundos (3000 ms)
+            setInterval(actualizarEstadoMesas, 3000);
 
             actualizarUIIndicadores();
             actualizarPropinas();
@@ -697,6 +1118,20 @@
                 });
             });
         });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
          @*PARTE AGREGADA POR MARLON NO TOCAR * @*@
@@ -759,7 +1194,91 @@
                 });
         }
 
-         //ACA TERMINA LO DE MARLON *
+        //ACA TERMINA LO DE MARLON *
+
+
+
+        //Empieza parte Steven
+
+        function actualizarEstadoPedido(ordenId, nuevoEstado) {
+            fetch('/Hame/ActualizarEstadoPedido', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    ordenId: ordenId,
+                    nuevoEstado: nuevoEstado
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // No necesitamos recargar porque la actualización automática lo hará
+                        mostrarNotificacion("success", "Estado actualizado", "El estado del pedido se ha actualizado correctamente");
+                    } else {
+                        mostrarNotificacion("error", "Error", "No se pudo actualizar el estado del pedido");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    mostrarNotificacion("error", "Error", "Ocurrió un error al actualizar el estado");
+                });
+        }
+
+
+
+
+        // Función para tomar la orden (cambia estado a "Preparando")
+        function tomarOrden(ordenId, mesaId) {
+            actualizarEstadoOrden(ordenId, 'Preparando', mesaId);
+        }
+
+        // Función para entregar la orden (cambia estado a "Entregado")
+        function entregarOrden(ordenId, mesaId) {
+            actualizarEstadoOrden(ordenId, 'Entregado', mesaId);
+        }
+
+
+
+
+        function actualizarEstadoOrden(ordenId, nuevoEstado, mesaId) {
+        fetch('/Hame/ActualizarEstadoOrden', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                ordenId: ordenId,
+                nuevoEstado: nuevoEstado,
+                meseroId: @Model.Id // ID del mesero desde el modelo
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                mostrarNotificacion("success", "Éxito", `Orden marcada como ${nuevoEstado}`);
+                // Forzar actualización inmediata
+                const mesaCard = document.querySelector(`.mesa-card[data-mesaid="${mesaId}"]`);
+                if (mesaCard) {
+                    const boton = mesaCard.querySelector('.btn-detalles');
+                    cargarDatosAdicionalesDesdeApi(mesaId, mesaCard, boton);
+                }
+            } else {
+                mostrarNotificacion("error", "Error", data.message || "No se pudo actualizar el estado");
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            mostrarNotificacion("error", "Error", "Ocurrió un error al actualizar el estado");
+        });
+    }
+
+
+        //Termina Parte Steven
+
+
+
 
     </script>
 

@@ -432,143 +432,57 @@ namespace GustoySazon.Controllers
 
         //Funciones de la mesa
         //funcion para poder llevar la orden del Cliente
+        [HttpGet]
         public JsonResult ObtenerEstadoMesa()
         {
-            var usuarioId = Session["UsuarioId"] as int?;
-            if (usuarioId == null)
-                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
-
-            int mesaId = 0;
-            string estadoAtencionUsuario = "Desconocido";
-            var pedidos = new List<object>();
-            var clientesEnMesa = new List<object>();
-
-            using (var conexion = new SqlConnection(connectionString))
+            try
             {
-                conexion.Open();
+                var estadoMesas = new List<object>();
 
-                //obtener las ordener por fecha y estado
-                string comandoEstadoOrdenes = @"SELECT TOP 1 m.Id AS MesaId, o.Estado FROM Usuarios u JOIN Mesas m ON u.MesaId = m.Id
-                                     LEFT JOIN Ordenes o ON o.UsuarioId = u.Id WHERE u.Id = @UsuarioId ORDER BY o.Fecha DESC";
-
-                using (var comandoOrdenPorID = new SqlCommand(comandoEstadoOrdenes, conexion))
+                using (var conn = new SqlConnection(connectionString))
                 {
-                    comandoOrdenPorID.Parameters.AddWithValue("@UsuarioId", usuarioId.Value);
-                    using (var lector = comandoOrdenPorID.ExecuteReader())
+                    conn.Open();
+
+                    // Obtener todas las mesas con su estado actual
+                    string query = @"SELECT m.Id AS MesaId, m.NumeroMesa, m.Estado, 
+                            (SELECT COUNT(*) FROM Usuarios u WHERE u.MesaId = m.Id) AS Ocupantes,
+                            (SELECT TOP 1 o.Estado FROM Ordenes o 
+                             JOIN Usuarios u ON o.UsuarioId = u.Id 
+                             WHERE u.MesaId = m.Id ORDER BY o.Fecha DESC) AS EstadoPedido
+                            FROM Mesas m";
+
+                    using (var cmd = new SqlCommand(query, conn))
+                    using (var reader = cmd.ExecuteReader())
                     {
-                        if (lector.Read())
+                        while (reader.Read())
                         {
-                            mesaId = (int)lector["MesaId"];
-                            estadoAtencionUsuario = lector["Estado"] != DBNull.Value ? lector["Estado"].ToString() : "Desconocido";
-                        }
-                    }
-                }
-
-
-
-
-
-                // Obtener pedidos actuales para el usuario
-                string comandoPedidosPorUsuario = @"SELECT NombreComida, Cantidad, PrecioUnitario, Estado FROM Ordenes WHERE UsuarioId = @UsuarioId";
-
-                using (var comandoPedidosPorID = new SqlCommand(comandoPedidosPorUsuario, conexion))
-                {
-                    comandoPedidosPorID.Parameters.AddWithValue("@UsuarioId", usuarioId.Value);
-                    using (var lector = comandoPedidosPorID.ExecuteReader())
-                    {
-                        while (lector.Read())
-                        {
-                            pedidos.Add(new
+                            estadoMesas.Add(new
                             {
-                                NombreComida = lector["NombreComida"].ToString(),
-                                Cantidad = (int)lector["Cantidad"],
-                                PrecioUnitario = lector["PrecioUnitario"] != DBNull.Value ? (decimal)lector["PrecioUnitario"] : 0m,
-                                Estado = lector["Estado"].ToString()
+                                Id = (int)reader["MesaId"],
+                                NumeroMesa = (int)reader["NumeroMesa"],
+                                Estado = reader["Estado"].ToString(),
+                                EstadoPedido = reader["EstadoPedido"] != DBNull.Value ?
+                                                 reader["EstadoPedido"].ToString() : "Sin pedido",
+                                Ocupantes = (int)reader["Ocupantes"]
                             });
                         }
                     }
                 }
 
-
-
-                // Obtener todos clientes en la mesa
-                if (mesaId > 0)
+                return Json(new
                 {
-                    string comandoClientesEnMesa = @"SELECT u.Id, u.Nombre FROM Usuarios u WHERE u.MesaId = @MesaId";
-
-                    var usuariosMesa = new List<(int Id, string Nombre)>();
-                    using (var comandoClienteSentados = new SqlCommand(comandoClientesEnMesa, conexion))
-                    {
-
-                        //se sacan los clientes en la mesa por id
-                        comandoClienteSentados.Parameters.AddWithValue("@MesaId", mesaId);
-                        using (var lector = comandoClienteSentados.ExecuteReader())
-                        {
-                            while (lector.Read())
-                            {
-                                usuariosMesa.Add(((int)lector["Id"], lector["Nombre"].ToString()));
-                            }
-                        }
-                    }
-
-
-
-
-
-
-                    // Para la lista de clientes en mesa determinar un estado
-                    foreach (var usuario in usuariosMesa)
-
-
-                    {
-                        //si no ha pedido nada
-                        string estadoCliente = "No ha ordenado aun";
-
-                        string comandoEstadoPedidoOtros = @" SELECT TOP 1 Estado FROM Ordenes WHERE UsuarioId = @Uid ORDER BY Fecha DESC";
-
-                        using (var comandoPedidoOtros = new SqlCommand(comandoEstadoPedidoOtros, conexion))
-                        {
-                            comandoPedidoOtros.Parameters.AddWithValue("@Uid", usuario.Id);
-                            var estadoPedidoObj = comandoPedidoOtros.ExecuteScalar();
-                            if (estadoPedidoObj != null)
-                            {
-                                var estadoPedido = estadoPedidoObj.ToString();
-
-
-
-                                //Existen 2 estados para la vista de los otros clientes despues de pedir
-                                if (estadoPedido == "Entregado")
-                                {
-                                    estadoCliente = "Por pagar";
-                                }
-                                else
-                                {
-                                    estadoCliente = "Pedido activo";
-                                }
-                            }
-                        }
-
-                        clientesEnMesa.Add(new
-                        {
-                            Id = usuario.Id,
-                            Nombre = usuario.Nombre,
-                            EstadoPedido = estadoCliente
-                        });
-                    }
-                }
-
-                conexion.Close();
+                    success = true,
+                    ClientesEnMesa = estadoMesas
+                }, JsonRequestBehavior.AllowGet);
             }
-
-
-            //al final se envia todo en un json
-            return Json(new
+            catch (Exception ex)
             {
-                success = true,
-                EstadoAtencion = estadoAtencionUsuario,
-                Pedidos = pedidos,
-                ClientesEnMesa = clientesEnMesa
-            }, JsonRequestBehavior.AllowGet);
+                return Json(new
+                {
+                    success = false,
+                    message = ex.Message
+                }, JsonRequestBehavior.AllowGet);
+            }
         }
 
 
@@ -1014,62 +928,94 @@ namespace GustoySazon.Controllers
             return RedirectToAction("Mesa");
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
         [HttpGet]
         public JsonResult ObtenerOrdenesPorMesa(int mesaId)
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["GustoySazonDB"].ConnectionString;
-            var pedidos = new List<OrdenModel>();
-
             try
             {
-                using (SqlConnection conn = new SqlConnection(connectionString))
+                // Validar parámetro de entrada
+                if (mesaId <= 0)
                 {
-                    string query = @"
-                SELECT 
-                    Id, GrupoOrdenId, UsuarioId, MesaId, MenuId,
-                    NombreComida, Cantidad, PrecioUnitario, PrecioTotal,
-                    Estado, Fecha, MeseroId
-                FROM Ordenes
-                WHERE MesaId = @MesaId";
+                    return Json(new { success = false, message = "ID de mesa inválido" });
+                }
 
-                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                using (var conn = new SqlConnection(connectionString))
+                {
+                    var pedidos = new List<object>();
+                    conn.Open();
+
+                    // Query optimizada para incluir solo estados relevantes
+                    string query = @"SELECT o.Id, o.NombreComida, o.Cantidad, 
+                           o.PrecioTotal, o.Estado, o.MeseroId
+                           FROM Ordenes o
+                           WHERE o.MesaId = @MesaId 
+                           AND o.Estado IN ('Pendiente', 'Preparando', 'Platillo Listo')
+                           ORDER BY o.Fecha DESC";
+
+                    using (var cmd = new SqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@MesaId", mesaId);
-                        conn.Open();
 
-                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        using (var reader = cmd.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                var orden = new OrdenModel
+                                pedidos.Add(new
                                 {
                                     Id = Convert.ToInt32(reader["Id"]),
-                                    GrupoOrdenId = Convert.ToInt32(reader["GrupoOrdenId"]),
-                                    UsuarioId = Convert.ToInt32(reader["UsuarioId"]),
-                                    MesaId = Convert.ToInt32(reader["MesaId"]),
-                                    MenuId = Convert.ToInt32(reader["MenuId"]),
-                                    NombreComida = reader["NombreComida"]?.ToString(),
+                                    NombreComida = reader["NombreComida"].ToString(),
                                     Cantidad = Convert.ToInt32(reader["Cantidad"]),
-                                    PrecioUnitario = Convert.ToDecimal(reader["PrecioUnitario"]),
                                     PrecioTotal = Convert.ToDecimal(reader["PrecioTotal"]),
-                                    Estado = reader["Estado"]?.ToString(),
-                                    Fecha = Convert.ToDateTime(reader["Fecha"]),
-                                    MeseroId = reader["MeseroId"] != DBNull.Value ? Convert.ToInt32(reader["MeseroId"]) : (int?)null
-                                };
-
-                                pedidos.Add(orden);
+                                    Estado = reader["Estado"].ToString(),
+                                    MeseroId = reader["MeseroId"] != DBNull.Value ?
+                                              Convert.ToInt32(reader["MeseroId"]) : (int?)null
+                                });
                             }
                         }
                     }
-                }
 
-                return Json(new { success = true, data = pedidos }, JsonRequestBehavior.AllowGet);
+                    return Json(new
+                    {
+                        success = true,
+                        data = pedidos.Count > 0 ? pedidos : null
+                    }, JsonRequestBehavior.AllowGet);
+                }
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+                // Log del error real
+                System.Diagnostics.Debug.WriteLine($"Error en ObtenerOrdenesPorMesa: {ex}");
+
+                return Json(new
+                {
+                    success = false,
+                    message = "Error al obtener órdenes",
+                    error = ex.Message
+                }, JsonRequestBehavior.AllowGet);
             }
         }
+
+
+
+
+
+
+
+
+
 
 
         //Funciones de la ventana pagos
@@ -1549,6 +1495,137 @@ namespace GustoySazon.Controllers
             // Implementación para cargar pedidos y clientes de la mesa
             // Similar a la que tenías anteriormente
         }
+
+
+
+
+
+
+
+
+        //Steven
+        [HttpPost]
+        public JsonResult ActualizarEstadoPedido(int ordenId, string nuevoEstado)
+        {
+            try
+            {
+                using (var conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string query = "UPDATE Ordenes SET Estado = @NuevoEstado WHERE Id = @OrdenId";
+
+                    using (var cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@NuevoEstado", nuevoEstado);
+                        cmd.Parameters.AddWithValue("@OrdenId", ordenId);
+
+                        int affectedRows = cmd.ExecuteNonQuery();
+
+                        return Json(new
+                        {
+                            success = affectedRows > 0,
+                            message = affectedRows > 0 ? "Estado actualizado" : "No se encontró la orden"
+                        });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = ex.Message
+                });
+            }
+        }
+
+
+
+
+
+        [HttpPost]
+        public JsonResult ActualizarEstadoOrden(int ordenId, string nuevoEstado, int meseroId)
+        {
+            try
+            {
+                // Validar estados permitidos
+                var estadosPermitidos = new[] { "Preparando", "Entregado" };
+                if (!estadosPermitidos.Contains(nuevoEstado))
+                {
+                    return Json(new { success = false, message = "Estado no válido" });
+                }
+
+                using (var conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    // Verificar estado actual
+                    string queryVerificar = "SELECT Estado FROM Ordenes WHERE Id = @OrdenId";
+                    string estadoActual;
+
+                    using (var cmd = new SqlCommand(queryVerificar, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@OrdenId", ordenId);
+                        estadoActual = cmd.ExecuteScalar()?.ToString();
+                    }
+
+                    // Validar transición de estados
+                    if (nuevoEstado == "Preparando" && estadoActual != "Pendiente")
+                    {
+                        return Json(new
+                        {
+                            success = false,
+                            message = "Solo se puede 'Tomar Orden' cuando el estado es 'Pendiente'"
+                        });
+                    }
+
+                    if (nuevoEstado == "Entregado" && estadoActual != "Platillo Listo")
+                    {
+                        return Json(new
+                        {
+                            success = false,
+                            message = "Solo se puede 'Entregar Orden' cuando el estado es 'Platillo Listo'"
+                        });
+                    }
+
+                    // Actualizar el estado
+                    string queryActualizar = @"UPDATE Ordenes 
+                                     SET Estado = @NuevoEstado, 
+                                         MeseroId = @MeseroId,
+                                         Fecha = GETDATE()
+                                     WHERE Id = @OrdenId";
+
+                    using (var cmd = new SqlCommand(queryActualizar, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@NuevoEstado", nuevoEstado);
+                        cmd.Parameters.AddWithValue("@OrdenId", ordenId);
+                        cmd.Parameters.AddWithValue("@MeseroId", meseroId);
+
+                        int affectedRows = cmd.ExecuteNonQuery();
+
+                        return Json(new
+                        {
+                            success = affectedRows > 0,
+                            message = affectedRows > 0 ? "Estado actualizado" : "No se encontró la orden"
+                        });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = ex.Message
+                });
+            }
+        }
+
+        //Fin Steven
+
+
+
 
     }
 }

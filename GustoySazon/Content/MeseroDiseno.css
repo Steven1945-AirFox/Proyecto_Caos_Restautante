@@ -1430,3 +1430,89 @@ body {
         }
     }
 }
+
+
+
+
+/*Parte Steven*/
+
+.content-section {
+    padding: 20px;
+    background-color: aliceblue;
+    border-radius: 12px;
+}
+
+.listado-mesas {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+    padding: 10px;
+}
+
+.mesa-card {
+    background-color: white;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    padding: 12px;
+    transition: transform 0.2s ease;
+}
+
+    .mesa-card:hover {
+        transform: scale(1.02);
+    }
+
+.mesa-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+}
+
+    .mesa-header.ocupada {
+        background-color: #ffd6d6;
+        color: #8b0000;
+        border-radius: 8px;
+        padding: 5px;
+    }
+
+    .mesa-header.libre {
+        background-color: #d6ffd9;
+        color: #006400;
+        border-radius: 8px;
+        padding: 5px;
+    }
+
+.estado-mesa {
+    font-weight: bold;
+}
+
+.mesa-body {
+    margin-top: 10px;
+}
+
+.detalles-adicionales {
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.pedido-detalle-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+    .pedido-detalle-table th,
+    .pedido-detalle-table td {
+        border: 1px solid #ccc;
+        padding: 6px;
+        text-align: center;
+    }
+
+
+
+/*Fin Parte Steven*/
