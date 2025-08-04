@@ -7,9 +7,11 @@ namespace GustoySazon.Models
     {
         public List<ClienteEnEspera> ClientesEnEspera { get; set; }
         public List<MesaDisponible> MesasDisponibles { get; set; }
-
-        
+        public int PosicionEnFila { get; set; }
+        public string NombreUsuarioActual { get; set; }
         public int UsuarioIdActual { get; set; }
+
+        public DateTime HoraRegistroUsuario { get; set; }
     }
 
     public class ClienteEnEspera

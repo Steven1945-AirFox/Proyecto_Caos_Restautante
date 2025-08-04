@@ -34,32 +34,48 @@
                        oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0,9)" />
             </div>
 
-            <div class="form-group">
-                <label>Número de asientos a solicitar:</label>
-                <div class="seats-selector">
-                    <div class="seats-toggle" id="seatsToggle">
-                        <span>Seleccionar cantidad</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="seats-dropdown" id="seatsDropdown">
-                        <div data-value="2">2 asientos</div>
-                        <div data-value="3">3 asientos</div>
-                        <div data-value="4">4 asientos</div>
-                        <div data-value="5">5 asientos</div>
-                        <div data-value="6">6 asientos</div>
-                    </div>
-                    <input type="hidden" id="selectedSeats" name="sillas" required>
+
+
+
+
+
+
+
+
+
+            @*<div class="form-group">
+            <label>Número de asientos a solicitar:</label>
+            <div class="seats-selector">
+                <div class="seats-toggle" id="seatsToggle">
+                    <span>Seleccionar cantidad</span>
+                    <i class="fas fa-chevron-down"></i>
                 </div>
+                <div class="seats-dropdown" id="seatsDropdown">
+                    <div data-value="2">2 asientos</div>
+                    <div data-value="3">3 asientos</div>
+                    <div data-value="4">4 asientos</div>
+                    <div data-value="5">5 asientos</div>
+                    <div data-value="6">6 asientos</div>
+                </div>
+                <input type="hidden" id="selectedSeats" name="sillas" required>
             </div>
+        </div>*@
 
 
-            
+
+
+
+
+
+
+
+
             <div class="form-group">
                 <label for="email">Correo electrónico:</label>
                 <input type="email" id="email" name="correo" placeholder="ejemplo@correo.com" required>
             </div>
 
-            
+
             <div class="form-group">
                 <label for="password">Contraseña:</label>
                 <input type="password" id="password" name="contrasena" placeholder="Contraseña segura" required minlength="6">
@@ -136,6 +152,8 @@
     </div>
 
     <script>
+
+        @*
         //seleccionar sillas
         const seatsToggle = document.getElementById('seatsToggle');
         const seatsDropdown = document.getElementById('seatsDropdown');
@@ -153,6 +171,17 @@
                 seatsDropdown.classList.remove('show');
             });
         });
+            *@
+
+
+
+
+
+
+
+
+
+
 
 
 

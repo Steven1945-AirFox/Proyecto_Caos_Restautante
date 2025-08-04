@@ -1,12 +1,45 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
+
+    <style>
+
+        .navbar-nav {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+
+        .derecha {
+            margin-left: auto;
+            display: flex;
+        }
+
+            /* Para que los botones queden uno al lado del otro */
+            .derecha + .derecha {
+                margin-left: 0;
+                padding-left: 10px;
+            }
+
+        /* Estilos para móviles */
+        @@media (max-width: 991.98px) {
+            .derecha {
+                margin-left: 0;
+            }
+
+                .derecha + .derecha {
+                    padding-left: 0;
+                }
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
@@ -18,8 +51,10 @@
             </button>
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
-                    <li>@Html.ActionLink("Inicio", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    
+
+
+                    @*<li>@Html.ActionLink("Inicio", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+
                     <li>@Html.ActionLink("Meseros", "Mesero", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Cocina", "Cocina", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Generador de Caos", "GenCaos", "Home", new { area = "" }, new { @class = "nav-link" })</li>
@@ -28,8 +63,8 @@
                     <li>@Html.ActionLink("Contacto", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>*@
 
 
-                    <li>@Html.ActionLink("Iniciar Sesion", "Login", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Registrarse", "registro", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li class="derecha">@Html.ActionLink("Iniciar Sesion", "Login", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li class="derecha">@Html.ActionLink("Registrarse", "registro", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                 </ul>
             </div>
         </div>

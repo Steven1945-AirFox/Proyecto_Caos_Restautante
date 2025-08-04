@@ -203,13 +203,8 @@ namespace GustoySazon.Controllers
 
 
 
-
-        //Funciones de la fila de espera
         public ActionResult FilaEspera()
         {
-
-
-
             // Verificar si hay usuario en sesión y lo manda directamente a la mesa
             if (Session["UsuarioId"] != null)
             {
@@ -231,61 +226,48 @@ namespace GustoySazon.Controllers
                             // Si ya tiene mesa, redirigir directamente a la mesa
                             return RedirectToAction("Mesa");
                         }
-
                     }
                 }
             }
 
-
-
             var modelo = new FilaEsperaViewModel
             {
-                ClientesEnEspera = new List<ClienteEnEspera>(),
-                MesasDisponibles = new List<MesaDisponible>()
+                MesasDisponibles = new List<MesaDisponible>(),
+                PosicionEnFila = 0 // Inicializar posición
             };
 
-
-
-            //Para obtener los usuarios activos
             using (SqlConnection conexion = new SqlConnection(connectionString))
             {
                 conexion.Open();
 
-
                 int usuarioId = 0;
-                int sillasRequeridas = 2;
                 string comandoUsuariosActuales;
 
                 if (Session["UsuarioId"] != null)
                 {
-                    //si cliente tiene sesion activa que se ordene en la lista de espera
                     usuarioId = (int)Session["UsuarioId"];
-                    comandoUsuariosActuales = "SELECT Id, Sillas FROM Usuarios WHERE Id = @UsuarioId";
+                    comandoUsuariosActuales = "SELECT Id, Nombre, HoraRegistro FROM Usuarios WHERE Id = @UsuarioId"; // Agregado HoraRegistro
                 }
                 else
                 {
-                    //si el usuario es nuevo que se posicione de ultimo en la fila
-                    comandoUsuariosActuales = "SELECT TOP 1 Id, Sillas FROM Usuarios ORDER BY HoraRegistro DESC";
+                    comandoUsuariosActuales = "SELECT TOP 1 Id, Nombre, HoraRegistro FROM Usuarios ORDER BY HoraRegistro DESC"; // Agregado HoraRegistro
                 }
 
-
-
-
-
-                //Para preparar datos del cliente para la fila de espera
-                using (SqlCommand comandoSillasPedidas = new SqlCommand(comandoUsuariosActuales, conexion))
+                // Obtener usuario actual
+                using (SqlCommand comandoUsuario = new SqlCommand(comandoUsuariosActuales, conexion))
                 {
                     if (Session["UsuarioId"] != null)
                     {
-                        comandoSillasPedidas.Parameters.AddWithValue("@UsuarioId", usuarioId);
+                        comandoUsuario.Parameters.AddWithValue("@UsuarioId", usuarioId);
                     }
 
-                    using (SqlDataReader lector = comandoSillasPedidas.ExecuteReader())
+                    using (SqlDataReader lector = comandoUsuario.ExecuteReader())
                     {
                         if (lector.Read())
                         {
                             usuarioId = (int)lector["Id"];
-                            sillasRequeridas = (int)lector["Sillas"];
+                            modelo.NombreUsuarioActual = lector["Nombre"].ToString();
+                            modelo.HoraRegistroUsuario = (DateTime)lector["HoraRegistro"]; // Asignar hora de registro
                         }
                         else
                         {
@@ -295,12 +277,7 @@ namespace GustoySazon.Controllers
                     }
                 }
 
-
-
-
-
-                // Guardar sesion del usuario
-                //tanto usuario como identificacion
+                // Guardar sesion del usuario si es nuevo
                 if (Session["UsuarioId"] == null)
                 {
                     Session["UsuarioId"] = usuarioId;
@@ -308,53 +285,37 @@ namespace GustoySazon.Controllers
 
                 modelo.UsuarioIdActual = usuarioId;
 
-                // Clientes en espera sin mesa asignada
-                string comandoClientes = @"SELECT Id, Nombre, HoraRegistro FROM Usuarios WHERE MesaId IS NULL";
+                // Calcular posición en fila
+                string comandoPosicion = @"
+            SELECT COUNT(*) + 1 AS Posicion
+            FROM Usuarios
+            WHERE MesaId IS NULL AND HoraRegistro < (SELECT HoraRegistro FROM Usuarios WHERE Id = @UsuarioId)";
 
-                using (SqlCommand comandoClientesEspera = new SqlCommand(comandoClientes, conexion))
-                using (SqlDataReader lector = comandoClientesEspera.ExecuteReader())
+                using (SqlCommand comandoPosicionFila = new SqlCommand(comandoPosicion, conexion))
+                {
+                    comandoPosicionFila.Parameters.AddWithValue("@UsuarioId", usuarioId);
+                    modelo.PosicionEnFila = (int)comandoPosicionFila.ExecuteScalar();
+                }
+
+                // Obtener TODAS las mesas disponibles
+                string comandoMesas = @"SELECT m.Id, m.NumeroMesa, m.Sillas, m.Ubicacion, m.Estado, 
+                           (SELECT COUNT(*) FROM Usuarios u WHERE u.MesaId = m.Id) AS Ocupantes
+                           FROM Mesas m";
+
+                using (SqlCommand comandoMesasDisponibles = new SqlCommand(comandoMesas, conexion))
+                using (SqlDataReader lector = comandoMesasDisponibles.ExecuteReader())
                 {
                     while (lector.Read())
                     {
-                        modelo.ClientesEnEspera.Add(new ClienteEnEspera
+                        modelo.MesasDisponibles.Add(new MesaDisponible
                         {
                             Id = (int)lector["Id"],
-                            Nombre = lector["Nombre"].ToString(),
-                            HoraRegistro = (DateTime)lector["HoraRegistro"]
+                            NumeroMesa = (int)lector["NumeroMesa"],
+                            Sillas = (int)lector["Sillas"],
+                            Ubicacion = lector["Ubicacion"].ToString(),
+                            Estado = lector["Estado"].ToString(),
+                            Ocupantes = (int)lector["Ocupantes"]
                         });
-                    }
-                }
-
-
-
-
-
-
-
-                // Obtener mesas con cantidad de sillas que el cliente elije
-                string comandoMesas = @"SELECT m.Id, m.NumeroMesa, m.Sillas, m.Ubicacion, m.Estado, (SELECT COUNT(*) FROM Usuarios u WHERE u.MesaId = m.Id) AS Ocupantes
-                                    FROM Mesas m WHERE m.Sillas = @Sillas";
-
-                using (SqlCommand comandoMesasPorSillas = new SqlCommand(comandoMesas, conexion))
-                {
-                    comandoMesasPorSillas.Parameters.AddWithValue("@Sillas", sillasRequeridas);
-
-                    using (SqlDataReader lector = comandoMesasPorSillas.ExecuteReader())
-                    {
-                        while (lector.Read())
-                        {
-                            modelo.MesasDisponibles.Add(new MesaDisponible
-                            {
-                                Id = (int)lector["Id"],
-                                NumeroMesa = (int)lector["NumeroMesa"],
-                                Sillas = (int)lector["Sillas"],
-                                Ubicacion = lector["Ubicacion"].ToString(),
-                                Estado = lector["Estado"].ToString(),
-
-                                //para ver las personas en X mesa
-                                Ocupantes = (int)lector["Ocupantes"]
-                            });
-                        }
                     }
                 }
 
@@ -362,9 +323,7 @@ namespace GustoySazon.Controllers
             }
 
             return View("FilaEspera", modelo);
-
         }
-
 
 
 
