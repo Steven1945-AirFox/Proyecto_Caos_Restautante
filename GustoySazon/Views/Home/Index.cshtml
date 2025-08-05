@@ -52,10 +52,6 @@
                     <i class="fas fa-utensils"></i>
                     Descubrir Platos
                 </button>
-                <button class="cta-button primary" onclick="scrollToSection('contacto')">
-                    <i class="fas fa-calendar-alt"></i>
-                    Reservar Mesa
-                </button>
             </div>
         </div>
 
@@ -131,20 +127,13 @@
                 </p>
             </div>
 
-            <div class="dishes-controls">
-                <button class="add-dish-btn" onclick="openAddDishModal()">
-                    <i class="fas fa-plus"></i>
-                    Agregar Nuevo Plato
-                </button>
-            </div>
-
             <div class="dishes-grid" id="dishesGrid">
                 <!-- Los platos se cargarán aquí dinámicamente -->
             </div>
         </div>
     </section>
 
-    <!-- Gallery Section - COMPLETAMENTE ARREGLADA -->
+    <!-- Gallery Section -->
     <section class="gallery-section" id="galeria">
         <div class="container">
             <div class="section-header centered">
@@ -178,7 +167,6 @@
                         <div class="gallery-category-icon">
                             <i class="fas fa-utensils"></i>
                         </div>
-                        <div class="gallery-price">$25.500</div>
                         <div class="gallery-overlay">
                             <div class="gallery-content">
                                 <h3 class="gallery-title">Bandeja Paisa Especial</h3>
@@ -196,7 +184,6 @@
                                 <h4 class="gallery-info-title">Bandeja Paisa Especial</h4>
                                 <p class="gallery-info-category">Platos Principales</p>
                             </div>
-                            <div class="gallery-info-price">$25.500</div>
                         </div>
                         <p class="gallery-info-description">Frijoles, arroz, carne molida, chicharrón, chorizo, huevo, patacón y aguacate</p>
                         <div class="gallery-info-tags">
@@ -244,7 +231,6 @@
                         <div class="gallery-category-icon">
                             <i class="fas fa-bowl-hot"></i>
                         </div>
-                        <div class="gallery-price">$20.000</div>
                         <div class="gallery-overlay">
                             <div class="gallery-content">
                                 <h3 class="gallery-title">Sancocho de Gallina</h3>
@@ -262,7 +248,6 @@
                                 <h4 class="gallery-info-title">Sancocho de Gallina</h4>
                                 <p class="gallery-info-category">Sopas</p>
                             </div>
-                            <div class="gallery-info-price">$20.000</div>
                         </div>
                         <p class="gallery-info-description">Gallina criolla, yuca, plátano, mazorca y verduras frescas</p>
                         <div class="gallery-info-tags">
@@ -278,7 +263,6 @@
                         <div class="gallery-category-icon">
                             <i class="fas fa-birthday-cake"></i>
                         </div>
-                        <div class="gallery-price">$14.000</div>
                         <div class="gallery-overlay">
                             <div class="gallery-content">
                                 <h3 class="gallery-title">Postres Artesanales</h3>
@@ -296,7 +280,6 @@
                                 <h4 class="gallery-info-title">Postres Caseros</h4>
                                 <p class="gallery-info-category">Postres</p>
                             </div>
-                            <div class="gallery-info-price">$14.000</div>
                         </div>
                         <p class="gallery-info-description">Flan, tres leches, arroz con leche y dulce de papaya</p>
                         <div class="gallery-info-tags">
@@ -344,7 +327,6 @@
                         <div class="gallery-category-icon">
                             <i class="fas fa-glass-water"></i>
                         </div>
-                        <div class="gallery-price">$7.000</div>
                         <div class="gallery-overlay">
                             <div class="gallery-content">
                                 <h3 class="gallery-title">Jugos Naturales</h3>
@@ -362,7 +344,6 @@
                                 <h4 class="gallery-info-title">Jugos Frescos</h4>
                                 <p class="gallery-info-category">Bebidas</p>
                             </div>
-                            <div class="gallery-info-price">$7.000</div>
                         </div>
                         <p class="gallery-info-description">Mango, maracuyá, lulo, guayaba y frutas de temporada</p>
                         <div class="gallery-info-tags">
@@ -410,7 +391,6 @@
                         <div class="gallery-category-icon">
                             <i class="fas fa-bowl-hot"></i>
                         </div>
-                        <div class="gallery-price">$18.500</div>
                         <div class="gallery-overlay">
                             <div class="gallery-content">
                                 <h3 class="gallery-title">Ajiaco Bogotano</h3>
@@ -428,7 +408,6 @@
                                 <h4 class="gallery-info-title">Ajiaco Bogotano</h4>
                                 <p class="gallery-info-category">Sopas</p>
                             </div>
-                            <div class="gallery-info-price">$18.500</div>
                         </div>
                         <p class="gallery-info-description">Tres tipos de papa, pollo, mazorca, alcaparras y crema</p>
                         <div class="gallery-info-tags">
@@ -472,114 +451,104 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section class="contact-section" id="contacto">
-        <div class="container">
-            <div class="section-header centered">
-                <h2 class="section-title">Reserva tu <span class="gradient-text">Mesa</span></h2>
-                <div class="section-divider"></div>
-                <p class="section-description">
-                    Asegura tu lugar en nuestra mesa familiar. Te esperamos para compartir momentos inolvidables y sabores que perdurarán en tu memoria.
-                </p>
-            </div>
 
-            <div class="contact-grid">
-                <div class="contact-info">
-                    <div class="info-card">
-                        <div class="info-header">
-                            <i class="fas fa-phone"></i>
-                            <h3>Información de Contacto</h3>
-                        </div>
-                        <div class="info-content">
-                            <div class="info-item">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <div>
-                                    <strong>Dirección</strong>
-                                    <p>Calle Principal 123<br>Centro Histórico, Ciudad<br>Código Postal: 12345</p>
-                                </div>
-                            </div>
-                            <div class="info-item">
+    @*
+        <!-- Contact Section -->
+        <section class="contact-section" id="contacto">
+            <div class="container">
+                <div class="section-header centered">
+                    <h2 class="section-title">Contáctanos</h2>
+                    <div class="section-divider"></div>
+                    <p class="section-description">
+                        Estamos aquí para atenderte y responder cualquier pregunta que tengas sobre nuestro restaurante.
+                    </p>
+                </div>
+
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <div class="info-card">
+                            <div class="info-header">
                                 <i class="fas fa-phone"></i>
-                                <div>
-                                    <strong>Teléfono</strong>
-                                    <p>(555) 123-4567<br>WhatsApp: (555) 987-6543</p>
+                                <h3>Información de Contacto</h3>
+                            </div>
+                            <div class="info-content">
+                                <div class="info-item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <div>
+                                        <strong>Dirección</strong>
+                                        <p>Calle Principal 123<br>Centro Histórico, Ciudad<br>Código Postal: 12345</p>
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-phone"></i>
+                                    <div>
+                                        <strong>Teléfono</strong>
+                                        <p>(555) 123-4567<br>WhatsApp: (555) 987-6543</p>
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-envelope"></i>
+                                    <div>
+                                        <strong>Email</strong>
+                                        <p>info@gustoysazon.com</p>
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-clock"></i>
+                                    <div>
+                                        <strong>Horarios de Atención</strong>
+                                        <p>Lunes a Domingo<br>11:00 AM - 10:00 PM<br>Cocina hasta 9:30 PM</p>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="info-item">
-                                <i class="fas fa-envelope"></i>
-                                <div>
-                                    <strong>Email</strong>
-                                    <p>reservas@gustoysazon.com<br>info@gustoysazon.com</p>
-                                </div>
-                            </div>
-                            <div class="info-item">
-                                <i class="fas fa-clock"></i>
-                                <div>
-                                    <strong>Horarios de Atención</strong>
-                                    <p>Lunes a Domingo<br>11:00 AM - 10:00 PM<br>Cocina hasta 9:30 PM</p>
-                                </div>
-                            </div>
+                        </div>
+
+                        <div class="info-tip">
+                            <h4>💡 Dato Curioso</h4>
+                            <p>Nuestras mesas tienen una historia especial. Cada una fue tallada a mano por artesanos locales usando madera de árboles centenarios, creando un ambiente único y auténtico que complementa perfectamente nuestros sabores tradicionales.</p>
                         </div>
                     </div>
 
-                    <div class="info-tip">
-                        <h4>💡 Dato Curioso</h4>
-                        <p>Nuestras mesas tienen una historia especial. Cada una fue tallada a mano por artesanos locales usando madera de árboles centenarios, creando un ambiente único y auténtico que complementa perfectamente nuestros sabores tradicionales.</p>
+                    <div class="contact-form-container">
+                        <div class="form-header">
+                            <h3>Formulario de Contacto</h3>
+                            <p>Completa los datos y nos pondremos en contacto contigo</p>
+                        </div>
+
+                        <form class="contact-form" id="contactForm">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="name">Nombre completo *</label>
+                                    <input type="text" id="name" name="name" required placeholder="Tu nombre completo">
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Teléfono *</label>
+                                    <input type="tel" id="phone" name="phone" required placeholder="(555) 123-4567">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Email *</label>
+                                <input type="email" id="email" name="email" required placeholder="tu@email.com">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="message">Mensaje *</label>
+                                <textarea id="message" name="message" rows="4" required placeholder="¿Cómo podemos ayudarte?"></textarea>
+                            </div>
+
+                            <button type="submit" class="cta-button primary full-width">
+                                <i class="fas fa-paper-plane"></i>
+                                Enviar Mensaje
+                            </button>
+                        </form>
                     </div>
-                </div>
-
-                <div class="contact-form-container">
-                    <div class="form-header">
-                        <h3>Formulario de Reserva</h3>
-                        <p>Completa los datos y nos pondremos en contacto contigo en las próximas 2 horas</p>
-                    </div>
-
-                    <form class="contact-form" id="contactForm">
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label for="name">Nombre completo *</label>
-                                <input type="text" id="name" name="name" required placeholder="Tu nombre completo">
-                            </div>
-                            <div class="form-group">
-                                <label for="phone">Teléfono *</label>
-                                <input type="tel" id="phone" name="phone" required placeholder="(555) 123-4567">
-                            </div>
-                        </div>
-
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label for="date">Fecha preferida *</label>
-                                <input type="date" id="date" name="date" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="time">Hora preferida *</label>
-                                <input type="time" id="time" name="time" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="guests">Número de personas *</label>
-                            <input type="number" id="guests" name="guests" min="1" max="20" required placeholder="¿Cuántas personas?">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="message">Mensaje adicional</label>
-                            <textarea id="message" name="message" rows="4" placeholder="Ocasión especial, preferencias alimentarias, solicitudes especiales, etc."></textarea>
-                        </div>
-
-                        <button type="submit" class="cta-button primary full-width">
-                            <i class="fas fa-paper-plane"></i>
-                            Enviar Reserva
-                        </button>
-
-                        <p class="form-note">
-                            * Campos obligatorios. Te contactaremos en las próximas 2 horas para confirmar tu reserva y coordinar los detalles.
-                        </p>
-                    </form>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+
+    *@
 
     <!-- Footer -->
     <footer class="footer">
@@ -619,7 +588,7 @@
                         <li><a href="#historia">Nuestra Historia</a></li>
                         <li><a href="#platos-estrella">Platos Estrella</a></li>
                         <li><a href="#galeria">Galería</a></li>
-                        <li><a href="#contacto">Reservas</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
                         <li><a href="#">Menú Completo</a></li>
                         <li><a href="#">Eventos Especiales</a></li>
                     </ul>
@@ -651,74 +620,6 @@
             </div>
         </div>
     </footer>
-
-    <!-- Modal para agregar platos -->
-    <div id="addDishModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">Agregar Nuevo Plato Estrella</h2>
-                <button class="close-modal" onclick="closeAddDishModal()" aria-label="Cerrar modal">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-
-            <form id="addDishForm">
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label for="dishName">Nombre del plato *</label>
-                        <input type="text" id="dishName" name="dishName" required placeholder="Ej: Bandeja Paisa Especial">
-                    </div>
-                    <div class="form-group">
-                        <label for="dishCategory">Categoría *</label>
-                        <input type="text" id="dishCategory" name="dishCategory" required placeholder="Ej: Platos Principales">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="dishDescription">Descripción *</label>
-                    <textarea id="dishDescription" name="dishDescription" rows="3" required placeholder="Describe los ingredientes principales y la preparación especial del plato"></textarea>
-                </div>
-
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label for="dishPrice">Precio *</label>
-                        <input type="text" id="dishPrice" name="dishPrice" required placeholder="$25.000">
-                    </div>
-                    <div class="form-group">
-                        <label for="dishRating">Calificación *</label>
-                        <input type="number" id="dishRating" name="dishRating" min="1" max="5" step="0.1" required placeholder="4.8">
-                    </div>
-                </div>
-
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label for="dishPrepTime">Tiempo de preparación *</label>
-                        <input type="text" id="dishPrepTime" name="dishPrepTime" required placeholder="30 min">
-                    </div>
-                    <div class="form-group">
-                        <label for="dishServes">Porciones *</label>
-                        <input type="text" id="dishServes" name="dishServes" required placeholder="2-3 personas">
-                    </div>
-                </div>
-
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label for="dishBadge">Etiqueta especial</label>
-                        <input type="text" id="dishBadge" name="dishBadge" placeholder="Especial, Popular, Nuevo, Premium">
-                    </div>
-                    <div class="form-group">
-                        <label for="dishImage">URL de imagen</label>
-                        <input type="url" id="dishImage" name="dishImage" placeholder="https://ejemplo.com/imagen.jpg">
-                    </div>
-                </div>
-
-                <button type="submit" class="cta-button primary full-width">
-                    <i class="fas fa-plus"></i>
-                    Agregar Plato Estrella
-                </button>
-            </form>
-        </div>
-    </div>
 
     <script>
         // Datos iniciales de platos estrella mejorados
@@ -810,58 +711,52 @@
                 const badgeIcon = getBadgeIcon(dish.badge);
 
                 dishCard.innerHTML = `
-                    <div class="dish-image-container">
-                        <img src="${dish.image}" alt="${dish.name}" loading="lazy">
-                        <div class="dish-overlay"></div>
-                        <div class="dish-badges">
-                            <div class="dish-badge">
-                                <i class="fas fa-${badgeIcon}"></i>
-                                ${dish.badge}
+                            <div class="dish-image-container">
+                                <img src="${dish.image}" alt="${dish.name}" loading="lazy">
+                                <div class="dish-overlay"></div>
+                                <div class="dish-badges">
+                                    <div class="dish-badge">
+                                        <i class="fas fa-${badgeIcon}"></i>
+                                        ${dish.badge}
+                                    </div>
+                                </div>
+                                <div class="dish-rating">
+                                    <i class="fas fa-star"></i>
+                                    ${dish.rating}
+                                </div>
+                                <button class="dish-favorite" onclick="toggleFavorite(${dish.id})" aria-label="Agregar a favoritos">
+                                    <i class="far fa-heart"></i>
+                                </button>
                             </div>
-                        </div>
-                        <div class="dish-rating">
-                            <i class="fas fa-star"></i>
-                            ${dish.rating}
-                        </div>
-                        <button class="dish-favorite" onclick="toggleFavorite(${dish.id})" aria-label="Agregar a favoritos">
-                            <i class="far fa-heart"></i>
-                        </button>
-                    </div>
-                    <div class="dish-content">
-                        <div class="dish-header">
-                            <div>
-                                <h3 class="dish-name">${dish.name}</h3>
-                                <p class="dish-category">${dish.category}</p>
+                            <div class="dish-content">
+                                <div class="dish-header">
+                                    <div>
+                                        <h3 class="dish-name">${dish.name}</h3>
+                                        <p class="dish-category">${dish.category}</p>
+                                    </div>
+                                </div>
+                                <p class="dish-description">${dish.description}</p>
+                                <div class="dish-details">
+                                    <div class="dish-detail">
+                                        <i class="fas fa-clock"></i>
+                                        <span>${dish.prepTime}</span>
+                                    </div>
+                                    <div class="dish-detail">
+                                        <i class="fas fa-users"></i>
+                                        <span>${dish.serves}</span>
+                                    </div>
+                                    <div class="dish-detail">
+                                        <i class="fas fa-star"></i>
+                                        <span>${dish.rating}/5</span>
+                                    </div>
+                                    <div class="dish-detail">
+                                        <i class="fas fa-utensils"></i>
+                                        <span>${dish.category}</span>
+                                    </div>
+                                </div>
+
                             </div>
-                        </div>
-                        <p class="dish-description">${dish.description}</p>
-                        <div class="dish-details">
-                            <div class="dish-detail">
-                                <i class="fas fa-clock"></i>
-                                <span>${dish.prepTime}</span>
-                            </div>
-                            <div class="dish-detail">
-                                <i class="fas fa-users"></i>
-                                <span>${dish.serves}</span>
-                            </div>
-                            <div class="dish-detail">
-                                <i class="fas fa-star"></i>
-                                <span>${dish.rating}/5</span>
-                            </div>
-                            <div class="dish-detail">
-                                <i class="fas fa-utensils"></i>
-                                <span>${dish.category}</span>
-                            </div>
-                        </div>
-                        <div class="dish-footer">
-                            <div class="dish-price">${dish.price}</div>
-                            <button class="dish-order-btn" onclick="orderDish(${dish.id})">
-                                <i class="fas fa-shopping-cart"></i>
-                                Ordenar Ahora
-                            </button>
-                        </div>
-                    </div>
-                `;
+                        `;
 
                 dishesGrid.appendChild(dishCard);
             });
@@ -962,27 +857,27 @@
         function showSuccessMessage(message) {
             const successDiv = document.createElement('div');
             successDiv.style.cssText = `
-                position: fixed;
-                top: 30px;
-                right: 30px;
-                background: linear-gradient(135deg, #059669, #10b981);
-                color: white;
-                padding: 20px 30px;
-                border-radius: 15px;
-                font-weight: 600;
-                font-size: 16px;
-                box-shadow: 0 15px 35px rgba(5, 150, 105, 0.4);
-                z-index: 1001;
-                animation: slideInRight 0.4s ease-out;
-                max-width: 350px;
-                border: 2px solid rgba(255, 255, 255, 0.2);
-            `;
+                        position: fixed;
+                        top: 30px;
+                        right: 30px;
+                        background: linear-gradient(135deg, #059669, #10b981);
+                        color: white;
+                        padding: 20px 30px;
+                        border-radius: 15px;
+                        font-weight: 600;
+                        font-size: 16px;
+                        box-shadow: 0 15px 35px rgba(5, 150, 105, 0.4);
+                        z-index: 1001;
+                        animation: slideInRight 0.4s ease-out;
+                        max-width: 350px;
+                        border: 2px solid rgba(255, 255, 255, 0.2);
+                    `;
             successDiv.innerHTML = `
-                <div style="display: flex; align-items: center; gap: 12px;">
-                    <i class="fas fa-check-circle" style="font-size: 20px;"></i>
-                    <span>${message}</span>
-                </div>
-            `;
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <i class="fas fa-check-circle" style="font-size: 20px;"></i>
+                            <span>${message}</span>
+                        </div>
+                    `;
 
             document.body.appendChild(successDiv);
 
@@ -1157,27 +1052,27 @@
         function showErrorMessage(message) {
             const errorDiv = document.createElement('div');
             errorDiv.style.cssText = `
-                position: fixed;
-                top: 30px;
-                right: 30px;
-                background: linear-gradient(135deg, #dc2626, #ef4444);
-                color: white;
-                padding: 20px 30px;
-                border-radius: 15px;
-                font-weight: 600;
-                font-size: 16px;
-                box-shadow: 0 15px 35px rgba(220, 38, 38, 0.4);
-                z-index: 1001;
-                animation: slideInRight 0.4s ease-out;
-                max-width: 350px;
-                border: 2px solid rgba(255, 255, 255, 0.2);
-            `;
+                        position: fixed;
+                        top: 30px;
+                        right: 30px;
+                        background: linear-gradient(135deg, #dc2626, #ef4444);
+                        color: white;
+                        padding: 20px 30px;
+                        border-radius: 15px;
+                        font-weight: 600;
+                        font-size: 16px;
+                        box-shadow: 0 15px 35px rgba(220, 38, 38, 0.4);
+                        z-index: 1001;
+                        animation: slideInRight 0.4s ease-out;
+                        max-width: 350px;
+                        border: 2px solid rgba(255, 255, 255, 0.2);
+                    `;
             errorDiv.innerHTML = `
-                <div style="display: flex; align-items: center; gap: 12px;">
-                    <i class="fas fa-exclamation-triangle" style="font-size: 20px;"></i>
-                    <span>${message}</span>
-                </div>
-            `;
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <i class="fas fa-exclamation-triangle" style="font-size: 20px;"></i>
+                            <span>${message}</span>
+                        </div>
+                    `;
 
             document.body.appendChild(errorDiv);
 

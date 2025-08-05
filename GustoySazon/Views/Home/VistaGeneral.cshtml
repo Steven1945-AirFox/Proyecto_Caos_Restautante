@@ -41,17 +41,25 @@
                         <p class="text-red-200 text-xs md:text-sm">Restaurante Gusto y Sazón</p>
                     </div>
                 </div>
+
+                <!-- Contenedor para elementos del lado derecho -->
+                <div class="flex items-center gap-3">
+                    <!-- Indicador de operación -->
+                    <span id="badgeOperacion"
+                          class="hidden bg-green-100 text-green-800 text-xs md:text-sm px-3 py-1 rounded-full font-semibold flex items-center gap-2 shadow">
+                        <span class="inline-block w-2 h-2 bg-green-500 rounded-full"></span>
+                        Operación activa • <span id="timerOperacion">00:00:00</span>
+                    </span>
+
+                    <!-- Botón de Salir -->
+                    <button onclick="location.href='@Url.Action("Index", "Home")'"
+                            class="flex items-center gap-2 bg-white/20 hover:bg-white/30 px-3 py-1 rounded-full transition-colors">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span class="text-xs md:text-sm">Salir del puesto</span>
+                    </button>
+                </div>
             </div>
         </div>
-
-        <div class="ml-auto flex items-center gap-3" id="operacionBadgeWrap">
-            <span id="badgeOperacion"
-                  class="hidden bg-green-100 text-green-800 text-xs md:text-sm px-3 py-1 rounded-full font-semibold flex items-center gap-2 shadow">
-                <span class="inline-block w-2 h-2 bg-green-500 rounded-full"></span>
-                Operación activa • <span id="timerOperacion">00:00:00</span>
-            </span>
-        </div>
-
     </header>
 
     <div class="main-container">
@@ -166,9 +174,47 @@
 
 
 
-           
-
         </section>
+
+
+
+
+
+
+
+
+        <!-- Control Financiero -->
+        <!-- Control Financiero -->
+        <!-- Control Financiero -->
+        <section id="control-financiero" class="mb-6 md:mb-8">
+            <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                <i class="fas fa-chart-line mr-2 md:mr-3 text-safe-green"></i>
+                <span>Control Financiero</span>
+            </h2>
+
+            <div class="space-y-4 md:space-y-6">
+                <!-- Métricas Financieras -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+
+                    <div class="bg-white rounded-lg shadow-md p-4 text-center">
+                        <div class="text-lg md:text-xl font-bold text-green-600" id="gananciasTotales">₡0</div>
+                        <div class="text-xs md:text-sm text-gray-600">Ventas Hoy</div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md p-4 text-center">
+                        <div class="text-lg md:text-xl font-bold text-orange-600" id="propinasTotales">₡0</div>
+                        <div class="text-xs md:text-sm text-gray-600">Propinas Hoy</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+
+
+
+
+
 
         <!-- Tabla de Personal Activo -->
         <section id="seccion-personal" class="mb-6 md:mb-8">
@@ -229,95 +275,29 @@
 
         <!-- Log de Acciones -->
         @*<section id="log-acciones" class="mb-6 md:mb-8">
-                <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-4 flex items-center">
-                    <i class="fas fa-history mr-2 md:mr-3 text-gray-600"></i>
-                    <span>Registro de Acciones</span>
-                </h2>
-
-                <div class="bg-white rounded-lg shadow-lg p-4 md:p-6">
-                    <div id="logContainer" class="log-container space-y-2">
-                        <div class="text-gray-500 text-sm italic">No hay acciones registradas aún...</div>
-                    </div>
-                </div>
-            </section>*@
-        <!-- Control Financiero -->
-        <section id="control-financiero" class="mb-6 md:mb-8">
             <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-4 flex items-center">
-                <i class="fas fa-chart-line mr-2 md:mr-3 text-safe-green"></i>
-                <span>Control Financiero</span>
+                <i class="fas fa-history mr-2 md:mr-3 text-gray-600"></i>
+                <span>Registro de Acciones</span>
             </h2>
 
-            <div class="space-y-4 md:space-y-6">
-                <!-- Flujo por Minuto -->
-                <!--<div class="bg-white rounded-lg shadow-lg p-4 md:p-6">
-                    <h3 class="text-base md:text-lg font-semibold text-gray-800 mb-4">Flujo por Minuto</h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div class="text-center p-4 bg-green-50 rounded-lg">
-                            <div class="text-xl md:text-2xl font-bold text-safe-green" id="ingresosPorMinuto">+$1,250</div>
-                            <div class="text-xs md:text-sm text-gray-600">Ingresos/min</div>
-                            <div class="text-xs text-green-600 mt-1">
-                                <i class="fas fa-arrow-up"></i> +5% vs hora anterior
-                            </div>
-                        </div>
-                        <div class="text-center p-4 bg-red-50 rounded-lg">
-                            <div class="text-xl md:text-2xl font-bold text-crisis-red" id="gastosPorMinuto">-$890</div>
-                            <div class="text-xs md:text-sm text-gray-600">Gastos/min</div>
-                            <div class="text-xs text-red-600 mt-1">
-                                <i class="fas fa-arrow-up"></i> +12% vs hora anterior
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-4 pt-4 border-t text-center">
-                        <div class="text-lg md:text-xl font-bold text-neutral-blue" id="gananciaNeta">+$360</div>
-                        <div class="text-xs md:text-sm text-gray-600">Ganancia Neta/min</div>
-                    </div>
-                </div>-->
-                <!-- Presupuesto de Emergencia -->
-                <!--<div class="bg-white rounded-lg shadow-lg p-4 md:p-6">
-                    <h3 class="text-base md:text-lg font-semibold text-gray-800 mb-4">Presupuesto de Emergencia</h3>
-                    <div class="mb-4">
-                        <div class="flex justify-between text-xs md:text-sm text-gray-600 mb-2">
-                            <span>Disponible</span>
-                            <span id="presupuestoTexto">$15,000 / $25,000</span>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-3 md:h-4">
-                            <div class="bg-warning-orange h-3 md:h-4 rounded-full transition-all duration-500" style="width: 60%" id="barraPresupuesto"></div>
-                        </div>
-                        <div class="flex justify-between text-xs text-gray-500 mt-1">
-                            <span>$0</span>
-                            <span>$25,000</span>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <button class="bg-neutral-blue hover:bg-blue-700 text-white py-2 px-4 rounded-lg transition-colors text-sm md:text-base" id="btnHistorialGastos">
-                            <i class="fas fa-history mr-2"></i>Ver Historial
-                        </button>
-                        <button class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-lg transition-colors text-sm md:text-base" id="btnAprobarGasto">
-                            <i class="fas fa-dollar-sign mr-2"></i>Aprobar Gasto
-                        </button>
-                    </div>
-                </div>-->
-                <!-- Métricas Adicionales -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div class="bg-white rounded-lg shadow-md p-4 text-center">
-                        <div class="text-lg md:text-xl font-bold text-blue-600" id="ventasHoy">₡0</div>
-                        <div class="text-xs md:text-sm text-gray-600">Ventas Hoy</div>
-                    </div>
-                    @*<div class="bg-white rounded-lg shadow-md p-4 text-center">
-                            <div class="text-lg md:text-xl font-bold text-green-600" id="ticketPromedio">$45</div>
-                            <div class="text-xs md:text-sm text-gray-600">Ticket Promedio</div>
-                        </div>
-                        <div class="bg-white rounded-lg shadow-md p-4 text-center">
-                            <div class="text-lg md:text-xl font-bold text-orange-600" id="gastosEmergencia">$2,100</div>
-                            <div class="text-xs md:text-sm text-gray-600">Gastos Emergencia</div>
-                        </div>*@
-                    @*<div class="bg-white rounded-lg shadow-md p-4 text-center">
-                            <div class="text-lg md:text-xl font-bold text-purple-600" id="margenGanancia">12.7%</div>
-                            <div class="text-xs md:text-sm text-gray-600">Margen Ganancia</div>
-                        </div>*@
+            <div class="bg-white rounded-lg shadow-lg p-4 md:p-6">
+                <div id="logContainer" class="log-container space-y-2">
+                    <div class="text-gray-500 text-sm italic">No hay acciones registradas aún...</div>
                 </div>
             </div>
-        </section>
+        </section>*@
+
+
+
+
+
+
+
+
+
+
+
+
 
         <!-- Control de Quejas de Clientes -->
         <section id="quejas-clientes" class="mb-6 md:mb-8">
@@ -325,28 +305,38 @@
                 <span>Quejas de Clientes</span>
             </h2>
 
+
+
+
+
+
+
+
+
+
+
             <!-- Filtros de Quejas
-            <div class="bg-white rounded-lg shadow-lg p-4 md:p-6 mb-4">
-                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
-                    <div class="flex flex-wrap gap-2">
-                        <button class="filter-btn active bg-gray-800 text-white px-3 py-1 rounded-full text-xs md:text-sm" data-filter="all">
-                            Todas (3)
-                        </button>
-                        <button class="filter-btn bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-xs md:text-sm hover:bg-gray-300" data-filter="critica">
-                            Críticas (1)
-                        </button>
-                        <button class="filter-btn bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-xs md:text-sm hover:bg-gray-300" data-filter="media">
-                            Medias (1)
-                        </button>
-                        <button class="filter-btn bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-xs md:text-sm hover:bg-gray-300" data-filter="baja">
-                            Bajas (1)
-                        </button>
-                    </div>
-                    <button class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm md:text-base" id="btnNuevaQueja">
-                        <i class="fas fa-plus mr-2"></i>Nueva Queja
+        <div class="bg-white rounded-lg shadow-lg p-4 md:p-6 mb-4">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
+                <div class="flex flex-wrap gap-2">
+                    <button class="filter-btn active bg-gray-800 text-white px-3 py-1 rounded-full text-xs md:text-sm" data-filter="all">
+                        Todas (3)
+                    </button>
+                    <button class="filter-btn bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-xs md:text-sm hover:bg-gray-300" data-filter="critica">
+                        Críticas (1)
+                    </button>
+                    <button class="filter-btn bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-xs md:text-sm hover:bg-gray-300" data-filter="media">
+                        Medias (1)
+                    </button>
+                    <button class="filter-btn bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-xs md:text-sm hover:bg-gray-300" data-filter="baja">
+                        Bajas (1)
                     </button>
                 </div>
-            </div>-->
+                <button class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm md:text-base" id="btnNuevaQueja">
+                    <i class="fas fa-plus mr-2"></i>Nueva Queja
+                </button>
+            </div>
+        </div>-->
             <!-- Tabla de Quejas -->
             <div class="bg-white rounded-lg shadow-lg overflow-hidden">
                 <!-- Tabla de Quejas -->
@@ -406,11 +396,11 @@
                 if (tipo === 'info') icono = 'fa-info-circle';
 
                 toast.innerHTML = `
-                                                                                                <div class="flex items-center">
-                                                                                                    <i class="fas ${icono} mr-2 flex-shrink-0"></i>
-                                                                                                    <span class="text-sm md:text-base">${mensaje}</span>
-                                                                                                </div>
-                                                                                            `;
+                                                                                                                                <div class="flex items-center">
+                                                                                                                                    <i class="fas ${icono} mr-2 flex-shrink-0"></i>
+                                                                                                                                    <span class="text-sm md:text-base">${mensaje}</span>
+                                                                                                                                </div>
+                                                                                                                            `;
 
                 document.body.appendChild(toast);
 
@@ -462,14 +452,14 @@
                 const logElement = document.createElement('div');
                 logElement.className = 'bg-gray-50 p-3 rounded border-l-4 border-blue-500';
                 logElement.innerHTML = `
-                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start">
-                    <div class="flex-1">
-                        <div class="font-semibold text-gray-800 text-sm md:text-base">${logEntry.accion}</div>
-                        <div class="text-xs md:text-sm text-gray-600 mt-1">${logEntry.detalle}</div>
-                    </div>
-                    <div class="text-xs text-gray-500 mt-2 sm:mt-0 sm:ml-4 flex-shrink-0">${logEntry.fecha}</div>
-                </div>
-            `;
+                                                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start">
+                                                    <div class="flex-1">
+                                                        <div class="font-semibold text-gray-800 text-sm md:text-base">${logEntry.accion}</div>
+                                                        <div class="text-xs md:text-sm text-gray-600 mt-1">${logEntry.detalle}</div>
+                                                    </div>
+                                                    <div class="text-xs text-gray-500 mt-2 sm:mt-0 sm:ml-4 flex-shrink-0">${logEntry.fecha}</div>
+                                                </div>
+                                            `;
 
                 logContainer.insertBefore(logElement, logContainer.firstChild);
             }
@@ -501,33 +491,33 @@
                 nuevaFila.setAttribute('data-employee-id', empleadoIdCounter);
 
                 nuevaFila.innerHTML = `
-                                                                <td class="px-3 md:px-6 py-4 whitespace-nowrap text-sm text-gray-900">${empleadoIdCounter.toString().padStart(3, '0')}</td>
-                                                                <td class="px-3 md:px-6 py-4 whitespace-nowrap">
-                                                                    <div class="flex items-center">
-                                                                        <div class="w-6 h-6 md:w-8 md:h-8 ${colorAvatar} rounded-full flex items-center justify-center text-white text-xs md:text-sm font-bold">${iniciales}</div>
-                                                                        <div class="ml-2 md:ml-3">
-                                                                            <div class="text-xs md:text-sm font-medium text-gray-900">${nombreAleatorio}</div>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td class="px-3 md:px-6 py-4 whitespace-nowrap">
-                                                                    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">Mesero</span>
-                                                                </td>
-                                                                <td class="px-3 md:px-6 py-4 whitespace-nowrap">
-                                                                    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Activo</span>
-                                                                </td>
-                                                                <td class="px-3 md:px-6 py-4 whitespace-nowrap text-xs md:text-sm text-gray-900 hidden sm:table-cell">Mañana</td>
-                                                                <td class="px-3 md:px-6 py-4 whitespace-nowrap text-xs md:text-sm font-medium">
-                                                                    <button class="text-indigo-600 hover:text-indigo-900 mr-2 md:mr-3">
-                                                                        <i class="fas fa-edit"></i>
-                                                                        <span class="hidden md:inline ml-1">Editar</span>
-                                                                    </button>
-                                                                    <button class="text-red-600 hover:text-red-900">
-                                                                        <i class="fas fa-trash"></i>
-                                                                        <span class="hidden md:inline ml-1">Eliminar</span>
-                                                                    </button>
-                                                                </td>
-                                                            `;
+                                                                                                <td class="px-3 md:px-6 py-4 whitespace-nowrap text-sm text-gray-900">${empleadoIdCounter.toString().padStart(3, '0')}</td>
+                                                                                                <td class="px-3 md:px-6 py-4 whitespace-nowrap">
+                                                                                                    <div class="flex items-center">
+                                                                                                        <div class="w-6 h-6 md:w-8 md:h-8 ${colorAvatar} rounded-full flex items-center justify-center text-white text-xs md:text-sm font-bold">${iniciales}</div>
+                                                                                                        <div class="ml-2 md:ml-3">
+                                                                                                            <div class="text-xs md:text-sm font-medium text-gray-900">${nombreAleatorio}</div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                                <td class="px-3 md:px-6 py-4 whitespace-nowrap">
+                                                                                                    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">Mesero</span>
+                                                                                                </td>
+                                                                                                <td class="px-3 md:px-6 py-4 whitespace-nowrap">
+                                                                                                    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Activo</span>
+                                                                                                </td>
+                                                                                                <td class="px-3 md:px-6 py-4 whitespace-nowrap text-xs md:text-sm text-gray-900 hidden sm:table-cell">Mañana</td>
+                                                                                                <td class="px-3 md:px-6 py-4 whitespace-nowrap text-xs md:text-sm font-medium">
+                                                                                                    <button class="text-indigo-600 hover:text-indigo-900 mr-2 md:mr-3">
+                                                                                                        <i class="fas fa-edit"></i>
+                                                                                                        <span class="hidden md:inline ml-1">Editar</span>
+                                                                                                    </button>
+                                                                                                    <button class="text-red-600 hover:text-red-900">
+                                                                                                        <i class="fas fa-trash"></i>
+                                                                                                        <span class="hidden md:inline ml-1">Eliminar</span>
+                                                                                                    </button>
+                                                                                                </td>
+                                                                                            `;
 
                 document.getElementById('tablaPersonalBody').appendChild(nuevaFila);
                 actualizarContadorPersonal();
@@ -552,33 +542,33 @@
                 nuevaFila.setAttribute('data-employee-id', empleadoIdCounter);
 
                 nuevaFila.innerHTML = `
-                                                                <td class="px-3 md:px-6 py-4 whitespace-nowrap text-sm text-gray-900">${empleadoIdCounter.toString().padStart(3, '0')}</td>
-                                                                <td class="px-3 md:px-6 py-4 whitespace-nowrap">
-                                                                    <div class="flex items-center">
-                                                                        <div class="w-6 h-6 md:w-8 md:h-8 ${colorAvatar} rounded-full flex items-center justify-center text-white text-xs md:text-sm font-bold">${iniciales}</div>
-                                                                        <div class="ml-2 md:ml-3">
-                                                                            <div class="text-xs md:text-sm font-medium text-gray-900">${nombreAleatorio}</div>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td class="px-3 md:px-6 py-4 whitespace-nowrap">
-                                                                    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-purple-100 text-purple-800">Chef</span>
-                                                                </td>
-                                                                <td class="px-3 md:px-6 py-4 whitespace-nowrap">
-                                                                    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Activo</span>
-                                                                </td>
-                                                                <td class="px-3 md:px-6 py-4 whitespace-nowrap text-xs md:text-sm text-gray-900 hidden sm:table-cell">Mañana</td>
-                                                                <td class="px-3 md:px-6 py-4 whitespace-nowrap text-xs md:text-sm font-medium">
-                                                                    <button class="text-indigo-600 hover:text-indigo-900 mr-2 md:mr-3">
-                                                                        <i class="fas fa-edit"></i>
-                                                                        <span class="hidden md:inline ml-1">Editar</span>
-                                                                    </button>
-                                                                    <button class="text-red-600 hover:text-red-900">
-                                                                        <i class="fas fa-trash"></i>
-                                                                        <span class="hidden md:inline ml-1">Eliminar</span>
-                                                                    </button>
-                                                                </td>
-                                                            `;
+                                                                                                <td class="px-3 md:px-6 py-4 whitespace-nowrap text-sm text-gray-900">${empleadoIdCounter.toString().padStart(3, '0')}</td>
+                                                                                                <td class="px-3 md:px-6 py-4 whitespace-nowrap">
+                                                                                                    <div class="flex items-center">
+                                                                                                        <div class="w-6 h-6 md:w-8 md:h-8 ${colorAvatar} rounded-full flex items-center justify-center text-white text-xs md:text-sm font-bold">${iniciales}</div>
+                                                                                                        <div class="ml-2 md:ml-3">
+                                                                                                            <div class="text-xs md:text-sm font-medium text-gray-900">${nombreAleatorio}</div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                                <td class="px-3 md:px-6 py-4 whitespace-nowrap">
+                                                                                                    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-purple-100 text-purple-800">Chef</span>
+                                                                                                </td>
+                                                                                                <td class="px-3 md:px-6 py-4 whitespace-nowrap">
+                                                                                                    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Activo</span>
+                                                                                                </td>
+                                                                                                <td class="px-3 md:px-6 py-4 whitespace-nowrap text-xs md:text-sm text-gray-900 hidden sm:table-cell">Mañana</td>
+                                                                                                <td class="px-3 md:px-6 py-4 whitespace-nowrap text-xs md:text-sm font-medium">
+                                                                                                    <button class="text-indigo-600 hover:text-indigo-900 mr-2 md:mr-3">
+                                                                                                        <i class="fas fa-edit"></i>
+                                                                                                        <span class="hidden md:inline ml-1">Editar</span>
+                                                                                                    </button>
+                                                                                                    <button class="text-red-600 hover:text-red-900">
+                                                                                                        <i class="fas fa-trash"></i>
+                                                                                                        <span class="hidden md:inline ml-1">Eliminar</span>
+                                                                                                    </button>
+                                                                                                </td>
+                                                                                            `;
 
                 document.getElementById('tablaPersonalBody').appendChild(nuevaFila);
                 actualizarContadorPersonal();
@@ -599,20 +589,20 @@
                 const modal = document.createElement('div');
                 modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4';
                 modal.innerHTML = `
-                                                                                                <div class="modal-content bg-white rounded-lg p-6 md:p-8 text-center">
-                                                                                                    <div class="text-4xl md:text-6xl text-red-500 mb-4">🚨</div>
-                                                                                                    <h3 class="text-xl md:text-2xl font-bold text-gray-800 mb-4">Alerta Enviada</h3>
-                                                                                                    <p class="text-gray-600 mb-6 text-sm md:text-base">Se ha enviado una alerta crítica al Centro de Comando</p>
-                                                                                                    <div class="bg-red-50 border border-red-200 rounded p-4 mb-6">
-                                                                                                        <p class="text-red-800 font-semibold text-sm md:text-base">Estado: EMERGENCIA ACTIVA</p>
-                                                                                                        <p class="text-red-600 text-xs md:text-sm">Tiempo de respuesta estimado: 2-3 minutos</p>
-                                                                                                    </div>
-                                                                                                    <button onclick="this.parentElement.parentElement.remove()"
-                                                                                                            class="bg-red-500 hover:bg-red-600 text-white px-4 md:px-6 py-2 rounded-lg text-sm md:text-base">
-                                                                                                        Entendido
-                                                                                                    </button>
-                                                                                                </div>
-                                                                                            `;
+                                                                                                                                <div class="modal-content bg-white rounded-lg p-6 md:p-8 text-center">
+                                                                                                                                    <div class="text-4xl md:text-6xl text-red-500 mb-4">🚨</div>
+                                                                                                                                    <h3 class="text-xl md:text-2xl font-bold text-gray-800 mb-4">Alerta Enviada</h3>
+                                                                                                                                    <p class="text-gray-600 mb-6 text-sm md:text-base">Se ha enviado una alerta crítica al Centro de Comando</p>
+                                                                                                                                    <div class="bg-red-50 border border-red-200 rounded p-4 mb-6">
+                                                                                                                                        <p class="text-red-800 font-semibold text-sm md:text-base">Estado: EMERGENCIA ACTIVA</p>
+                                                                                                                                        <p class="text-red-600 text-xs md:text-sm">Tiempo de respuesta estimado: 2-3 minutos</p>
+                                                                                                                                    </div>
+                                                                                                                                    <button onclick="this.parentElement.parentElement.remove()"
+                                                                                                                                            class="bg-red-500 hover:bg-red-600 text-white px-4 md:px-6 py-2 rounded-lg text-sm md:text-base">
+                                                                                                                                        Entendido
+                                                                                                                                    </button>
+                                                                                                                                </div>
+                                                                                                                            `;
 
                 document.body.appendChild(modal);
                 mostrarToast('Alerta enviada al Centro de Comando', 'error');
@@ -825,36 +815,36 @@
                     const modal = document.createElement('div');
                     modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4';
                     modal.innerHTML = `
-                                                                                                    <div class="modal-content bg-white rounded-lg p-6 md:p-8 max-w-md w-full">
-                                                                                                        <h3 class="text-xl font-bold text-gray-800 mb-4">Detalles de la Queja</h3>
-                                                                                                        <div class="space-y-3">
-                                                                                                            <div>
-                                                                                                                <label class="font-semibold text-gray-700">Cliente:</label>
-                                                                                                                <p class="text-gray-600">${cliente}</p>
-                                                                                                            </div>
-                                                                                                            <div>
-                                                                                                                <label class="font-semibold text-gray-700">Motivo:</label>
-                                                                                                                <p class="text-gray-600">${motivo}</p>
-                                                                                                            </div>
-                                                                                                            <div>
-                                                                                                                <label class="font-semibold text-gray-700">Prioridad:</label>
-                                                                                                                <p class="text-gray-600">${prioridad}</p>
-                                                                                                            </div>
-                                                                                                        //    <div>
-                                                                                                        //        <label class="font-semibold text-gray-700">Acciones Sugeridas:</label>
-                                                                                                        //        <ul class="text-sm text-gray-600 list-disc list-inside">
-                                                                                                        //            <li>Ofrecer descuento del 20%</li>
-                                                                                                        //            <li>Rehacer el pedido sin costo</li>
-                                                                                                        //            <li>Asignar mesero senior</li>
-                                                                                                        //        </ul>
-                                                                                                        //    </div>
-                                                                                                        //</div>
-                                                                                                        //<button onclick="this.parentElement.parentElement.remove()"
-                                                                                                        //        class="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg w-full">
-                                                                                                        //    Cerrar
-                                                                                                        //</button>
-                                                                                                    </div>
-                                                                                                `;
+                                                                                                                                    <div class="modal-content bg-white rounded-lg p-6 md:p-8 max-w-md w-full">
+                                                                                                                                        <h3 class="text-xl font-bold text-gray-800 mb-4">Detalles de la Queja</h3>
+                                                                                                                                        <div class="space-y-3">
+                                                                                                                                            <div>
+                                                                                                                                                <label class="font-semibold text-gray-700">Cliente:</label>
+                                                                                                                                                <p class="text-gray-600">${cliente}</p>
+                                                                                                                                            </div>
+                                                                                                                                            <div>
+                                                                                                                                                <label class="font-semibold text-gray-700">Motivo:</label>
+                                                                                                                                                <p class="text-gray-600">${motivo}</p>
+                                                                                                                                            </div>
+                                                                                                                                            <div>
+                                                                                                                                                <label class="font-semibold text-gray-700">Prioridad:</label>
+                                                                                                                                                <p class="text-gray-600">${prioridad}</p>
+                                                                                                                                            </div>
+                                                                                                                                        //    <div>
+                                                                                                                                        //        <label class="font-semibold text-gray-700">Acciones Sugeridas:</label>
+                                                                                                                                        //        <ul class="text-sm text-gray-600 list-disc list-inside">
+                                                                                                                                        //            <li>Ofrecer descuento del 20%</li>
+                                                                                                                                        //            <li>Rehacer el pedido sin costo</li>
+                                                                                                                                        //            <li>Asignar mesero senior</li>
+                                                                                                                                        //        </ul>
+                                                                                                                                        //    </div>
+                                                                                                                                        //</div>
+                                                                                                                                        //<button onclick="this.parentElement.parentElement.remove()"
+                                                                                                                                        //        class="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg w-full">
+                                                                                                                                        //    Cerrar
+                                                                                                                                        //</button>
+                                                                                                                                    </div>
+                                                                                                                                `;
                     document.body.appendChild(modal);
                 });
             });
@@ -1016,27 +1006,27 @@
                             const fila = document.createElement('tr');
                             fila.setAttribute('data-employee-id', empleado.Id);
                             fila.innerHTML = `
-                                                                            <td class="px-3 md:px-6 py-4 text-sm text-gray-900">${String(empleado.Id).padStart(3, '0')}</td>
-                                                                            <td class="px-3 md:px-6 py-4 whitespace-nowrap">
-                                                                                <div class="flex items-center">
-                                                                                    <div class="w-6 h-6 md:w-8 md:h-8 ${color} rounded-full flex items-center justify-center text-white text-xs md:text-sm font-bold">${iniciales}</div>
-                                                                                    <div class="ml-2 md:ml-3">
-                                                                                        <div class="text-xs md:text-sm font-medium text-gray-900">${empleado.Nombre}</div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="px-3 md:px-6 py-4"><span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full ${rolClase}">${empleado.Rol}</span></td>
-                                                                            <td class="px-3 md:px-6 py-4"><span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Activo</span></td>
-                                                                            <td class="px-3 md:px-6 py-4 text-xs md:text-sm text-gray-900 hidden sm:table-cell">Mañana</td>
-                                                                            <td class="px-3 md:px-6 py-4 text-xs md:text-sm font-medium">
-                                                                                <button class="text-indigo-600 hover:text-indigo-900 mr-2 md:mr-3 btn-editar" data-id="${empleado.Id}">
-                                                                                    <i class="fas fa-edit"></i><span class="hidden md:inline ml-1">Editar</span>
-                                                                                </button>
-                                                                                <button class="text-red-600 hover:text-red-900 btn-eliminar" data-id="${empleado.Id}">
-                                                                                    <i class="fas fa-trash"></i><span class="hidden md:inline ml-1">Eliminar</span>
-                                                                                </button>
-                                                                            </td>
-                                                                        `;
+                                                                                                            <td class="px-3 md:px-6 py-4 text-sm text-gray-900">${String(empleado.Id).padStart(3, '0')}</td>
+                                                                                                            <td class="px-3 md:px-6 py-4 whitespace-nowrap">
+                                                                                                                <div class="flex items-center">
+                                                                                                                    <div class="w-6 h-6 md:w-8 md:h-8 ${color} rounded-full flex items-center justify-center text-white text-xs md:text-sm font-bold">${iniciales}</div>
+                                                                                                                    <div class="ml-2 md:ml-3">
+                                                                                                                        <div class="text-xs md:text-sm font-medium text-gray-900">${empleado.Nombre}</div>
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                            </td>
+                                                                                                            <td class="px-3 md:px-6 py-4"><span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full ${rolClase}">${empleado.Rol}</span></td>
+                                                                                                            <td class="px-3 md:px-6 py-4"><span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Activo</span></td>
+                                                                                                            <td class="px-3 md:px-6 py-4 text-xs md:text-sm text-gray-900 hidden sm:table-cell">Mañana</td>
+                                                                                                            <td class="px-3 md:px-6 py-4 text-xs md:text-sm font-medium">
+                                                                                                                <button class="text-indigo-600 hover:text-indigo-900 mr-2 md:mr-3 btn-editar" data-id="${empleado.Id}">
+                                                                                                                    <i class="fas fa-edit"></i><span class="hidden md:inline ml-1">Editar</span>
+                                                                                                                </button>
+                                                                                                                <button class="text-red-600 hover:text-red-900 btn-eliminar" data-id="${empleado.Id}">
+                                                                                                                    <i class="fas fa-trash"></i><span class="hidden md:inline ml-1">Eliminar</span>
+                                                                                                                </button>
+                                                                                                            </td>
+                                                                                                        `;
                             body.appendChild(fila);
                         });
 
@@ -1094,31 +1084,31 @@
                                 }
 
                                 const row = `
-                                <tr class="queja-row bg-white" data-priority="${prioridad}" data-queja-id="${resena.Id}">
-                                    <td class="px-3 md:px-6 py-4 whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <div class="w-6 h-6 md:w-8 md:h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs md:text-sm font-bold">${resena.UsuarioId}</div>
-                                            <div class="ml-2 md:ml-3">
-                                                <div class="text-xs md:text-sm font-medium text-gray-900">Usuario ${resena.UsuarioId}</div>
-                                                <div class="text-xs text-gray-500">${resena.NombreUsuario}</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-3 md:px-6 py-4">
-                                        <div class="text-xs md:text-sm text-gray-900">${resena.ResenaTexto || "Sin texto"}</div>
-                                        <div class="text-xs text-gray-500">Calificación: ${resena.Calificacion ?? 'N/A'}</div>
-                                    </td>
-                                    <td class="px-3 md:px-6 py-4 whitespace-nowrap">
-                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full ${clase}">${etiqueta}</span>
-                                    </td>
-                                    <td class="px-3 md:px-6 py-4 text-xs text-gray-500 hidden sm:table-cell">
-                                        ${new Date(resena.Fecha).toLocaleString()}
-                                    </td>
-                                    <td class="px-3 md:px-6 py-4">
+                                                                <tr class="queja-row bg-white" data-priority="${prioridad}" data-queja-id="${resena.Id}">
+                                                                    <td class="px-3 md:px-6 py-4 whitespace-nowrap">
+                                                                        <div class="flex items-center">
+                                                                            <div class="w-6 h-6 md:w-8 md:h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs md:text-sm font-bold">${resena.UsuarioId}</div>
+                                                                            <div class="ml-2 md:ml-3">
+                                                                                <div class="text-xs md:text-sm font-medium text-gray-900">Usuario ${resena.UsuarioId}</div>
+                                                                                <div class="text-xs text-gray-500">${resena.NombreUsuario}</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td class="px-3 md:px-6 py-4">
+                                                                        <div class="text-xs md:text-sm text-gray-900">${resena.ResenaTexto || "Sin texto"}</div>
+                                                                        <div class="text-xs text-gray-500">Calificación: ${resena.Calificacion ?? 'N/A'}</div>
+                                                                    </td>
+                                                                    <td class="px-3 md:px-6 py-4 whitespace-nowrap">
+                                                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full ${clase}">${etiqueta}</span>
+                                                                    </td>
+                                                                    <td class="px-3 md:px-6 py-4 text-xs text-gray-500 hidden sm:table-cell">
+                                                                        ${new Date(resena.Fecha).toLocaleString()}
+                                                                    </td>
+                                                                    <td class="px-3 md:px-6 py-4">
 
-                                    </td>
-                                </tr>
-                            `;
+                                                                    </td>
+                                                                </tr>
+                                                            `;
                                 tbody.insertAdjacentHTML("beforeend", row);
                             });
                         } else {
@@ -1148,18 +1138,18 @@
                 const card = document.createElement('div');
                 card.className = 'win-card bg-white/95 text-gray-800 rounded-xl shadow-2xl border border-gray-200 p-4 win-enter';
                 card.innerHTML = `
-      <div class="flex gap-3">
-        <div class="text-2xl leading-none">${icon}</div>
-        <div class="flex-1">
-          <div class="font-semibold text-sm md:text-base">${title}</div>
-          <div class="text-xs md:text-sm text-gray-600 mt-0.5">${message}</div>
-        </div>
-        <button type="button" aria-label="Cerrar" class="shrink-0 text-gray-400 hover:text-gray-600">
-          <i class="fa-solid fa-xmark text-lg"></i>
-        </button>
-      </div>
-      <div class="win-progress bg-blue-600 mt-3 rounded-full"></div>
-    `;
+                                      <div class="flex gap-3">
+                                        <div class="text-2xl leading-none">${icon}</div>
+                                        <div class="flex-1">
+                                          <div class="font-semibold text-sm md:text-base">${title}</div>
+                                          <div class="text-xs md:text-sm text-gray-600 mt-0.5">${message}</div>
+                                        </div>
+                                        <button type="button" aria-label="Cerrar" class="shrink-0 text-gray-400 hover:text-gray-600">
+                                          <i class="fa-solid fa-xmark text-lg"></i>
+                                        </button>
+                                      </div>
+                                      <div class="win-progress bg-blue-600 mt-3 rounded-full"></div>
+                                    `;
                 wrap.appendChild(card);
                 document.body.appendChild(wrap);
 
@@ -1309,6 +1299,57 @@
                     else iniciarOperacion();
                 });
             });
+
+
+
+
+
+
+
+            // Función para cargar datos financieros desde SQL Server
+            function cargarDatosFinancieros() {
+                fetch('/Home/ObtenerResumenFinanciero')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Función para formatear como moneda en colones
+                            const formatearMoneda = (monto) => {
+                                return parseFloat(monto).toLocaleString('es-CR', {
+                                    style: 'currency',
+                                    currency: 'CRC',
+                                    minimumFractionDigits: 0
+                                });
+                            };
+
+                            // Actualizar los valores en la vista
+
+
+                            if (data.gananciasTotales) {
+                                document.getElementById('gananciasTotales').textContent = formatearMoneda(data.gananciasTotales);
+                            }
+
+                            if (data.propinasTotales) {
+                                document.getElementById('propinasTotales').textContent = formatearMoneda(data.propinasTotales);
+                            }
+                        } else {
+                            console.error("Error al obtener datos financieros:", data.error);
+                        }
+                    })
+                    .catch(err => console.error("Error de red:", err));
+            }
+
+            // Ejecutar al cargar la página
+            document.addEventListener("DOMContentLoaded", function () {
+                cargarDatosFinancieros();
+
+                // Actualizar cada 30 segundos
+                setInterval(cargarDatosFinancieros, 30000);
+            });
+
+
+
+
+
 
         </script>
 </body>

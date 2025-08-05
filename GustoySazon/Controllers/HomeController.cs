@@ -11,9 +11,11 @@ using System.Net.NetworkInformation;
 using System.Net.Security;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using static GustoySazon.Models.MeseroViewModel;
+
 
 
 
@@ -47,7 +49,7 @@ namespace GustoySazon.Controllers
             return View();
         }
 
-        
+
 
         public ActionResult GenCaos()
         {
@@ -272,7 +274,7 @@ namespace GustoySazon.Controllers
                         else
                         {
                             conexion.Close();
-                            return RedirectToAction("registro");
+                            return RedirectToAction("index");
                         }
                     }
                 }
@@ -1026,27 +1028,61 @@ namespace GustoySazon.Controllers
 
         //Funciones de la ventana pagos
         //calcular montos de la pagina
-        public ActionResult Pagos()
+        public ActionResult Pagos(bool pagoGrupal = false)
         {
             var usuarioId = ObtenerUsuarioIdDeSesion();
             var nombreUsuario = ObtenerNombreUsuarioDeSesion();
+            int mesaId = 0;
+
+            // Obtener mesa del usuario
+            using (var conexion = new SqlConnection(connectionString))
+            {
+                conexion.Open();
+                string comandoMesa = "SELECT MesaId FROM Usuarios WHERE Id = @UsuarioId";
+                using (var cmd = new SqlCommand(comandoMesa, conexion))
+                {
+                    cmd.Parameters.AddWithValue("@UsuarioId", usuarioId);
+                    var result = cmd.ExecuteScalar();
+                    if (result != DBNull.Value) mesaId = (int)result;
+                }
+            }
 
             var modelo = new PagosViewModel
             {
                 UsuarioId = usuarioId,
                 NombreUsuario = nombreUsuario,
                 Tarjetas = ObtenerTarjetasDelUsuario(usuarioId, nombreUsuario),
-                ItemsOrden = ObtenerItemsOrden(usuarioId),
+                MesaId = mesaId,
+                EsPagoGrupal = pagoGrupal
             };
 
-            // Calcular subtotal, iva, propina y total
+            if (pagoGrupal)
+            {
+                // Obtener todos los items de la mesa
+                modelo.ItemsMesa = ObtenerItemsMesa(mesaId);
+                modelo.ItemsOrden = modelo.ItemsMesa; // Mostrar todos los items en la vista
+            }
+            else
+            {
+                // Obtener solo los items del usuario (comportamiento actual)
+                modelo.ItemsOrden = ObtenerItemsOrden(usuarioId);
+            }
+
+            // Calcular montos
             modelo.Subtotal = CalcularSubtotal(modelo.ItemsOrden);
             modelo.IVA = modelo.Subtotal * 0.13m;
             modelo.Propina = 0;
             modelo.Total = modelo.Subtotal + modelo.IVA + modelo.Propina;
 
+            // Obtener usuarios en la mesa para pago grupal
+            if (pagoGrupal)
+            {
+                modelo.UsuariosMesa = ObtenerUsuariosEnMesa(mesaId);
+            }
+
             return View(modelo);
         }
+
 
 
 
@@ -1099,36 +1135,71 @@ namespace GustoySazon.Controllers
 
 
 
+        private List<int> ObtenerUsuariosEnMesa(int mesaId)
+        {
+            var usuarios = new List<int>();
+            using (var conexion = new SqlConnection(connectionString))
+            {
+                conexion.Open();
+                string comando = "SELECT Id FROM Usuarios WHERE MesaId = @MesaId";
+                using (var cmd = new SqlCommand(comando, conexion))
+                {
+                    cmd.Parameters.AddWithValue("@MesaId", mesaId);
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            usuarios.Add((int)reader["Id"]);
+                        }
+                    }
+                }
+            }
+            return usuarios;
+        }
+
+
+
+
+
+
+
         //llamar los elementos de la tabla para ordenar en pagos
-        public List<ItemOrden> ObtenerItemsOrden(int usuarioId)
+        private List<ItemOrden> ObtenerItemsMesa(int mesaId)
         {
             var items = new List<ItemOrden>();
-            string comandollamarOrdenPorPagar = @"SELECT Id AS GrupoOrdenId, NomComida AS NombreComida, Cantidad, PrecioUnitario
-                            FROM Pagos WHERE UsuarioId = @UsuarioId AND Estado = 'Por Pagar'";
+            string comando = @"SELECT p.Id AS GrupoOrdenId, p.NomComida AS NombreComida, 
+                      p.Cantidad, p.PrecioUnitario, p.UsuarioId
+                      FROM Pagos p
+                      JOIN Usuarios u ON p.UsuarioId = u.Id
+                      WHERE u.MesaId = @MesaId AND p.Estado = 'Por Pagar'";
 
             using (var connection = new SqlConnection(connectionString))
-            using (var comandoOrdenPorPagar = new SqlCommand(comandollamarOrdenPorPagar, connection))
+            using (var cmd = new SqlCommand(comando, connection))
             {
-                comandoOrdenPorPagar.Parameters.AddWithValue("@UsuarioId", usuarioId);
+                cmd.Parameters.AddWithValue("@MesaId", mesaId);
                 connection.Open();
 
-                using (var lector = comandoOrdenPorPagar.ExecuteReader())
+                using (var reader = cmd.ExecuteReader())
                 {
-                    while (lector.Read())
+                    while (reader.Read())
                     {
                         items.Add(new ItemOrden
                         {
-                            OrdenId = lector.GetInt32(lector.GetOrdinal("GrupoOrdenId")),
-                            NombreComida = lector.GetString(lector.GetOrdinal("NombreComida")),
-                            Cantidad = lector.GetInt32(lector.GetOrdinal("Cantidad")),
-                            PrecioUnitario = lector.GetDecimal(lector.GetOrdinal("PrecioUnitario"))
+                            OrdenId = reader.GetInt32(reader.GetOrdinal("GrupoOrdenId")),
+                            NombreComida = reader.GetString(reader.GetOrdinal("NombreComida")),
+                            Cantidad = reader.GetInt32(reader.GetOrdinal("Cantidad")),
+                            PrecioUnitario = reader.GetDecimal(reader.GetOrdinal("PrecioUnitario")),
+                            UsuarioId = reader.GetInt32(reader.GetOrdinal("UsuarioId"))
                         });
                     }
                 }
             }
-
             return items;
         }
+
+
+
+
 
         private decimal CalcularSubtotal(List<ItemOrden> items)
         {
@@ -1150,7 +1221,8 @@ namespace GustoySazon.Controllers
                 return (int)Session["UsuarioId"];
 
             else
-                throw new Exception("Usuario no autenticado");
+                throw new Exception("Usuario no autenticado, Vaya al Login y Registrese");
+
         }
 
 
@@ -1180,86 +1252,375 @@ namespace GustoySazon.Controllers
             {
                 modelo.NombreUsuario = ObtenerNombreUsuarioDeSesion();
                 modelo.Tarjetas = ObtenerTarjetasDelUsuario(modelo.UsuarioId, modelo.NombreUsuario);
-                modelo.ItemsOrden = ObtenerItemsOrden(modelo.UsuarioId);
+                modelo.ItemsOrden = modelo.EsPagoGrupal ?
+                    ObtenerItemsMesa(modelo.MesaId) : ObtenerItemsOrden(modelo.UsuarioId);
                 return View("Pagos", modelo);
             }
 
             using (SqlConnection conexion = new SqlConnection(connectionString))
-
-
             {
                 conexion.Open();
 
-
-                using (var accion = conexion.BeginTransaction())
+                using (var transaccion = conexion.BeginTransaction())
                 {
-
-                    // eliminar las ordenes entregadas al cliente
-                    string eliminarOrdenesEntregadas = @"delete from Ordenes where UsuarioId = @UsuarioId and Estado = 'Entregado'";
-
-
-                    using (var comando = new SqlCommand(eliminarOrdenesEntregadas, conexion, accion))
+                    try
                     {
-                        comando.Parameters.AddWithValue("@UsuarioId", modelo.UsuarioId);
-                        comando.ExecuteNonQuery();
-                    }
+                        if (modelo.EsPagoGrupal)
+                        {
+                            // 1. Obtener todos los GrupoOrdenId únicos de la mesa que están por pagar
+                            var grupoOrdenIds = new List<int>();
+                            string queryGrupoOrden = @"SELECT DISTINCT GrupoOrdenId FROM Pagos 
+                                        WHERE MesaId = @MesaId AND Estado = 'Por Pagar'";
 
-                    // asignar al platillo como pagado
-                    string actualizarPagos = @" UPDATE Pagos SET Estado = 'Pagado' WHERE UsuarioId = @UsuarioId AND GrupoOrdenId IN ( SELECT DISTINCT GrupoOrdenId FROM Pagos
-                                                 WHERE UsuarioId = @UsuarioId AND Estado = 'Por Pagar' )";
-                    using (var comando2 = new SqlCommand(actualizarPagos, conexion, accion))
+                            using (var cmd = new SqlCommand(queryGrupoOrden, conexion, transaccion))
+                            {
+                                cmd.Parameters.AddWithValue("@MesaId", modelo.MesaId);
+                                using (var reader = cmd.ExecuteReader())
+                                {
+                                    while (reader.Read())
+                                    {
+                                        grupoOrdenIds.Add(Convert.ToInt32(reader["GrupoOrdenId"]));
+                                    }
+                                }
+                            }
+
+                            // 2. Marcar como pagado en la tabla Pagos para TODOS los usuarios de la mesa
+                            string actualizarPagosMesa = @"UPDATE Pagos SET Estado = 'Pagado' 
+                                        WHERE MesaId = @MesaId AND Estado = 'Por Pagar'";
+                            using (var cmd = new SqlCommand(actualizarPagosMesa, conexion, transaccion))
+                            {
+                                cmd.Parameters.AddWithValue("@MesaId", modelo.MesaId);
+                                int affectedRows = cmd.ExecuteNonQuery();
+
+                                if (affectedRows == 0)
+                                {
+                                    throw new Exception("No se encontraron pagos pendientes para esta mesa");
+                                }
+                            }
+
+                            // 3. Eliminar TODAS las órdenes con estado "Entregado" de la mesa completa
+                            if (grupoOrdenIds.Any())
+                            {
+                                string eliminarOrdenesMesa = @"DELETE FROM Ordenes 
+                                            WHERE GrupoOrdenId IN ({0}) AND Estado = 'Entregado'";
+
+                                string parametros = string.Join(",", grupoOrdenIds.Select((_, i) => $"@GrupoOrdenId{i}"));
+                                eliminarOrdenesMesa = string.Format(eliminarOrdenesMesa, parametros);
+
+                                using (var cmd = new SqlCommand(eliminarOrdenesMesa, conexion, transaccion))
+                                {
+                                    for (int i = 0; i < grupoOrdenIds.Count; i++)
+                                    {
+                                        cmd.Parameters.AddWithValue($"@GrupoOrdenId{i}", grupoOrdenIds[i]);
+                                    }
+                                    int ordenesEliminadas = cmd.ExecuteNonQuery();
+                                    System.Diagnostics.Debug.WriteLine($"Se eliminaron {ordenesEliminadas} órdenes entregadas");
+                                }
+                            }
+
+                            // 4. Liberar solo al usuario que está pagando
+                            string liberarUsuario = "UPDATE Usuarios SET MesaId = NULL WHERE Id = @UsuarioId";
+                            using (var cmd = new SqlCommand(liberarUsuario, conexion, transaccion))
+                            {
+                                cmd.Parameters.AddWithValue("@UsuarioId", modelo.UsuarioId);
+                                cmd.ExecuteNonQuery();
+                            }
+                        }
+                        else
+                        {
+                            // Pago individual
+                            // 1. Eliminar órdenes entregadas del usuario
+                            string eliminarOrdenes = @"DELETE FROM Ordenes 
+                                    WHERE UsuarioId = @UsuarioId AND Estado = 'Entregado'";
+                            using (var cmd = new SqlCommand(eliminarOrdenes, conexion, transaccion))
+                            {
+                                cmd.Parameters.AddWithValue("@UsuarioId", modelo.UsuarioId);
+                                cmd.ExecuteNonQuery();
+                            }
+
+                            // 2. Marcar como pagado en la tabla Pagos
+                            string actualizarPagos = @"UPDATE Pagos SET Estado = 'Pagado' 
+                                    WHERE UsuarioId = @UsuarioId AND Estado = 'Por Pagar'";
+                            using (var cmd = new SqlCommand(actualizarPagos, conexion, transaccion))
+                            {
+                                cmd.Parameters.AddWithValue("@UsuarioId", modelo.UsuarioId);
+                                cmd.ExecuteNonQuery();
+                            }
+
+                            // 3. Liberar al usuario
+                            string liberarUsuario = "UPDATE Usuarios SET MesaId = NULL WHERE Id = @UsuarioId";
+                            using (var cmd = new SqlCommand(liberarUsuario, conexion, transaccion))
+                            {
+                                cmd.Parameters.AddWithValue("@UsuarioId", modelo.UsuarioId);
+                                cmd.ExecuteNonQuery();
+                            }
+
+                            // 4. Verificar si la mesa quedó vacía
+                            string contarOcupantes = "SELECT COUNT(*) FROM Usuarios WHERE MesaId = @MesaId";
+                            int ocupantes = 0;
+                            using (var cmd = new SqlCommand(contarOcupantes, conexion, transaccion))
+                            {
+                                cmd.Parameters.AddWithValue("@MesaId", modelo.MesaId);
+                                ocupantes = (int)cmd.ExecuteScalar();
+                            }
+
+                            if (ocupantes == 0)
+                            {
+                                string actualizarMesa = "UPDATE Mesas SET Estado = 'Libre' WHERE Id = @MesaId";
+                                using (var cmd = new SqlCommand(actualizarMesa, conexion, transaccion))
+                                {
+                                    cmd.Parameters.AddWithValue("@MesaId", modelo.MesaId);
+                                    cmd.ExecuteNonQuery();
+                                }
+                            }
+                        }
+
+                        // Registrar en finanzas
+                        string comandoFinanzas = @"
+                    IF EXISTS (SELECT 1 FROM finanzas WHERE DiaRegistrado = CAST(GETDATE() AS DATE))
+                    BEGIN
+                        UPDATE finanzas 
+                        SET ganancias_totales = ganancias_totales + @Total,
+                            propinas_totales = propinas_totales + @Propina
+                        WHERE DiaRegistrado = CAST(GETDATE() AS DATE);
+                    END
+                    ELSE
+                    BEGIN
+                        INSERT INTO finanzas (ganancias_totales, propinas_totales)
+                        VALUES (@Total, @Propina);
+                    END";
+
+                        using (var cmdFinanzas = new SqlCommand(comandoFinanzas, conexion, transaccion))
+                        {
+                            cmdFinanzas.Parameters.AddWithValue("@Total", modelo.Total);
+                            cmdFinanzas.Parameters.AddWithValue("@Propina", modelo.Propina);
+                            cmdFinanzas.ExecuteNonQuery();
+                        }
+
+                        // Obtener número de mesa para la factura
+                        int numeroMesa = 0;
+                        string queryNumeroMesa = "SELECT NumeroMesa FROM Mesas WHERE Id = @MesaId";
+                        using (var cmdNumeroMesa = new SqlCommand(queryNumeroMesa, conexion, transaccion))
+                        {
+                            cmdNumeroMesa.Parameters.AddWithValue("@MesaId", modelo.MesaId);
+                            numeroMesa = (int)cmdNumeroMesa.ExecuteScalar();
+                        }
+                        modelo.NumeroMesa = numeroMesa;
+
+                        transaccion.Commit();
+                        TempData["Success"] = "Pago procesado exitosamente";
+
+                        // Enviar factura por correo
+                        string correoCliente = Session["Correo"]?.ToString();
+                        if (!string.IsNullOrEmpty(correoCliente))
+                        {
+                            try
+                            {
+                                EnviarFacturaPorCorreo(correoCliente, modelo, modelo.EsPagoGrupal);
+                            }
+                            catch (Exception ex)
+                            {
+                                System.Diagnostics.Debug.WriteLine($"Error al enviar factura: {ex.Message}");
+                                // No hacemos rollback por un error en el envío del correo
+                            }
+                        }
+                    }
+                    catch (Exception ex)
                     {
-                        comando2.Parameters.AddWithValue("@UsuarioId", modelo.UsuarioId);
-                        comando2.ExecuteNonQuery();
-                    }
-
-                    accion.Commit();
-
-                }
-
-
-
-                // sacar al cliente de la mesa despues de pagar
-
-
-                // Quitar la mesa al usuario
-                string actualizarMesaUsuario = "UPDATE Usuarios SET MesaId = NULL WHERE Id = @UsuarioId";
-                using (SqlCommand comandoQuitarMesa = new SqlCommand(actualizarMesaUsuario, conexion))
-                {
-                    comandoQuitarMesa.Parameters.AddWithValue("@UsuarioId", modelo.UsuarioId);
-                    comandoQuitarMesa.ExecuteNonQuery();
-                }
-
-                // Ver si hay otros clientes
-                string contarOcupantes = "SELECT COUNT(*) FROM Usuarios WHERE MesaId = @MesaId";
-                int ocupantes = 0;
-                using (SqlCommand comandoContarPersonas = new SqlCommand(contarOcupantes, conexion))
-                {
-                    comandoContarPersonas.Parameters.AddWithValue("@MesaId", modelo.MesaId);
-                    ocupantes = (int)comandoContarPersonas.ExecuteScalar();
-                }
-
-                // Liberar mesa si ya esta vacia
-                if (ocupantes == 0)
-                {
-                    string actualizarMesa = "UPDATE Mesas SET Estado = 'Libre' WHERE Id = @MesaId";
-                    using (SqlCommand comandoactualizarmesa = new SqlCommand(actualizarMesa, conexion))
-                    {
-                        comandoactualizarmesa.Parameters.AddWithValue("@MesaId", modelo.MesaId);
-                        comandoactualizarmesa.ExecuteNonQuery();
+                        transaccion.Rollback();
+                        TempData["Error"] = $"Error al procesar el pago: {ex.Message}";
+                        return RedirectToAction("Pagos", new { pagoGrupal = modelo.EsPagoGrupal });
                     }
                 }
-
-
-
-                conexion.Close();
-
-
-
             }
 
             return RedirectToAction("Index");
         }
+
+
+
+
+
+
+
+
+        private void EnviarFacturaPorCorreo(string correoDestino, PagosViewModel modelo, bool esPagoGrupal)
+        {
+            try
+            {
+                ServicePointManager.ServerCertificateValidationCallback =
+                    delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+                    {
+                        return true;
+                    };
+
+                var mensaje = new MailMessage();
+                mensaje.From = new MailAddress("gustosazon8@gmail.com", "Gusto y Sazón");
+                mensaje.To.Add(correoDestino);
+                mensaje.Subject = $"Factura Electrónica - Gusto y Sazón - {DateTime.Now:dd/MM/yyyy}";
+
+                // Construir el cuerpo HTML de la factura
+                string cuerpoFactura = ConstruirCuerpoFactura(modelo, esPagoGrupal);
+                mensaje.Body = cuerpoFactura;
+                mensaje.IsBodyHtml = true;
+
+                var smtp = new SmtpClient("smtp.gmail.com")
+                {
+                    Port = 587,
+                    Credentials = new NetworkCredential("gustosazon8@gmail.com", "asiv yjjj ixtj nqch"),
+                    EnableSsl = true
+                };
+
+                smtp.Send(mensaje);
+            }
+            catch (Exception ex)
+            {
+                // Puedes loggear el error si lo deseas
+                System.Diagnostics.Debug.WriteLine($"Error al enviar factura: {ex.Message}");
+            }
+        }
+
+        private string ConstruirCuerpoFactura(PagosViewModel modelo, bool esPagoGrupal)
+        {
+            string tipoPago = esPagoGrupal ? "Pago Grupal (Mesa completa)" : "Pago Individual";
+            string nombreCliente = Session["Nombre"]?.ToString() ?? "Cliente";
+            string numeroFactura = DateTime.Now.ToString("yyyyMMddHHmmss");
+
+            var sb = new StringBuilder();
+            sb.AppendLine($@"
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {{ font-family: Arial, sans-serif; line-height: 1.6; }}
+        .factura {{ max-width: 800px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; }}
+        .header {{ text-align: center; margin-bottom: 20px; }}
+        .info {{ margin-bottom: 20px; }}
+        .detalle {{ width: 100%; border-collapse: collapse; margin-bottom: 20px; }}
+        .detalle th, .detalle td {{ border: 1px solid #ddd; padding: 8px; text-align: left; }}
+        .detalle th {{ background-color: #f2f2f2; }}
+        .totales {{ text-align: right; margin-top: 20px; }}
+        .footer {{ margin-top: 30px; text-align: center; font-size: 0.9em; color: #666; }}
+    </style>
+</head>
+<body>
+    <div class='factura'>
+        <div class='header'>
+            <h1>Gusto y Sazón</h1>
+            <h2>Factura Electrónica #{numeroFactura}</h2>
+            <p>{DateTime.Now:dd/MM/yyyy HH:mm}</p>
+        </div>
+
+        <div class='info'>
+            <p><strong>Cliente:</strong> {nombreCliente}</p>
+            <p><strong>Tipo de pago:</strong> {tipoPago}</p>
+            <p><strong>Mesa:</strong> {modelo.NumeroMesa}</p>
+        </div>");
+
+            // Solo agregar la tabla si hay items
+            if (modelo.ItemsOrden != null && modelo.ItemsOrden.Any())
+            {
+                sb.AppendLine(@"
+        <table class='detalle'>
+            <thead>
+                <tr>
+                    <th>Descripción</th>
+                    <th>Cantidad</th>
+                    <th>Precio Unitario</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>");
+
+                foreach (var item in modelo.ItemsOrden)
+                {
+                    sb.AppendLine($@"
+                <tr>
+                    <td>{item.NombreComida}</td>
+                    <td>{item.Cantidad}</td>
+                    <td>₡{item.PrecioUnitario.ToString("N2")}</td>
+                    <td>₡{item.Subtotal.ToString("N2")}</td>
+                </tr>");
+                }
+
+                sb.AppendLine(@"
+            </tbody>
+        </table>");
+            }
+            else
+            {
+                sb.AppendLine("<p>No hay items en esta orden</p>");
+            }
+
+            sb.AppendLine($@"
+        <div class='totales'>
+            <p><strong>Subtotal:</strong> ₡{modelo.Subtotal.ToString("N2")}</p>
+            <p><strong>IVA (13%):</strong> ₡{modelo.IVA.ToString("N2")}</p>
+            <p><strong>Propina:</strong> ₡{modelo.Propina.ToString("N2")}</p>
+            <p><strong>Total:</strong> ₡{modelo.Total.ToString("N2")}</p>
+        </div>
+
+        <div class='footer'>
+            <p>¡Gracias por su visita!</p>
+            <p>Gusto y Sazón - Tel: 1234-5678</p>
+            <p>Esta factura es un comprobante electrónico</p>
+        </div>
+    </div>
+</body>
+</html>");
+
+            return sb.ToString();
+        }
+
+
+
+
+
+
+
+
+        private List<ItemOrden> ObtenerItemsOrden(int usuarioId)
+        {
+            var items = new List<ItemOrden>();
+            string comando = @"SELECT Id AS GrupoOrdenId, NomComida AS NombreComida, Cantidad, PrecioUnitario
+                      FROM Pagos WHERE UsuarioId = @UsuarioId AND Estado = 'Por Pagar'";
+
+            using (var connection = new SqlConnection(connectionString))
+            using (var cmd = new SqlCommand(comando, connection))
+            {
+                cmd.Parameters.AddWithValue("@UsuarioId", usuarioId);
+                connection.Open();
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        items.Add(new ItemOrden
+                        {
+                            OrdenId = reader.GetInt32(reader.GetOrdinal("GrupoOrdenId")),
+                            NombreComida = reader.GetString(reader.GetOrdinal("NombreComida")),
+                            Cantidad = reader.GetInt32(reader.GetOrdinal("Cantidad")),
+                            PrecioUnitario = reader.GetDecimal(reader.GetOrdinal("PrecioUnitario")),
+                            UsuarioId = usuarioId
+                        });
+                    }
+                }
+            }
+            return items;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1313,6 +1674,13 @@ namespace GustoySazon.Controllers
         }
 
 
+
+
+
+
+
+
+        
 
 
 
@@ -1397,6 +1765,17 @@ namespace GustoySazon.Controllers
             ViewBag.Error = "Correo o contraseña incorrectos.";
             return View(model);
         }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1568,6 +1947,91 @@ namespace GustoySazon.Controllers
 
 
 
+
+
+        [HttpGet]
+        public JsonResult ObtenerResumenFinanciero()
+        {
+            try
+            {
+                using (var connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    // Obtener el resumen del día actual
+                    var query = @"SELECT 
+                        SUM(ganancias_totales) as GananciasTotales,
+                        SUM(propinas_totales) as PropinasTotales,
+                        (SUM(ganancias_totales) + SUM(propinas_totales)) as VentasHoy
+                      FROM finanzas 
+                      WHERE DiaRegistrado = CAST(GETDATE() AS DATE)";
+
+                    using (var cmd = new SqlCommand(query, connection))
+                    {
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                var ganancias = reader["GananciasTotales"] != DBNull.Value ?
+                                    Convert.ToDecimal(reader["GananciasTotales"]) : 0m;
+                                var propinas = reader["PropinasTotales"] != DBNull.Value ?
+                                    Convert.ToDecimal(reader["PropinasTotales"]) : 0m;
+                                var ventas = reader["VentasHoy"] != DBNull.Value ?
+                                    Convert.ToDecimal(reader["VentasHoy"]) : 0m;
+
+                                return Json(new
+                                {
+                                    success = true,
+                                    gananciasTotales = ganancias,
+                                    propinasTotales = propinas,
+                                    ventasHoy = ventas
+                                }, JsonRequestBehavior.AllowGet);
+                            }
+                            else
+                            {
+                                return Json(new
+                                {
+                                    success = true,
+                                    gananciasTotales = 0m,
+                                    propinasTotales = 0m,
+                                    ventasHoy = 0m
+                                }, JsonRequestBehavior.AllowGet);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    success = false,
+                    error = ex.Message
+                }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         //Parte Ordenes Cocina
 
 
@@ -1590,6 +2054,13 @@ namespace GustoySazon.Controllers
             new EquipoViewModel { Nombre = "Parrilla Principal", Estado = "Roto", Capacidad = 0, Temperatura = 0 },
         }
             };
+
+
+
+
+
+
+
 
 
 
@@ -1640,38 +2111,92 @@ namespace GustoySazon.Controllers
 
 
 
+        
+
+
+
+
+
+
+
+        private readonly string _connectionString = ConfigurationManager.ConnectionStrings["GustoySazonDB"].ConnectionString;
+
         [HttpPost]
-        public ActionResult MarcarOrdenComoLista(int id)
+        public JsonResult MarcarOrdenComoLista(int id)
         {
             try
             {
-                using (SqlConnection conexion = new SqlConnection(connectionString))
+                using (SqlConnection conexion = new SqlConnection(_connectionString))
                 {
                     conexion.Open();
 
-                    string query = "UPDATE Ordenes SET Estado = 'Platillo Listo' WHERE Id = @Id";
+                    string query = "UPDATE Ordenes SET Estado = 'Platillo Listo' WHERE Id = @id";
 
                     using (SqlCommand cmd = new SqlCommand(query, conexion))
                     {
-                        cmd.Parameters.AddWithValue("@Id", id);
+                        cmd.Parameters.AddWithValue("@id", id);
                         int rowsAffected = cmd.ExecuteNonQuery();
 
-                        if (rowsAffected > 0)
+                        if (rowsAffected == 0)
                         {
-                            return Json(new { success = true });
-                        }
-                        else
-                        {
-                            return Json(new { success = false, message = "Orden no encontrada" });
+                            return Json(new { success = false, message = "Orden no encontrada o ya actualizada." });
                         }
                     }
                 }
+
+                return Json(new { success = true });
             }
             catch (Exception ex)
             {
+                // Para debug, puedes registrar ex.Message en logs si quieres
                 return Json(new { success = false, message = ex.Message });
             }
         }
+
+
+
+
+
+
+
+
+
+
+        [HttpPost]
+        public ActionResult ActualizarEstado(int id)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["GustoySazonDB"].ConnectionString;
+
+            using (SqlConnection conexion = new SqlConnection(connectionString))
+            {
+                conexion.Open();
+
+                string updateQuery = "UPDATE Ordenes SET Estado = 'Listo para entregar' WHERE Id = @id";
+
+                using (SqlCommand cmd = new SqlCommand(updateQuery, conexion))
+                {
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+
+            // Retorna código 200 OK
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
 
 
 

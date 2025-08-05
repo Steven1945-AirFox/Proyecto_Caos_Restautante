@@ -8,6 +8,87 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Personal</title>
     <link href="~/Content/RegistroPersonal.css" rel="stylesheet" />
+
+
+    <style>
+
+        /* Estilo para el botón de salir - Ahora en izquierda */
+        .Botonsalir {
+            position: fixed;
+            bottom: 30px;
+            left: 30px; /* Cambiado de right a left */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ff4757;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            overflow: hidden;
+            animation: pulse 4s infinite; /* Efecto de pulso */
+        }
+
+            .Botonsalir::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+                transition: 0.5s;
+            }
+
+            .Botonsalir:hover {
+                background-color: #ff6b81;
+                transform: translateY(-3px);
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            }
+
+                .Botonsalir:hover::before {
+                    left: 100%;
+                }
+
+            .Botonsalir:active {
+                transform: translateY(-1px);
+            }
+
+        .textosalir {
+            position: relative;
+            transition: 0.3s;
+        }
+
+        .Botonsalir:hover .textosalir {
+            letter-spacing: 1px;
+        }
+
+        /* Animación de pulso (opcional) */
+        @@keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+
+
+
+    </style>
+
 </head>
 <body>
     <div class="container">
@@ -76,16 +157,28 @@
                     <select id="rol" name="rol" required>
                         <option value="">Seleccione un rol</option>
                         <option value="gerente">Gerente</option>
-                        <option value="Chef">Chef</option>        
+                        <option value="Chef">Chef</option>
                         <option value="Mesero">Mesero</option>
 
                     </select>
                 </div>
             </div>
 
+
+
+
+            <!-- Botón de Salir -->
+            <button onclick="location.href='@Url.Action("VistaGeneral", "Home")'" class="Botonsalir">
+                <span class="textosalir">Volver al Menu de Gerente</span>
+            </button>
+
+
             <button type="submit" class="submit-btn">
                 Registrar Personal
             </button>
+
+
+
         </form>
     </div>
 

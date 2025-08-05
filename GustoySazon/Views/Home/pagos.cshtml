@@ -13,6 +13,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Pago Final - Gusto y Sazón</title>
     <link href="~/Content/ClientePagos.css" rel="stylesheet" />
+
+
+
+    <style>
+        .payment-mode {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+            .payment-mode button {
+                padding: 10px 20px;
+                border: 1px solid #ddd;
+                background-color: #f8f8f8;
+                cursor: pointer;
+                border-radius: 4px;
+                font-size: 16px;
+            }
+
+                .payment-mode button.selected {
+                    background-color: #4CAF50;
+                    color: white;
+                    border-color: #4CAF50;
+                }
+    </style>
+
+
 </head>
 <body>
     <div class="container">
@@ -21,6 +49,10 @@
         <table class="resumen-table">
             <thead>
                 <tr>
+                    @if (Model.EsPagoGrupal)
+                    {
+                        <th>Cliente</th>
+                    }
                     <th>Código</th>
                     <th>Nombre</th>
                     <th>Cantidad</th>
@@ -35,6 +67,10 @@
                     foreach (var item in Model.ItemsOrden)
                     {
                         <tr>
+                            @if (Model.EsPagoGrupal)
+                            {
+                                <td>@(item.UsuarioId == Model.UsuarioId ? "Tú" : $"Cliente {item.UsuarioId}")</td>
+                            }
                             <td>@item.OrdenId</td>
                             <td>@item.NombreComida</td>
                             <td>@item.Cantidad</td>
@@ -47,11 +83,23 @@
                 else
                 {
                     <tr>
-                        <td colspan="6" style="text-align:center;">No hay platillos para mostrar</td>
+                        <td colspan="@(Model.EsPagoGrupal ? 7 : 6)" style="text-align:center;">No hay platillos para mostrar</td>
                     </tr>
                 }
             </tbody>
         </table>
+
+
+        <div class="payment-mode">
+            <button type="button" class="@(!Model.EsPagoGrupal ? "selected" : "")"
+                    onclick="location.href='@Url.Action("Pagos", new { pagoGrupal = false })'">
+                Pago Individual
+            </button>
+            <button type="button" class="@(Model.EsPagoGrupal ? "selected" : "")"
+                    onclick="location.href='@Url.Action("Pagos", new { pagoGrupal = true })'">
+                Pago de Mesa Completa
+            </button>
+        </div>
 
         @using (Html.BeginForm("ProcesarPago", "Home", FormMethod.Post, new { id = "pagoForm" }))
 
@@ -65,6 +113,8 @@
             @Html.HiddenFor(m => m.Total)
             @Html.HiddenFor(m => m.TarjetaSeleccionadaId)
             @Html.HiddenFor(m => m.TipoPropina)
+
+
 
             <div class="payment-section">
                 <h2 class="section-title">Método de pago</h2>
@@ -81,7 +131,7 @@
                                 <p>Expira: @tarjeta.FechaVencimiento</p>
                                 <p>Titular: @tarjeta.NombreTitular</p>
                                 @Html.RadioButtonFor(m => m.TarjetaSeleccionadaId, tarjeta.Id,
-                                    new { @class = "tarjeta-radio", style = "display:none;" })
+                                              new { @class = "tarjeta-radio", style = "display:none;" })
                             </div>
                         }
                     }
@@ -174,9 +224,9 @@
                 <button type="submit" class="submit-review">Enviar reseña</button>
             }
         </div>
-        </div>
+    </div>
 
-        <script>
+    <script>
         // Selección de tarjeta
         function seleccionarTarjeta(id) {
             var cards = document.querySelectorAll('.payment-card');
@@ -268,14 +318,39 @@
 
 
 
-        function validarPago() {
+            function validarPago() {
                 const seleccionada = document.querySelector('input[name="TarjetaSeleccionadaId"]:checked');
                 if (!seleccionada) {
                     alert("Por favor, selecciona un método de pago antes de continuar.");
                     return;
                 }
+
+                // Asegurarse de que los campos ocultos tengan los valores correctos
+                const subtotalText = document.getElementById("subtotalDisplay").textContent;
+                const ivaText = document.getElementById("ivaDisplay").textContent;
+                const propinaText = document.getElementById("propinaDisplay").textContent;
+                const totalText = document.getElementById("totalDisplay").textContent;
+
+                // Extraer solo el valor numérico (eliminando el símbolo ₡ y comas)
+                const subtotal = parseFloat(subtotalText.replace('₡', '').replace(/,/g, ''));
+                const iva = parseFloat(ivaText.replace('₡', '').replace(/,/g, ''));
+                const propina = parseFloat(propinaText.replace('₡', '').replace(/,/g, ''));
+                const total = parseFloat(totalText.replace('₡', '').replace(/,/g, ''));
+
+                // Asignar los valores a los campos ocultos
+                document.getElementById("Subtotal").value = subtotal;
+                document.getElementById("IVA").value = iva;
+                document.getElementById("Propina").value = propina;
+                document.getElementById("Total").value = total;
+
+                // Validar que los valores sean números válidos
+                if (isNaN(subtotal) || isNaN(iva) || isNaN(propina) || isNaN(total)) {
+                    alert("Error en los valores calculados. Por favor recarga la página e intenta nuevamente.");
+                    return;
+                }
+
                 document.getElementById("pagoForm").submit();
-        }
-        </script>
+            }
+    </script>
 </body>
 </html>

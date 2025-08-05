@@ -352,17 +352,8 @@
         .tabla-ordenes-cocina tbody tr:nth-child(even) {
             background-color: #f8fbfa;
         }
-
-
-
-
-
-
-
-
-
-
     </style>
+    @*PARTE AGREGADA POR MARLON NO TOCAR*@
     @*PARTE AGREGADA POR MARLON NO TOCAR*@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
@@ -376,7 +367,6 @@
             <h2>Chef: Josue Waterhouse</h2>
             <img src="https://cdn-icons-png.flaticon.com/512/2922/2922065.png" width="50" />
         </div>
-
 
         <div class="alertas">
             <div class="alerta">
@@ -411,7 +401,6 @@
             </div>
         </div>
 
-
         <!-- 🔥 Contenedor de soluciones en tiempo real -->
         <div id="contenedor-soluciones" class="cards" style="margin-top: 30px; margin-bottom: 30px;">
             <div class="card vacio">No hay soluciones activas en este momento.</div>
@@ -427,18 +416,8 @@
             <button onclick="showTab('emergencia')">Emergencia</button>
         </div>
 
-
-
-
-
-
-
-
-
-
         <!-- ÓRDENES -->
         <!--Modificado por Steven -->
-        <!-- ÓRDENES -->
         <div id="ordenesSection" class="cards active">
             <table class="tabla-ordenes-cocina">
                 <thead>
@@ -478,7 +457,7 @@
                                 <td>
                                     @if (orden.Estado != "Platillo Listo")
                                     {
-                                        <button class="btn-marcar-listo" onclick="marcarComoListo(@orden.Id)">Marcar como listo</button>
+                                        <button class="btn-marcar-listo" onclick="marcarComoListo(@orden.Id)" data-orden-id="@orden.Id">Cocinar</button>
                                     }
                                     else
                                     {
@@ -498,19 +477,6 @@
             </table>
         </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
         <!-- EQUIPOS -->
         <div id="equiposSection" class="cards">
             @for (int i = 1; i <= 3; i++)
@@ -521,7 +487,7 @@
                 var capacidadTotal = 5;
                 var temperatura = i == 3 ? 0 : (i == 1 ? 200 : 180);
                 var bgColor = i == 3 ? "#f8d7da" : "#d4edda";
-                var porcentaje = (capacidadUsada * 100) / capacidadTotal;
+                var porcentaje = capacidadTotal == 0 ? 0 : (capacidadUsada * 100) / capacidadTotal;
 
                 <div class="card" style="background:@bgColor">
                     <h4>@nombre</h4>
@@ -538,7 +504,7 @@
         </div>
 
         <!-- INGREDIENTES -->
-        <div id="ingredientesSection">
+        <div id="ingredientesSection" class="cards">
             <table class="tabla-ingredientes">
                 <tr><th>Ingrediente</th><th>Cantidad</th></tr>
             </table>
@@ -583,114 +549,118 @@
     </div>
 
     <script>
-        function showTab(tab) {
-            const tabs = ["ordenesSection", "equiposSection", "ingredientesSection", "comunicacionSection", "emergenciaSection"];
-            tabs.forEach(id => document.getElementById(id).classList.remove("active"));
-            document.getElementById(tab + "Section").classList.add("active");
-        }
+		// Función para mostrar pestañas
+		function showTab(tab) {
+			const tabs = ["ordenesSection", "equiposSection", "ingredientesSection", "comunicacionSection", "emergenciaSection"];
+			tabs.forEach(id => document.getElementById(id).classList.remove("active"));
+			document.getElementById(tab + "Section").classList.add("active");
+		}
 
+		// SignalR conexión (Marlon)
+		const hubConnection = $.hubConnection();
+		const solucionHub = hubConnection.createHubProxy('solucionHub');
 
-        @*PARTE AGREGADA POR MARLON NO TOCAR*@
-        const hubConnection = $.hubConnection();
-        const solucionHub = hubConnection.createHubProxy('solucionHub');
+		solucionHub.on("MostrarSoluciones", function (categoria, eventoId, titulo, soluciones) {
+			if (categoria === "cocina") {
+				mostrarTarjetasSolucion(eventoId, titulo, soluciones);
+			}
+		});
 
-        // Escuchar soluciones emitidas desde el simulador
-        solucionHub.on("MostrarSoluciones", function (categoria, eventoId, titulo, soluciones) {
-            if (categoria === "cocina") {
-                mostrarTarjetasSolucion(eventoId, titulo, soluciones);
-            }
-        });
+		solucionHub.on("SolucionSeleccionada", function (eventoId, severidad) {
+			console.log("✅ Solución confirmada para evento:", eventoId);
+			document.getElementById("contenedor-soluciones").innerHTML = '';
+		});
 
-        // Eliminar tarjeta si ya se resolvió
-        solucionHub.on("SolucionSeleccionada", function (eventoId, severidad) {
-            console.log("✅ Solución confirmada para evento:", eventoId);
-            document.getElementById("contenedor-soluciones").innerHTML = '';
-        });
+		hubConnection.start().done(function () {
+			console.log("✅ Conectado como cocina");
+		});
 
-        hubConnection.start().done(function () {
-            console.log("✅ Conectado como cocina");
-        });
+		function mostrarTarjetasSolucion(eventoId, titulo, soluciones) {
+			const mensajeEvento = document.getElementById("evento-activo");
+			if (mensajeEvento) {
+				mensajeEvento.style.display = 'block';
+				const tituloEventoSpan = document.getElementById("titulo-evento");
+				if (tituloEventoSpan) {
+					tituloEventoSpan.textContent = titulo;
+				}
+			}
 
-        // Mostrar tarjetas
-        function mostrarTarjetasSolucion(eventoId, titulo, soluciones) {
-            const mensajeEvento = document.getElementById("evento-activo");
-            if (mensajeEvento) {
-                mensajeEvento.style.display = 'block';
-                mensajeEvento.textContent = "🚨 Evento activo: " + titulo;
-            }
+			const contenedor = document.getElementById("contenedor-soluciones");
+			contenedor.innerHTML = '';
 
-            const contenedor = document.getElementById("contenedor-soluciones");
-            contenedor.innerHTML = '';
+			if (!Array.isArray(soluciones)) {
+				console.error("❌ 'soluciones' no es un array válido:", soluciones);
+				contenedor.innerHTML = `<div class="card" style="background: #fff3cd; border-left: 5px solid #ffc107; padding: 16px;">
+					<strong>Advertencia:</strong> No se pudieron cargar las soluciones para el evento <em>${titulo}</em>.
+				</div>`;
+				return;
+			}
 
-            // ✅ Validar si soluciones está definido y es un arreglo
-            if (!Array.isArray(soluciones)) {
-                console.error("❌ Error: 'soluciones' no es un array válido:", soluciones);
-                contenedor.innerHTML = `<div class="card" style="background: #fff3cd; border-left: 5px solid #ffc107; padding: 16px;">
-            <strong>Advertencia:</strong> No se pudieron cargar las soluciones para el evento <em>${titulo}</em>.
-        </div>`;
-                return;
-            }
+			soluciones.forEach(s => {
+				const card = document.createElement("div");
+				card.className = "card";
+				card.style = "border-left: 5px solid #007bff; background: #ffffff; margin-bottom: 20px;";
+				card.innerHTML = `
+					<h3 style="color: #007bff; margin-bottom: 8px;">🚨 ${titulo}</h3>
+					<p><strong>${s.severity?.toUpperCase() || ''}</strong>: ${s.text || ''}</p>
+					<button onclick="confirmarSolucion('${eventoId}', '${s.severity}')"
+							style="margin-top: 10px; background: #007bff; color: white; padding: 8px 12px; border: none; border-radius: 5px; cursor: pointer;">
+						Aplicar Solución
+					</button>
+				`;
+				contenedor.appendChild(card);
+			});
+		}
 
-            soluciones.forEach(s => {
-                const card = document.createElement("div");
-                card.className = "card";
-                card.style = "border-left: 5px solid #007bff; background: #ffffff; margin-bottom: 20px;";
+		function confirmarSolucion(eventoId, severidad) {
+			solucionHub.invoke("ConfirmarSolucion", eventoId, severidad)
+				.done(() => {
+					alert("✅ Solución enviada");
+					document.getElementById("contenedor-soluciones").innerHTML = '';
+				})
+				.fail(err => {
+					console.error("❌ Error al enviar solución:", err);
+				});
+		}
 
-                card.innerHTML = `
-            <h3 style="color: #007bff; margin-bottom: 8px;">🚨 ${titulo}</h3>
-            <p><strong>${s.severity?.toUpperCase() || ''}</strong>: ${s.text || ''}</p>
-            <button onclick="confirmarSolucion('${eventoId}', '${s.severity}')"
-                    style="margin-top: 10px; background: #007bff; color: white; padding: 8px 12px; border: none; border-radius: 5px; cursor: pointer;">
-                Aplicar Solución
-            </button>
-        `;
+		// Función para marcar orden como lista con temporizador y cambio de botón
+		function marcarComoListo(ordenId) {
+			const boton = document.querySelector(`button[data-orden-id='${ordenId}']`);
+			if (boton) {
+				boton.disabled = true;
+				boton.textContent = "Cocinando...";
+			}
 
-                contenedor.appendChild(card);
-            });
-        }
+			// Tiempo aleatorio entre 15 y 60 segundos
+			const tiempoEspera = Math.floor(Math.random() * (60 - 15 + 1)) + 15;
 
-
-        // Confirmar solución elegida
-        function confirmarSolucion(eventoId, severidad) {
-            solucionHub.invoke("ConfirmarSolucion", eventoId, severidad)
-                .done(() => {
-                    alert("✅ Solución enviada");
-                    document.getElementById("contenedor-soluciones").innerHTML = '';
-                })
-                .fail(err => {
-                    console.error("❌ Error al enviar solución:", err);
-                });
-        }
-    @*ACA TERMINA LO DE MARLON*@
-
-
-
-
-        /* Script de Steven para las Ordenes del cliente */
-
-
-    function marcarComoListo(ordenId) {
-    $.ajax({
-        url: '@Url.Action("MarcarOrdenComoLista", "Home")',
-        type: 'POST',
-        data: { id: ordenId },
-        success: function (response) {
-            if (response.success) {
-                // Recargar la página para ver los cambios
-                location.reload();
-            } else {
-                alert('Error al actualizar el estado: ' + response.message);
-            }
-        },
-        error: function () {
-            alert('Error al comunicarse con el servidor');
-        }
-            });
-     }
-
-
-
-
+			setTimeout(function () {
+				$.ajax({
+					url: '@Url.Action("MarcarOrdenComoLista", "Home")',
+					type: 'POST',
+					data: { id: ordenId },
+					success: function (response) {
+						if (response.success) {
+							location.reload();
+						} else {
+							alert('Error: ' + response.message);
+							if (boton) {
+								boton.disabled = false;
+								boton.textContent = "Cocinar";
+							}
+						}
+					},
+					error: function () {
+						alert('Error al comunicarse con el servidor');
+						if (boton) {
+							boton.disabled = false;
+							boton.textContent = "Cocinar";
+						}
+					}
+				});
+			}, tiempoEspera * 1000);
+		}
     </script>
+
 </body>
 </html>

@@ -41,6 +41,20 @@ namespace GustoySazon.Models
         public string Comentario { get; set; }
 
 
+
+
+
+        public bool EsPagoGrupal { get; set; }
+        public List<ItemOrden> ItemsMesa { get; set; }
+        public List<int> UsuariosMesa { get; set; }
+
+
+
+
+
+        public List<ItemFactura> ItemsFactura { get; set; }
+
+
     }
 
     public class ItemOrden
@@ -54,6 +68,8 @@ namespace GustoySazon.Models
         public decimal IVAUnitario => PrecioUnitario * 0.13m;
         public decimal Subtotal => PrecioUnitario * Cantidad;
         public decimal IVATotal => IVAUnitario * Cantidad;
+
+        public int UsuarioId { get; set; }
     }
 
     public class TarjetaViewModel
@@ -95,6 +111,33 @@ namespace GustoySazon.Models
         public int Calificacion { get; set; }
         public string Comentario { get; set; }
     }
+
+
+
+
+
+
+
+
+    public class ItemFactura
+    {
+        public string NombreComida { get; set; }
+        public int Cantidad { get; set; }
+        public decimal PrecioUnitario { get; set; }
+        public decimal IVA { get; set; }
+        public decimal Subtotal { get; set; }
+        public string NombreCliente { get; set; }
+    }
+
+ 
+
+
+
+
+
+
+
+
 
 
 

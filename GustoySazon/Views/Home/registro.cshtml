@@ -3,6 +3,12 @@
     ViewBag.Title = "registro";
 }
 
+
+
+
+@{
+    Layout = null;
+}
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,22 +50,22 @@
 
 
             @*<div class="form-group">
-            <label>Número de asientos a solicitar:</label>
-            <div class="seats-selector">
-                <div class="seats-toggle" id="seatsToggle">
-                    <span>Seleccionar cantidad</span>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="seats-dropdown" id="seatsDropdown">
-                    <div data-value="2">2 asientos</div>
-                    <div data-value="3">3 asientos</div>
-                    <div data-value="4">4 asientos</div>
-                    <div data-value="5">5 asientos</div>
-                    <div data-value="6">6 asientos</div>
-                </div>
-                <input type="hidden" id="selectedSeats" name="sillas" required>
-            </div>
-        </div>*@
+                    <label>Número de asientos a solicitar:</label>
+                    <div class="seats-selector">
+                        <div class="seats-toggle" id="seatsToggle">
+                            <span>Seleccionar cantidad</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="seats-dropdown" id="seatsDropdown">
+                            <div data-value="2">2 asientos</div>
+                            <div data-value="3">3 asientos</div>
+                            <div data-value="4">4 asientos</div>
+                            <div data-value="5">5 asientos</div>
+                            <div data-value="6">6 asientos</div>
+                        </div>
+                        <input type="hidden" id="selectedSeats" name="sillas" required>
+                    </div>
+                </div>*@
 
 
 
@@ -140,7 +146,7 @@
 
             <div class="form-group">
                 <label for="cardExpiry">Fecha de expiración (Formato MM/AA):</label>
-                                                                                                <!--solo meses del 1 al 9 y del 10 al 12-->
+                <!--solo meses del 1 al 9 y del 10 al 12-->
                 <input type="text" id="cardExpiry" placeholder="Ejemplo: 07/25" required pattern="^(0[1-9]|1[0-2])\/\d{2}$" title="Formato MM/AA">
             </div>
 
@@ -243,7 +249,7 @@
 
             const hoy = new Date();
             const mesActual = hoy.getMonth() + 1;
-            const anioActual = hoy.getFullYear() % 100; 
+            const anioActual = hoy.getFullYear() % 100;
 
             if (anioIngresado < anioActual) return false;
             if (anioIngresado === anioActual && mesIngresado < mesActual) return false;
