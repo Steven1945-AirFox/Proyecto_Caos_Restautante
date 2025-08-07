@@ -941,77 +941,6 @@ namespace GustoySazon.Controllers
 
 
 
-        [HttpGet]
-        public JsonResult ObtenerOrdenesPorMesa(int mesaId)
-        {
-            try
-            {
-                // Validar parámetro de entrada
-                if (mesaId <= 0)
-                {
-                    return Json(new { success = false, message = "ID de mesa inválido" });
-                }
-
-                using (var conn = new SqlConnection(connectionString))
-                {
-                    var pedidos = new List<object>();
-                    conn.Open();
-
-                    // Query optimizada para incluir solo estados relevantes
-                    string query = @"SELECT o.Id, o.NombreComida, o.Cantidad, 
-                           o.PrecioTotal, o.Estado, o.MeseroId
-                           FROM Ordenes o
-                           WHERE o.MesaId = @MesaId 
-                           AND o.Estado IN ('Pendiente', 'Preparando', 'Platillo Listo')
-                           ORDER BY o.Fecha DESC";
-
-                    using (var cmd = new SqlCommand(query, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@MesaId", mesaId);
-
-                        using (var reader = cmd.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                pedidos.Add(new
-                                {
-                                    Id = Convert.ToInt32(reader["Id"]),
-                                    NombreComida = reader["NombreComida"].ToString(),
-                                    Cantidad = Convert.ToInt32(reader["Cantidad"]),
-                                    PrecioTotal = Convert.ToDecimal(reader["PrecioTotal"]),
-                                    Estado = reader["Estado"].ToString(),
-                                    MeseroId = reader["MeseroId"] != DBNull.Value ?
-                                              Convert.ToInt32(reader["MeseroId"]) : (int?)null
-                                });
-                            }
-                        }
-                    }
-
-                    return Json(new
-                    {
-                        success = true,
-                        data = pedidos.Count > 0 ? pedidos : null
-                    }, JsonRequestBehavior.AllowGet);
-                }
-            }
-            catch (Exception ex)
-            {
-                // Log del error real
-                System.Diagnostics.Debug.WriteLine($"Error en ObtenerOrdenesPorMesa: {ex}");
-
-                return Json(new
-                {
-                    success = false,
-                    message = "Error al obtener órdenes",
-                    error = ex.Message
-                }, JsonRequestBehavior.AllowGet);
-            }
-        }
-
-
-
-
-
 
 
 
@@ -1442,21 +1371,26 @@ namespace GustoySazon.Controllers
                 conn.Open();
 
                 // 1. Obtener información del mesero
-                string queryMesero = @"SELECT TOP 1 Turno, PropinasTotales
-                             FROM MeseroActividad 
-                             WHERE EmpleadoId = @EmpleadoId 
-                             ORDER BY Id DESC";
+                // Obtener propinas del día de hoy desde la tabla finanzas
+                string queryPropinasHoy = @"
+                                            SELECT TOP 1 propinas_totales 
+                                            FROM finanzas 
+                                            WHERE DiaRegistrado = CAST(GETDATE() AS DATE)
+                                            ORDER BY id DESC";
 
-                using (var cmd = new SqlCommand(queryMesero, conn))
+                using (var cmd = new SqlCommand(queryPropinasHoy, conn))
                 {
-                    cmd.Parameters.AddWithValue("@EmpleadoId", empleadoId);
                     using (var reader = cmd.ExecuteReader())
                     {
                         if (reader.Read())
                         {
-                            model.Turno = reader["Turno"]?.ToString() ?? model.Turno;
-                            model.PropinasTurno = reader["PropinasTotales"] != DBNull.Value ?
-                                Convert.ToDecimal(reader["PropinasTotales"]) : 0m;
+                            model.PropinasTurno = reader["propinas_totales"] != DBNull.Value
+                                ? Convert.ToDecimal(reader["propinas_totales"])
+                                : 0m;
+                        }
+                        else
+                        {
+                            model.PropinasTurno = 0m; // No hay datos registrados hoy
                         }
                     }
                 }
@@ -1490,12 +1424,79 @@ namespace GustoySazon.Controllers
             return View(model);
         }
 
-        private void CargarDetallesMesa(MesaInfo mesa, SqlConnection conexion)
-        {
-            // Implementación para cargar pedidos y clientes de la mesa
-            // Similar a la que tenías anteriormente
-        }
 
+
+
+
+
+
+
+        [HttpGet]
+        public JsonResult ObtenerOrdenesPorMesa(int mesaId)
+        {
+            try
+            {
+                using (var conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string query = @"
+                SELECT 
+                    o.Id,
+                    o.MenuId,
+                    m.NombreComida,
+                    o.Cantidad,
+                    o.PrecioUnitario,
+                    o.PrecioTotal,
+                    o.Estado,
+                    o.MesaId
+                FROM Ordenes o
+                JOIN Menu m ON o.MenuId = m.Id
+                WHERE o.MesaId = @MesaId
+                AND o.Estado IN ('Pendiente', 'Preparando', 'Platillo Listo')
+                ORDER BY o.Fecha DESC";
+
+                    var ordenes = new List<dynamic>();
+
+                    using (var cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@MesaId", mesaId);
+
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                ordenes.Add(new
+                                {
+                                    Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                    MenuId = reader.GetInt32(reader.GetOrdinal("MenuId")),
+                                    NombreComida = reader.GetString(reader.GetOrdinal("NombreComida")),
+                                    Cantidad = reader.GetInt32(reader.GetOrdinal("Cantidad")),
+                                    PrecioUnitario = reader.GetDecimal(reader.GetOrdinal("PrecioUnitario")),
+                                    PrecioTotal = reader.GetDecimal(reader.GetOrdinal("PrecioTotal")),
+                                    Estado = reader.GetString(reader.GetOrdinal("Estado")),
+                                    MesaId = reader.GetInt32(reader.GetOrdinal("MesaId"))
+                                });
+                            }
+                        }
+                    }
+
+                    return Json(new
+                    {
+                        success = true,
+                        data = ordenes
+                    }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = "Error al obtener órdenes: " + ex.Message
+                }, JsonRequestBehavior.AllowGet);
+            }
+        }
 
 
 
@@ -1505,7 +1506,7 @@ namespace GustoySazon.Controllers
 
         //Steven
         [HttpPost]
-        public JsonResult ActualizarEstadoPedido(int ordenId, string nuevoEstado)
+        public JsonResult ActualizarEstadoPedido(int mesaId, int orderIndex, string nuevoEstado)
         {
             try
             {
@@ -1513,29 +1514,61 @@ namespace GustoySazon.Controllers
                 {
                     conn.Open();
 
-                    string query = "UPDATE Ordenes SET Estado = @NuevoEstado WHERE Id = @OrdenId";
+                    // Primero obtenemos la orden específica por mesaId e índice
+                    string queryGetOrder = @"
+                SELECT Id 
+                FROM Ordenes 
+                WHERE MesaId = @MesaId
+                AND Estado IN ('Pendiente', 'Preparando', 'Platillo Listo')
+                ORDER BY Fecha DESC
+                OFFSET @OrderIndex ROWS FETCH NEXT 1 ROWS ONLY";
 
-                    using (var cmd = new SqlCommand(query, conn))
+                    object result;
+                    using (var cmd = new SqlCommand(queryGetOrder, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@MesaId", mesaId);
+                        cmd.Parameters.AddWithValue("@OrderIndex", orderIndex);
+                        result = cmd.ExecuteScalar();
+                    }
+
+                    // Verificar si se encontró una orden
+                    if (result == null || result == DBNull.Value)
+                    {
+                        return Json(new
+                        {
+                            success = false,
+                            message = "No se encontró la orden solicitada"
+                        });
+                    }
+
+                    int orderId = Convert.ToInt32(result);
+
+                    // Luego actualizamos el estado
+                    string queryUpdate = "UPDATE Ordenes SET Estado = @NuevoEstado WHERE Id = @OrderId";
+
+                    using (var cmd = new SqlCommand(queryUpdate, conn))
                     {
                         cmd.Parameters.AddWithValue("@NuevoEstado", nuevoEstado);
-                        cmd.Parameters.AddWithValue("@OrdenId", ordenId);
-
+                        cmd.Parameters.AddWithValue("@OrderId", orderId);
                         int affectedRows = cmd.ExecuteNonQuery();
 
                         return Json(new
                         {
                             success = affectedRows > 0,
-                            message = affectedRows > 0 ? "Estado actualizado" : "No se encontró la orden"
+                            message = affectedRows > 0 ? "Estado actualizado" : "No se pudo actualizar la orden"
                         });
                     }
                 }
             }
             catch (Exception ex)
             {
+                // Log del error completo
+                System.Diagnostics.Debug.WriteLine($"Error al actualizar estado: {ex.ToString()}");
+
                 return Json(new
                 {
                     success = false,
-                    message = ex.Message
+                    message = "Error al procesar la solicitud. Por favor, intente nuevamente."
                 });
             }
         }
@@ -1549,52 +1582,42 @@ namespace GustoySazon.Controllers
         {
             try
             {
-                // Validar estados permitidos
-                var estadosPermitidos = new[] { "Preparando", "Entregado" };
-                if (!estadosPermitidos.Contains(nuevoEstado))
-                {
-                    return Json(new { success = false, message = "Estado no válido" });
-                }
-
                 using (var conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
 
-                    // Verificar estado actual
+                    // 1. Verificar que la orden existe y obtener su estado actual
                     string queryVerificar = "SELECT Estado FROM Ordenes WHERE Id = @OrdenId";
                     string estadoActual;
 
                     using (var cmd = new SqlCommand(queryVerificar, conn))
                     {
                         cmd.Parameters.AddWithValue("@OrdenId", ordenId);
-                        estadoActual = cmd.ExecuteScalar()?.ToString();
-                    }
-
-                    // Validar transición de estados
-                    if (nuevoEstado == "Preparando" && estadoActual != "Pendiente")
-                    {
-                        return Json(new
+                        var result = cmd.ExecuteScalar();
+                        if (result == null || result == DBNull.Value)
                         {
-                            success = false,
-                            message = "Solo se puede 'Tomar Orden' cuando el estado es 'Pendiente'"
-                        });
+                            return Json(new { success = false, message = "La orden no existe" });
+                        }
+                        estadoActual = result.ToString();
                     }
 
+                    // 2. Validar la transición de estado
                     if (nuevoEstado == "Entregado" && estadoActual != "Platillo Listo")
                     {
                         return Json(new
                         {
                             success = false,
-                            message = "Solo se puede 'Entregar Orden' cuando el estado es 'Platillo Listo'"
+                            message = "Solo puedes entregar órdenes que estén en estado 'Platillo Listo'"
                         });
                     }
 
-                    // Actualizar el estado
-                    string queryActualizar = @"UPDATE Ordenes 
-                                     SET Estado = @NuevoEstado, 
-                                         MeseroId = @MeseroId,
-                                         Fecha = GETDATE()
-                                     WHERE Id = @OrdenId";
+                    // 3. Actualizar el estado
+                    string queryActualizar = @"
+                UPDATE Ordenes 
+                SET Estado = @NuevoEstado,
+                    MeseroId = @MeseroId,
+                    Fecha = GETDATE()
+                WHERE Id = @OrdenId";
 
                     using (var cmd = new SqlCommand(queryActualizar, conn))
                     {
@@ -1604,11 +1627,22 @@ namespace GustoySazon.Controllers
 
                         int affectedRows = cmd.ExecuteNonQuery();
 
-                        return Json(new
+                        if (affectedRows > 0)
                         {
-                            success = affectedRows > 0,
-                            message = affectedRows > 0 ? "Estado actualizado" : "No se encontró la orden"
-                        });
+                            return Json(new
+                            {
+                                success = true,
+                                message = "Estado actualizado correctamente"
+                            });
+                        }
+                        else
+                        {
+                            return Json(new
+                            {
+                                success = false,
+                                message = "No se pudo actualizar la orden"
+                            });
+                        }
                     }
                 }
             }
@@ -1617,10 +1651,51 @@ namespace GustoySazon.Controllers
                 return Json(new
                 {
                     success = false,
-                    message = ex.Message
+                    message = $"Error interno: {ex.Message}"
                 });
             }
         }
+
+
+
+
+
+
+
+        [HttpGet]
+        public JsonResult ObtenerPropinasHoy()
+        {
+            try
+            {
+                decimal propinasHoy = 0;
+
+                using (var conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    string query = @"SELECT TOP 1 propinas_totales FROM finanzas 
+                     WHERE DiaRegistrado = CAST(GETDATE() AS DATE)
+                     ORDER BY id DESC";
+
+                    using (var cmd = new SqlCommand(query, conn))
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            propinasHoy = reader["propinas_totales"] != DBNull.Value ?
+                                          Convert.ToDecimal(reader["propinas_totales"]) : 0m;
+                        }
+                    }
+                }
+
+                return Json(new { success = true, propinasTurno = propinasHoy }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
 
         //Fin Steven
 

@@ -10,6 +10,7 @@ namespace GustoySazon.Models
     public class MesaViewModel
     {
         public int MesaId { get; set; }
+        
         public int NumeroMesa { get; set; }
         public string EstadoAtencion { get; set; }
 
@@ -35,6 +36,7 @@ namespace GustoySazon.Models
         public decimal PrecioUnitario { get; set; }
         public decimal PrecioTotal { get; set; }
         public string Estado { get; set; }
+        public int Id { get; set; }
     }
 
     public class MeseroViewModel

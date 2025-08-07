@@ -599,98 +599,127 @@
 
     <script>
     // Variables para simulación con persistencia
-    let nivelEstres, nivelEnergia, eficiencia, tiempoTranscurrido, ultimaActualizacion;
+let nivelEstres, nivelEnergia, eficiencia, tiempoTranscurrido, ultimaActualizacion;
+let tiempoInterval;
+let propinasInterval;
 
-    // Función para cargar datos desde localStorage
-    function cargarDatosGuardados() {
-        const datosGuardados = localStorage.getItem('simulacionDatos');
-        if (datosGuardados) {
-            const datos = JSON.parse(datosGuardados);
-            nivelEstres = datos.nivelEstres || @Model.NivelEstres;
-            nivelEnergia = datos.nivelEnergia || @Model.NivelEnergia;
-            eficiencia = datos.eficiencia || @Model.Eficiencia;
-            tiempoTranscurrido = datos.tiempoTranscurrido || 0;
-            ultimaActualizacion = new Date(datos.ultimaActualizacion || Date.now());
+// Función para cargar datos desde localStorage
+function cargarDatosGuardados() {
+    const datosGuardados = localStorage.getItem('simulacionDatos');
+    if (datosGuardados) {
+        const datos = JSON.parse(datosGuardados);
+        nivelEstres = datos.nivelEstres || @Model.NivelEstres;
+        nivelEnergia = datos.nivelEnergia || @Model.NivelEnergia;
+        eficiencia = datos.eficiencia || @Model.Eficiencia;
+        tiempoTranscurrido = datos.tiempoTranscurrido || 0;
+        ultimaActualizacion = new Date(datos.ultimaActualizacion || Date.now());
 
-            // Calcular tiempo offline y actualizar valores
+        // Calcular tiempo offline y actualizar valores
+        const ahora = new Date();
+        const minutosOffline = Math.floor((ahora - ultimaActualizacion) / (1000 * 60));
+
+        if (minutosOffline > 0) {
+            // Actualizar valores basado en tiempo offline
+            nivelEstres = Math.min(100, nivelEstres + (minutosOffline * 1));
+            nivelEnergia = Math.max(0, nivelEnergia - (minutosOffline * 1));
+            eficiencia = Math.max(0, eficiencia - (minutosOffline * 2));
+            tiempoTranscurrido += (minutosOffline * 60); // Convertir a segundos
+        }
+
+        ultimaActualizacion = ahora;
+    } else {
+        // Valores iniciales del modelo
+        nivelEstres = @Model.NivelEstres;
+        nivelEnergia = @Model.NivelEnergia;
+        eficiencia = @Model.Eficiencia;
+        tiempoTranscurrido = 0;
+        ultimaActualizacion = new Date();
+    }
+}
+
+        // Función para guardar datos en localStorage
+        function guardarDatos() {
+            const datos = {
+                nivelEstres: nivelEstres,
+                nivelEnergia: nivelEnergia,
+                eficiencia: eficiencia,
+                tiempoTranscurrido: tiempoTranscurrido,
+                ultimaActualizacion: ultimaActualizacion.toISOString()
+            };
+            localStorage.setItem('simulacionDatos', JSON.stringify(datos));
+        }
+
+        // Formato HH:MM:SS
+        function formatearTiempo(segundos) {
+            const horas = Math.floor(segundos / 3600);
+            const minutos = Math.floor((segundos % 3600) / 60);
+            const segs = segundos % 60;
+            return `${horas.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}:${segs.toString().padStart(2, '0')}`;
+        }
+
+        // Indicadores simulados
+        function actualizarIndicadoresSimulados() {
+            tiempoTranscurrido += 1; // Incrementar el contador de tiempo
+
             const ahora = new Date();
-            const minutosOffline = Math.floor((ahora - ultimaActualizacion) / (1000 * 60));
+            const segundosTranscurridos = Math.floor((ahora - ultimaActualizacion) / 1000);
 
-            if (minutosOffline > 0) {
-                // Actualizar valores basado en tiempo offline
-                nivelEstres = Math.min(100, nivelEstres + (minutosOffline * 1));
-                nivelEnergia = Math.max(0, nivelEnergia - (minutosOffline * 1));
-                eficiencia = Math.max(0, eficiencia - (minutosOffline * 2));
-                tiempoTranscurrido += (minutosOffline * 60); // Convertir a segundos
+            if (segundosTranscurridos >= 60) {
+                const minutosTranscurridos = Math.floor(segundosTranscurridos / 60);
+                nivelEstres = Math.min(100, nivelEstres + (minutosTranscurridos * 1));
+                nivelEnergia = Math.max(0, nivelEnergia - (minutosTranscurridos * 1));
+                eficiencia = Math.max(0, eficiencia - (minutosTranscurridos * 2));
+                ultimaActualizacion = ahora;
+
+                // Guardar cambios
+                guardarDatos();
             }
 
-            ultimaActualizacion = ahora;
-        } else {
-            // Valores iniciales del modelo
-            nivelEstres = @Model.NivelEstres;
-            nivelEnergia = @Model.NivelEnergia;
-            eficiencia = @Model.Eficiencia;
-            tiempoTranscurrido = 0;
-            ultimaActualizacion = new Date();
-        }
-    }
-
-    // Función para guardar datos en localStorage
-    function guardarDatos() {
-        const datos = {
-            nivelEstres: nivelEstres,
-            nivelEnergia: nivelEnergia,
-            eficiencia: eficiencia,
-            tiempoTranscurrido: tiempoTranscurrido,
-            ultimaActualizacion: ultimaActualizacion.toISOString()
-        };
-        localStorage.setItem('simulacionDatos', JSON.stringify(datos));
-    }
-
-    // Formato HH:MM:SS
-    function formatearTiempo(segundos) {
-        const horas = Math.floor(segundos / 3600);
-        const minutos = Math.floor((segundos % 3600) / 60);
-        const segs = segundos % 60;
-        return `${horas.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}:${segs.toString().padStart(2, '0')}`;
-    }
-
-    // Indicadores simulados
-    function actualizarIndicadoresSimulados() {
-        const ahora = new Date();
-        const segundosTranscurridos = Math.floor((ahora - ultimaActualizacion) / 1000);
-        tiempoTranscurrido += 1;
-
-        if (segundosTranscurridos >= 60) {
-            const minutosTranscurridos = Math.floor(segundosTranscurridos / 60);
-            nivelEstres = Math.min(100, nivelEstres + (minutosTranscurridos * 1));
-            nivelEnergia = Math.max(0, nivelEnergia - (minutosTranscurridos * 1));
-            eficiencia = Math.max(0, eficiencia - (minutosTranscurridos * 2));
-            ultimaActualizacion = ahora;
-
-            // Guardar cambios
-            guardarDatos();
+            actualizarUIIndicadores();
         }
 
-        actualizarUIIndicadores();
-    }
+        // Actualiza barras e indicadores
+        function actualizarUIIndicadores() {
+            document.querySelector('.stress .status-fill').style.width = `${nivelEstres}%`;
+            document.querySelector('.stress .status-value').textContent = `${nivelEstres.toFixed(0)}%`;
 
-    // Actualiza barras e indicadores
-    function actualizarUIIndicadores() {
-        document.querySelector('.stress .status-fill').style.width = `${nivelEstres}%`;
-        document.querySelector('.stress .status-value').textContent = `${nivelEstres.toFixed(0)}%`;
+            document.querySelector('.energy .status-fill').style.width = `${nivelEnergia}%`;
+            document.querySelector('.energy .status-value').textContent = `${nivelEnergia.toFixed(0)}%`;
 
-        document.querySelector('.energy .status-fill').style.width = `${nivelEnergia}%`;
-        document.querySelector('.energy .status-value').textContent = `${nivelEnergia.toFixed(0)}%`;
+            document.querySelector('.efficiency .status-fill').style.width = `${eficiencia}%`;
+            document.querySelector('.efficiency .status-value').textContent = `${eficiencia.toFixed(0)}%`;
 
-        document.querySelector('.efficiency .status-fill').style.width = `${eficiencia}%`;
-        document.querySelector('.efficiency .status-value').textContent = `${eficiencia.toFixed(0)}%`;
-
-        const tiempoElement = document.querySelector('.time-worked .status-value');
-        if (tiempoElement) {
-            tiempoElement.textContent = formatearTiempo(tiempoTranscurrido);
+            const tiempoElement = document.querySelector('.time-worked .status-value');
+            if (tiempoElement) {
+                tiempoElement.textContent = formatearTiempo(tiempoTranscurrido);
+            }
         }
-    }
+
+
+
+
+
+
+        // Propinas simuladas - Versión mejorada
+        async function actualizarPropinas() {
+            try {
+                const response = await fetch('/Hame/ObtenerPropinasHoy?_=' + Date.now());
+                if (!response.ok) throw new Error('Error en la respuesta del servidor');
+
+                const data = await response.json();
+                if (data.success) {
+                    const propinasValue = document.querySelector('.tips .status-value');
+                    if (propinasValue) {
+                        propinasValue.textContent = `₡${data.propinasTurno.toFixed(2)}`;
+                    }
+                }
+            } catch (error) {
+                console.error("Error al actualizar propinas:", error);
+            }
+        }
+
+
+
 
     // Función para resetear datos (opcional)
     function resetearSimulacion() {
@@ -703,19 +732,63 @@
         actualizarUIIndicadores();
     }
 
-    // Inicializar al cargar la página
-    document.addEventListener('DOMContentLoaded', function() {
-        cargarDatosGuardados();
-        actualizarUIIndicadores();
+        // Inicializar al cargar la página
+        document.addEventListener('DOMContentLoaded', function () {
+            cargarDatosGuardados();
+            actualizarUIIndicadores();
 
-        // Guardar datos cada minuto
-        setInterval(guardarDatos, 60000);
-    });
+            // Iniciar intervalos
+            tiempoInterval = setInterval(actualizarIndicadoresSimulados, 1000); // Actualizar cada segundo
+            propinasInterval = setInterval(actualizarPropinas, 15000); // Actualizar propinas cada 15 segundos
 
-    // Guardar datos antes de cerrar la página
-    window.addEventListener('beforeunload', function() {
-        guardarDatos();
-    });
+            // Configurar otros eventos y funciones
+            configurarFiltros();
+            actualizarPropinas();
+            actualizarEstadoMesas();
+
+            // Guardar datos cada minuto
+            setInterval(guardarDatos, 60000);
+
+            // Configurar eventos de botones
+            const botonesDetalles = document.querySelectorAll('.btn-detalles');
+            botonesDetalles.forEach(boton => {
+                boton.addEventListener('click', function () {
+                    const mesaId = this.getAttribute('data-mesaid');
+                    toggleDetallesAdicionales(mesaId, this);
+                });
+            });
+        });
+
+        // Limpiar intervalos al salir de la página
+        window.addEventListener('beforeunload', function () {
+            clearInterval(tiempoInterval);
+            clearInterval(propinasInterval);
+            guardarDatos();
+        });
+
+
+
+        // En el DOMContentLoaded o donde configures los eventos
+        document.querySelectorAll('.btn-detalles').forEach(boton => {
+            boton.addEventListener('click', function () {
+                const mesaId = this.closest('.mesa-card').getAttribute('data-mesaid');
+                if (!mesaId) {
+                    console.error('No se encontró el ID de la mesa');
+                    return;
+                }
+                toggleDetallesAdicionales(mesaId, this);
+            });
+        });
+
+
+
+
+
+
+
+
+
+
 
         // Array de 20 consejos
         const consejos = [
@@ -754,20 +827,11 @@
             alert(`✨ ${consejoAleatorio.texto}`);
         }
 
-        // Propinas simuladas
-        function actualizarPropinas() {
-            fetch('/Hame/ObtenerEstadoMeseroActualizado')
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        const propinasValue = document.querySelector('.tips .status-value');
-                        if (propinasValue) {
-                            propinasValue.textContent = `${data.propinasTurno.toFixed(2)}`;
-                        }
-                    }
-                })
-                .catch(console.error);
-        }
+
+
+
+
+
 
         // Filtros por pestañas
         function configurarFiltros() {
@@ -785,6 +849,9 @@
                 });
             });
         }
+
+
+
 
         // Estado de mesas (colores, switches, fecha)
         function actualizarEstadoMesas() {
@@ -823,56 +890,52 @@
                 });
         }
 
+
+
+
+
+
         // Variable global para controlar el tiempo de visualización
         let tiempoVisualizacionOrden = null;
 
+
+
         function toggleDetallesAdicionales(mesaId, botonClickeado) {
             const mesaCard = botonClickeado.closest('.mesa-card');
-            let detallesExistentes = mesaCard.querySelector('.detalles-adicionales');
+            const detallesContainer = mesaCard.querySelector('.detalles-contenedor');
+            let detallesExistentes = detallesContainer.querySelector('.detalles-adicionales');
 
-            // Si ya está abierto y visible, no hacer nada
+            // Si ya está abierto y visible, cerrarlo y salir
             if (detallesExistentes && detallesExistentes.style.display !== 'none') {
+                detallesExistentes.style.display = 'none';
+                botonClickeado.textContent = '👀 Ver Pedido Completo';
+                botonClickeado.classList.remove('btn-warning');
+                botonClickeado.classList.add('btn-info');
                 return;
             }
 
-            // Cancelar timeout anterior si existe
-            if (tiempoVisualizacionOrden) {
-                clearTimeout(tiempoVisualizacionOrden);
-            }
-
-            // Mostrar el contenedor si estaba oculto
-            if (detallesExistentes) {
-                detallesExistentes.style.display = 'block';
+            // Limpiar timeout anterior si existe
+            if (mesaCard.timeoutVisualizacion) {
+                clearTimeout(mesaCard.timeoutVisualizacion);
             }
 
             // Cargar datos inmediatamente
             cargarDatosAdicionalesDesdeApi(mesaId, mesaCard, botonClickeado);
-
-            // Configurar actualización periódica cada 3 segundos
-            const intervaloActualizacion = setInterval(() => {
-                const detalles = mesaCard.querySelector('.detalles-adicionales');
-                if (!detalles || detalles.style.display === 'none') {
-                    clearInterval(intervaloActualizacion);
-                    return;
-                }
-                console.log(`Actualizando automáticamente mesa ${mesaId}`);
-                cargarDatosAdicionalesDesdeApi(mesaId, mesaCard, botonClickeado);
-            }, 3000);
-
-            // Configurar cierre después de 20 segundos
-            tiempoVisualizacionOrden = setTimeout(() => {
-                const detalles = mesaCard.querySelector('.detalles-adicionales');
-                if (detalles) {
-                    detalles.style.display = 'none';
-                }
-                if (botonClickeado) {
-                    botonClickeado.textContent = '👀 Ver Pedido Completo';
-                    botonClickeado.classList.remove('btn-warning');
-                    botonClickeado.classList.add('btn-info');
-                }
-                clearInterval(intervaloActualizacion);
-            }, 20000);
         }
+
+        function reintentarCarga(mesaId, element) {
+            const container = element.closest('.detalles-contenedor');
+            const mesaCard = element.closest('.mesa-card');
+            const boton = mesaCard.querySelector('.btn-detalles');
+
+            container.innerHTML = '<div class="loading">Reintentando...</div>';
+            cargarDatosAdicionalesDesdeApi(mesaId, mesaCard, boton);
+        }
+
+
+
+
+
 
 
 
@@ -883,7 +946,7 @@
         function cargarDatosAdicionalesDesdeApi(mesaId, mesaCard, botonClickeado) {
             const detallesContainer = mesaCard.querySelector('.detalles-contenedor');
 
-            // Mostrar indicador de carga mejorado
+            // Mostrar indicador de carga
             detallesContainer.innerHTML = `
         <div class="loading">
             <div class="spinner"></div>
@@ -891,71 +954,45 @@
         </div>
     `;
 
-            console.log(`Iniciando carga para mesa ${mesaId}`); // Debug
-
-            fetch(`/Hame/ObtenerOrdenesPorMesa?mesaId=${mesaId}&_=${Date.now()}`)
+            fetch(`/Hame/ObtenerOrdenesPorMesa?mesaId=${mesaId}`)
                 .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`Error HTTP! estado: ${response.status}`);
-                    }
+                    if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
                     return response.json();
                 })
                 .then(data => {
-                    console.log('Datos recibidos:', data); // Debug
-
                     if (!data || !data.success) {
-                        throw new Error(data?.message || 'Respuesta inválida del servidor');
+                        throw new Error(data?.message || 'No se pudieron cargar los pedidos');
                     }
 
-                    mesaCard.dataset.cargando = "false";
-
-                    if (!data.data || data.data.length === 0) {
-                        detallesContainer.innerHTML = `
-                    <div class="detalles-adicionales" style="margin-top: 10px;">
-                        <em>No hay pedidos activos para esta mesa.</em>
-                    </div>
-                `;
-                        return;
-                    }
-
-                    // Construir la tabla HTML
+                    // Construir la tabla HTML con botones de acción
                     let tablaHTML = `
-                <div class="detalles-adicionales" style="margin-top: 10px;">
+                <div class="detalles-adicionales" style="display: block; margin-top: 10px;">
                     <table class="pedido-detalle-table">
                         <thead>
                             <tr>
                                 <th>Platillo</th>
                                 <th>Cantidad</th>
-                                <th>Precio Total</th>
+                                <th>Precio</th>
                                 <th>Estado</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-            `;
-
-                    data.data.forEach(p => {
-                        const mostrarTomarOrden = p.Estado === 'Pendiente';
-                        const mostrarEntregarOrden = p.Estado === 'Platillo Listo';
-
-                        tablaHTML += `
-                    <tr>
-                        <td>${p.NombreComida}</td>
-                        <td style="text-align:center;">${p.Cantidad}</td>
-                        <td style="text-align:right;">$${parseFloat(p.PrecioTotal).toFixed(2)}</td>
-                        <td>${p.Estado}</td>
-                        <td>
-                            ${mostrarTomarOrden ?
-                                `<button class="btn-tomar-orden" onclick="tomarOrden(${p.Id}, ${mesaId})">Tomar Orden</button>` : ''}
-                            ${mostrarEntregarOrden ?
-                                `<button class="btn-entregar-orden" onclick="entregarOrden(${p.Id}, ${mesaId})">Entregar Orden</button>` : ''}
-                            ${!mostrarTomarOrden && !mostrarEntregarOrden ? 'Ninguna acción disponible' : ''}
-                        </td>
-                    </tr>
-                `;
-                    });
-
-                    tablaHTML += `
+                            ${data.data.map(orden => `
+                                <tr>
+                                    <td>${orden.NombreComida}</td>
+                                    <td>${orden.Cantidad}</td>
+                                    <td>₡${orden.PrecioTotal.toFixed(2)}</td>
+                                    <td>${orden.Estado}</td>
+                                    <td>
+                                        ${orden.Estado === 'Pendiente' ?
+                            `<button class="btn-tomar-orden" onclick="tomarOrden(${orden.Id}, ${mesaId})">Tomar Orden</button>` :
+                            orden.Estado === 'Platillo Listo' ?
+                                `<button class="btn-entregar-orden" onclick="entregarOrden(${orden.Id}, ${mesaId})">Entregar</button>` :
+                                ''}
+                                    </td>
+                                </tr>
+                            `).join('')}
                         </tbody>
                     </table>
                 </div>
@@ -970,11 +1007,8 @@
                         botonClickeado.classList.add('btn-warning');
                     }
 
-                    // Configurar el cierre automático después de 20 segundos
-                    if (tiempoVisualizacionOrden) {
-                        clearTimeout(tiempoVisualizacionOrden);
-                    }
-                    tiempoVisualizacionOrden = setTimeout(() => {
+                    // Configurar cierre automático después de 20 segundos
+                    mesaCard.timeoutVisualizacion = setTimeout(() => {
                         const detalles = detallesContainer.querySelector('.detalles-adicionales');
                         if (detalles) detalles.style.display = 'none';
                         if (botonClickeado) {
@@ -982,31 +1016,13 @@
                             botonClickeado.classList.remove('btn-warning');
                             botonClickeado.classList.add('btn-info');
                         }
-                    }, 20000); // 20 segundos
-
+                    }, 20000);
                 })
-                .catch(error => {
-                    console.error(`Error al cargar órdenes para mesa ${mesaId}:`, error);
-                    detallesContainer.innerHTML = `
-                <div class="error-message">
-                    <h4>Error al cargar los pedidos</h4>
-                    <p>${error.message}</p>
-                    <button onclick="reintentarCarga(${mesaId}, this)">
-                        Reintentar
-                    </button>
-                </div>
-            `;
-                });
+                
         }
 
-        function reintentarCarga(mesaId, element) {
-            const container = element.closest('.detalles-contenedor');
-            const mesaCard = element.closest('.mesa-card');
-            const boton = mesaCard.querySelector('.btn-detalles');
 
-            container.innerHTML = '<div class="loading">Reintentando...</div>';
-            cargarDatosAdicionalesDesdeApi(mesaId, mesaCard, boton);
-        }
+
 
 
 
@@ -1049,11 +1065,11 @@
         document.addEventListener('DOMContentLoaded', function () {
             configurarFiltros();
 
-            setInterval(actualizarIndicadoresSimulados, 1000);
-            setInterval(actualizarPropinas, 30000);
+            setInterval(actualizarIndicadoresSimulados, 10000);
+            setInterval(actualizarPropinas, 15000);
 
             // Agrega esta línea para actualizar cada 3 segundos (3000 ms)
-            setInterval(actualizarEstadoMesas, 20000);
+            setInterval(actualizarEstadoMesas, 10000);
 
             actualizarUIIndicadores();
             actualizarPropinas();
@@ -1153,23 +1169,31 @@
 
 
 
+
+
+
+
+
+
+
         //Empieza parte Steven
 
-        function actualizarEstadoPedido(ordenId, nuevoEstado) {
+        function actualizarEstadoPedido(mesaId, nuevoEstado, index) {
+            // Usamos mesaId e index para identificar la orden
             fetch('/Hame/ActualizarEstadoPedido', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    ordenId: ordenId,
+                    mesaId: mesaId,
+                    orderIndex: index,
                     nuevoEstado: nuevoEstado
                 })
             })
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        // No necesitamos recargar porque la actualización automática lo hará
                         mostrarNotificacion("success", "Estado actualizado", "El estado del pedido se ha actualizado correctamente");
                     } else {
                         mostrarNotificacion("error", "Error", "No se pudo actualizar el estado del pedido");
@@ -1184,15 +1208,80 @@
 
 
 
-        // Función para tomar la orden (cambia estado a "Preparando")
-        function tomarOrden(ordenId, mesaId) {
-            actualizarEstadoOrden(ordenId, 'Preparando', mesaId);
-        }
 
-        // Función para entregar la orden (cambia estado a "Entregado")
-        function entregarOrden(ordenId, mesaId) {
-            actualizarEstadoOrden(ordenId, 'Entregado', mesaId);
+
+
+
+        function tomarOrden(ordenId, mesaId) {
+    fetch('/Hame/ActualizarEstadoOrden', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            ordenId: ordenId,
+            nuevoEstado: 'Preparando',
+            meseroId: @Model.Id // ID del mesero desde el modelo
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            mostrarNotificacion("success", "Orden tomada", "La orden está siendo preparada");
+            // Actualizar la vista
+            const mesaCard = document.querySelector(`.mesa-card[data-mesaid="${mesaId}"]`);
+            if (mesaCard) {
+                const boton = mesaCard.querySelector('.btn-detalles');
+                cargarDatosAdicionalesDesdeApi(mesaId, mesaCard, boton);
+            }
+        } else {
+            mostrarNotificacion("error", "Error", data.message || "No se pudo tomar la orden");
         }
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        mostrarNotificacion("error", "Error", "Ocurrió un error al tomar la orden");
+    });
+}
+
+function entregarOrden(ordenId, mesaId) {
+    fetch('/Hame/ActualizarEstadoOrden', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            ordenId: ordenId,
+            nuevoEstado: 'Entregado',
+            meseroId: @Model.Id // ID del mesero desde el modelo
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            mostrarNotificacion("success", "Orden entregada", "La orden ha sido entregada al cliente");
+            // Actualizar la vista
+            const mesaCard = document.querySelector(`.mesa-card[data-mesaid="${mesaId}"]`);
+            if (mesaCard) {
+                const boton = mesaCard.querySelector('.btn-detalles');
+                cargarDatosAdicionalesDesdeApi(mesaId, mesaCard, boton);
+            }
+        } else {
+            mostrarNotificacion("error", "Error", data.message || "No se pudo entregar la orden");
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        mostrarNotificacion("error", "Error", "Ocurrió un error al entregar la orden");
+    });
+}
+
+       
+
+
+
+
+
 
 
 
