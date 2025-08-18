@@ -12,6 +12,7 @@ using System.Net.Mail;
 using System.Net.NetworkInformation;
 using System.Net.Security;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
@@ -97,11 +98,7 @@ namespace GustoySazon.Controllers
             return View();
         }
 
-        public ActionResult Login()
-        {
-            return View();
-        }
-
+      
         public ActionResult Autenticacion()
         {
             return View();
@@ -1684,28 +1681,20 @@ namespace GustoySazon.Controllers
 
 
 
-
-
-
-
-        
-
-
-
-
-
-
-
-
-
-
+        [HttpGet]
+        public ActionResult Login()
+        {
+            return View();
+        }
 
 
 
 
         //parte Login y Autenticacion
-
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        // ==================== LOGIN ====================
+      
         public ActionResult Login(LoginViewModel model)
         {
             if (!ModelState.IsValid)
@@ -1720,28 +1709,39 @@ namespace GustoySazon.Controllers
 
                 //Tomar datos de la tabla de clientes
                 string queryUsuario = @"SELECT Id, Nombre, Rol, Correo FROM Usuarios WHERE Correo = @Correo AND Contrasena = @Contrasena";
-                using (SqlCommand cmdUsuario = new SqlCommand(queryUsuario, conn))
+                // 🔑 1. VALIDACIÓN: Usuarios (con contraseña encriptada)
+                string hashedPassword = HashPassword(model.Contrasena);
+
+                using (SqlCommand cmdUsuario = new SqlCommand(
+                    "SELECT Id, Nombre, Rol FROM Usuarios WHERE Correo = @Correo AND Contrasena = @Contrasena", conn))
                 {
-                    cmdUsuario.Parameters.AddWithValue("@Correo", model.Correo);
-                    cmdUsuario.Parameters.AddWithValue("@Contrasena", model.Contrasena);
+                    cmdUsuario.Parameters.AddWithValue("@Correo", model.Correo.Trim());
+                    cmdUsuario.Parameters.AddWithValue("@Contrasena", hashedPassword);
 
                     using (SqlDataReader reader = cmdUsuario.ExecuteReader())
                     {
                         if (reader.Read())
                         {
-                            Session["UsuarioId"] = reader["Id"];
-                            Session["Nombre"] = reader["Nombre"];
-                            Session["Rol"] = reader["Rol"];
-                            Session["Correo"] = reader["Correo"];
+                            int id = Convert.ToInt32(reader["Id"]);
+                            string nombre = reader["Nombre"].ToString();
+                            string rol = reader["Rol"].ToString()?.Trim();
 
+                            // ✅ Guardar en sesión
+                            Session["UsuarioId"] = id;
+                            Session["Nombre"] = nombre;
+                            Session["Correo"] = model.Correo.Trim();
+                            Session["Rol"] = rol;
+
+                            // 📩 Generar y enviar código
                             string codigo = GenerarCodigo();
                             Session["CodigoVerificacion"] = codigo;
-                            EnviarCodigoPorCorreo(model.Correo, codigo);
+                            EnviarCodigoPorCorreo(model.Correo.Trim(), codigo);
 
-                            return RedirectToAction("Autenticacion");
+                            return RedirectToAction("Autenticacion", "Home");
                         }
                     }
                 }
+
 
 
                 //Tomar datos de la tabla de Empleados
@@ -1782,15 +1782,6 @@ namespace GustoySazon.Controllers
 
 
 
-
-
-
-
-
-
-
-
-
         //metodo de Autenticacion
         [HttpPost]
         public ActionResult ValidarCodigo(string codigoIngresado)
@@ -1819,22 +1810,42 @@ namespace GustoySazon.Controllers
             TempData["Error"] = "Código incorrecto. Intente nuevamente.";
             return RedirectToAction("Autenticacion");
         }
+        // ==================== HASH ====================
+        private string HashPassword(string password)
+        {
+            if (string.IsNullOrEmpty(password))
+                return string.Empty;
 
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                StringBuilder builder = new StringBuilder();
+
+                foreach (byte b in bytes)
+                    builder.Append(b.ToString("x2"));
+
+                return builder.ToString();
+            }
+        }
+
+        // ==================== VALIDAR CÓDIGO ====================
+        
+        
+
+        // ==================== GENERAR CÓDIGO ====================
         private string GenerarCodigo()
         {
-            const string caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%?¿&*";
+            const string caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
             var random = new Random();
             return new string(Enumerable.Repeat(caracteres, 6)
                 .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
+        // ==================== ENVIAR CORREO ====================
         private void EnviarCodigoPorCorreo(string correoDestino, string codigo)
         {
             ServicePointManager.ServerCertificateValidationCallback =
-                delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
-                {
-                    return true;
-                };
+                delegate { return true; };
 
             var mensaje = new MailMessage();
             mensaje.From = new MailAddress("gustosazon8@gmail.com", "Gusto y Sazón");
@@ -1853,9 +1864,24 @@ namespace GustoySazon.Controllers
             smtp.Send(mensaje);
         }
 
+        // ==================== REENVIAR CÓDIGO ====================
+        [HttpGet]
+        public ActionResult ReenviarCodigo()
+        {
+            string correo = Session["Correo"]?.ToString();
+            if (string.IsNullOrEmpty(correo))
+            {
+                TempData["Error"] = "No se encontró el correo en sesión. Inicia sesión nuevamente.";
+                return RedirectToAction("Login");
+            }
 
+            string codigo = GenerarCodigo();
+            Session["CodigoVerificacion"] = codigo;
+            EnviarCodigoPorCorreo(correo, codigo);
 
-
+            TempData["Error"] = "Se ha enviado un nuevo código a tu correo.";
+            return RedirectToAction("Autenticacion");
+        }
 
 
 
@@ -2691,7 +2717,7 @@ namespace GustoySazon.Controllers
 
 
         private const string RecoveryEmailKey = "RecoveryEmail";
-        private readonly string _apiBaseUrl = "http://localhost:3004/api/recuperar";
+        private readonly string _apiBaseUrl = "https://apicambiocontrase-a.onrender.com/api/recuperar";
 
         // GET: Home/ContrasenaOlvidada
         public ActionResult ContrasenaOlvidada()

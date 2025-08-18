@@ -20,7 +20,8 @@
 		}
 
 		.verification-container {
-			width: 400px;
+			width: 100%;
+			max-width: 400px;
 			background-color: #fff;
 			padding: 30px;
 			border-radius: 12px;
@@ -29,55 +30,99 @@
 		}
 
 		.verification-title {
-			font-size: 21px;
+			font-size: 22px;
 			margin-bottom: 15px;
 			color: #333;
+			font-weight: bold;
 		}
 
 		.verification-text {
 			font-size: 16px;
-			margin-bottom: 25px;
+			margin-bottom: 20px;
 			color: #555;
 		}
 
 		input[type="text"] {
 			width: 100%;
-			padding: 10px;
-			font-size: 16px;
-			margin-bottom: 15px;
+			padding: 12px;
+			font-size: 18px;
+			margin-bottom: 20px;
 			border: 1px solid #ccc;
-			border-radius: 5px;
+			border-radius: 6px;
+			box-sizing: border-box;
+			text-align: center;
+			letter-spacing: 3px;
+			/* ❌ Se eliminó text-transform para permitir mayúsculas y minúsculas */
 		}
 
 		button {
 			background-color: #ff661f;
 			color: #fff;
 			border: none;
-			padding: 10px 20px;
+			padding: 12px 20px;
 			font-size: 16px;
-			border-radius: 5px;
+			border-radius: 6px;
 			cursor: pointer;
 			transition: background-color 0.3s ease;
+			width: 100%;
 		}
 
 			button:hover {
 				background-color: #e65c0c;
 			}
+
+		.resend {
+			margin-top: 15px;
+			font-size: 14px;
+		}
+
+			.resend a {
+				color: #ff661f;
+				text-decoration: none;
+				font-weight: bold;
+			}
+
+				.resend a:hover {
+					text-decoration: underline;
+				}
+
+		.error-msg {
+			color: red;
+			margin-top: 15px;
+			font-weight: bold;
+		}
+
+		.debug-msg {
+			color: blue;
+			margin-top: 10px;
+			font-size: 13px;
+		}
 	</style>
 </head>
 <body>
 	<div class="verification-container">
 		<div class="verification-title">Código de Verificación</div>
-		<div class="verification-text">Ingresa el código que fue enviado a su correo electrónico.</div>
+		<div class="verification-text">Ingresa el código que enviamos a tu correo electrónico.</div>
 
-		<form method="post" action="/Home/ValidarCodigo">
-			<input type="text" name="codigoIngresado" placeholder="Código" required />
+		@using (Html.BeginForm("ValidarCodigo", "Home", FormMethod.Post))
+		{
+			<input type="text" name="codigoIngresado" aria-label="Código de verificación" placeholder="Ej: X9A2B7" required />
 			<button type="submit">Verificar Código</button>
-		</form>
+		}
+
+		<div class="resend">
+			¿No recibiste el código?
+			<a href="@Url.Action("ReenviarCodigo", "Home")">Reenviar</a>
+		</div>
 
 		@if (TempData["Error"] != null)
 		{
-			<div style="color: red; margin-top: 10px;">@TempData["Error"]</div>
+			<div class="error-msg">@TempData["Error"]</div>
+		}
+
+		@if (TempData["DebugRol"] != null)
+		{
+			<div class="debug-msg">@TempData["DebugRol"]</div>
 		}
 	</div>
 </body>

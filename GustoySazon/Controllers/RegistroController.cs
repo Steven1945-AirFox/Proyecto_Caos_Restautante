@@ -1,10 +1,9 @@
 ﻿using GustoySazon.Models;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web.Mvc;
 
 namespace GustoySazon.Controllers
@@ -12,6 +11,21 @@ namespace GustoySazon.Controllers
     public class RegistroController : Controller
     {
         private string connectionString = ConfigurationManager.ConnectionStrings["GustoySazonDB"].ConnectionString;
+
+        // 🔒 Método para encriptar/hashear contraseñas
+        private string HashPassword(string password)
+        {
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    builder.Append(bytes[i].ToString("x2")); // Convierte a hexadecimal
+                }
+                return builder.ToString();
+            }
+        }
 
         [HttpGet]
         public ActionResult Index()
@@ -23,9 +37,6 @@ namespace GustoySazon.Controllers
             }
             return View();
         }
-
-
-
 
         [HttpPost]
         public ActionResult Index(ClienteViewModel modelo)
@@ -45,7 +56,7 @@ namespace GustoySazon.Controllers
                         comandoUsuarioCedula.Parameters.AddWithValue("@Cedula", modelo.Cedula);
                         var result = comandoUsuarioCedula.ExecuteScalar();
 
-                        if (result != null) 
+                        if (result != null)
                         {
                             usuarioId = (int)result;
 
@@ -56,15 +67,15 @@ namespace GustoySazon.Controllers
                                 comandoActualizar.Parameters.AddWithValue("@Nombre", modelo.Nombre);
                                 comandoActualizar.Parameters.AddWithValue("@Sillas", modelo.Sillas);
                                 comandoActualizar.Parameters.AddWithValue("@Correo", modelo.Correo);
-                                comandoActualizar.Parameters.AddWithValue("@Contrasena", modelo.Contrasena);
+                                comandoActualizar.Parameters.AddWithValue("@Contrasena", HashPassword(modelo.Contrasena)); // 🔒 Hash
                                 comandoActualizar.Parameters.AddWithValue("@Id", usuarioId);
                                 comandoActualizar.ExecuteNonQuery();
                             }
                         }
-                        else 
+                        else
                         {
                             string comandoEnviarUsuario = @"INSERT INTO Usuarios (Nombre, Cedula, Sillas, HoraRegistro, Correo, Contrasena)
-                                                OUTPUT INSERTED.Id VALUES (@Nombre, @Cedula, @Sillas, GETDATE(), @Correo, @Contrasena)";
+                                                            OUTPUT INSERTED.Id VALUES (@Nombre, @Cedula, @Sillas, GETDATE(), @Correo, @Contrasena)";
 
                             using (SqlCommand comandoUsuario = new SqlCommand(comandoEnviarUsuario, conexion))
                             {
@@ -72,7 +83,7 @@ namespace GustoySazon.Controllers
                                 comandoUsuario.Parameters.AddWithValue("@Cedula", modelo.Cedula);
                                 comandoUsuario.Parameters.AddWithValue("@Sillas", modelo.Sillas);
                                 comandoUsuario.Parameters.AddWithValue("@Correo", modelo.Correo);
-                                comandoUsuario.Parameters.AddWithValue("@Contrasena", modelo.Contrasena);
+                                comandoUsuario.Parameters.AddWithValue("@Contrasena", HashPassword(modelo.Contrasena)); // 🔒 Hash
                                 usuarioId = (int)comandoUsuario.ExecuteScalar();
                             }
                         }
@@ -81,13 +92,14 @@ namespace GustoySazon.Controllers
                     Session["UsuarioId"] = usuarioId;
                     Session["NombreUsuario"] = modelo.Nombre;
 
-
-
-
                     // Actualizar o insertar tarjeta
-                    string comandoEditarAgregarTarjeta = @" IF EXISTS (SELECT 1 FROM Tarjetas WHERE UsuarioId = @UsuarioId) UPDATE Tarjetas SET 
-                                        TipoTarjeta = @TipoTarjeta, NumTarjeta = @NumTarjeta, FechaVenc = @FechaVenc WHERE UsuarioId = @UsuarioId
-                                        ELSE INSERT INTO Tarjetas (UsuarioId, TipoTarjeta, NumTarjeta, FechaVenc) VALUES (@UsuarioId, @TipoTarjeta, @NumTarjeta, @FechaVenc)";
+                    string comandoEditarAgregarTarjeta = @" IF EXISTS (SELECT 1 FROM Tarjetas WHERE UsuarioId = @UsuarioId) 
+                                                            UPDATE Tarjetas 
+                                                            SET TipoTarjeta = @TipoTarjeta, NumTarjeta = @NumTarjeta, FechaVenc = @FechaVenc 
+                                                            WHERE UsuarioId = @UsuarioId
+                                                            ELSE 
+                                                            INSERT INTO Tarjetas (UsuarioId, TipoTarjeta, NumTarjeta, FechaVenc) 
+                                                            VALUES (@UsuarioId, @TipoTarjeta, @NumTarjeta, @FechaVenc)";
 
                     using (SqlCommand comandoTarjeta = new SqlCommand(comandoEditarAgregarTarjeta, conexion))
                     {
@@ -107,14 +119,7 @@ namespace GustoySazon.Controllers
             return View(modelo);
         }
 
-
-
-
-
-
-
-
-        //rellenar espacios del formulario automaticamente
+        // Rellenar espacios del formulario automáticamente
         [HttpGet]
         public ActionResult GetClientePorCedula(string cedula)
         {
@@ -123,8 +128,10 @@ namespace GustoySazon.Controllers
                 conexion.Open();
 
                 string comandoRellenarCliente = @"SELECT u.Nombre, u.Sillas, t.TipoTarjeta, t.NumTarjeta, 
-                                FORMAT(t.FechaVenc, 'MM/yy') as FechaVenc, u.Correo, u.Contrasena
-                                FROM Usuarios u LEFT JOIN Tarjetas t ON u.Id = t.UsuarioId WHERE u.Cedula = @Cedula";
+                                                  FORMAT(t.FechaVenc, 'MM/yy') as FechaVenc, u.Correo
+                                                  FROM Usuarios u 
+                                                  LEFT JOIN Tarjetas t ON u.Id = t.UsuarioId 
+                                                  WHERE u.Cedula = @Cedula";
 
                 using (SqlCommand comandoRellenar = new SqlCommand(comandoRellenarCliente, conexion))
                 {
@@ -142,7 +149,7 @@ namespace GustoySazon.Controllers
                                 numTarjeta = lector["NumTarjeta"] != DBNull.Value ? lector["NumTarjeta"].ToString() : "",
                                 fechaVenc = lector["FechaVenc"] != DBNull.Value ? lector["FechaVenc"].ToString() : "",
                                 correo = lector["Correo"] != DBNull.Value ? lector["Correo"].ToString() : "",
-                                contrasena = lector["Contrasena"] != DBNull.Value ? lector["Contrasena"].ToString() : ""
+                                contrasena = "" // ⚠️ nunca devolvemos el hash de la contraseña
                             }, JsonRequestBehavior.AllowGet);
                         }
                     }
