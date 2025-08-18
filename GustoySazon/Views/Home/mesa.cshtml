@@ -15,6 +15,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Gusto y Sazón</title>
     <link href="~/Content/ClienteMesa.css" rel="stylesheet" />
+
+
+    <style>
+        /* Estilos para el chatbot */
+        .chatbot-container {
+            background: #fff9f0;
+            border-radius: 26px;
+            padding: 25px 30px;
+            margin: 30px 0;
+            box-shadow: 0 8px 25px rgba(222, 180, 89, 0.35), inset 0 0 25px #fff3cc;
+        }
+
+        #chatbot {
+            margin-top: 15px;
+        }
+
+        #chatbot-messages {
+            height: 200px;
+            overflow-y: auto;
+            background: white;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #e0c78e;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+        }
+
+        #chatbot-input {
+            width: calc(100% - 100px);
+            padding: 12px;
+            border: 2px solid #e0c78e;
+            border-radius: 12px;
+            font-size: 1rem;
+            margin-right: 10px;
+        }
+
+        #chatbot button {
+            background: linear-gradient(45deg, #f3d993, #e4b24a);
+            color: #4e370a;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+            #chatbot button:hover {
+                background: linear-gradient(45deg, #e4b24a, #f3d993);
+                transform: translateY(-2px);
+            }
+
+
+
+
+        
+        .typing {
+            color: #666;
+            font-style: italic;
+        }
+
+        .response-text {
+            display: inline;
+        }
+
+    </style>
+
+
 </head>
 <body>
 
@@ -87,6 +155,30 @@
                 <button class="llamar" onclick="abrirModal()">Llamar al Mesero</button>
             </div>
         </div>
+
+
+
+
+
+        <!-- Después del div.contenedor-tablas y antes del botón "Salir" -->
+        <div class="chatbot-container fade-in">
+            <h2 class="table-title">🤖 Asistente Virtual</h2>
+            <div id="chatbot">
+                <div id="chatbot-messages"></div>
+                <input type="text" id="chatbot-input" placeholder="Escribe tu pregunta..." />
+                <button onclick="enviarPreguntaChatbot()">Enviar</button>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
 
         <button onclick="salirDelRestaurante()" class="salir">
             Salir del Restaurante
@@ -284,7 +376,108 @@
             });
     }
 
-    setInterval(actualizarEstadoMesa, 1000);
+        setInterval(actualizarEstadoMesa, 1000);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Reemplaza la función enviarPreguntaChatbot con esta versión
+// Función para enviar preguntas al chatbot
+async function enviarPreguntaChatbot() {
+    const userInput = document.getElementById("chatbot-input").value;
+    if (!userInput.trim()) return;
+
+    const chatDiv = document.getElementById("chatbot-messages");
+
+    // Agregar mensaje del usuario
+    chatDiv.innerHTML += `<p><strong>Tú:</strong> ${userInput}</p>`;
+    document.getElementById("chatbot-input").value = "";
+
+    // Mostrar estado de "escribiendo"
+    chatDiv.innerHTML += `<p class="typing"><em>El asistente está escribiendo...</em></p>`;
+    chatDiv.scrollTop = chatDiv.scrollHeight;
+
+    try {
+        const response = await fetch('@Url.Action("Chatbot", "Home")', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ mensaje: userInput })
+        });
+
+        if (!response.ok) throw new Error("Error en la respuesta");
+
+        const data = await response.json();
+
+        // Eliminar el mensaje de "escribiendo"
+        const typingElements = document.getElementsByClassName("typing");
+        if (typingElements.length > 0) {
+            typingElements[0].remove();
+        }
+
+        // Mostrar la respuesta con efecto de escritura
+        const botResponse = data.respuesta;
+        const responseElement = document.createElement("p");
+        responseElement.innerHTML = `<strong>Asistente:</strong> <span class="response-text"></span>`;
+        chatDiv.appendChild(responseElement);
+
+        // Efecto de escritura
+        const textElement = responseElement.querySelector(".response-text");
+        let i = 0;
+        const speed = 20; // velocidad de escritura (ms por caracter)
+
+        function typeWriter() {
+            if (i < botResponse.length) {
+                textElement.innerHTML += botResponse.charAt(i);
+                i++;
+                chatDiv.scrollTop = chatDiv.scrollHeight;
+                setTimeout(typeWriter, speed);
+            }
+        }
+
+        typeWriter();
+
+    } catch (error) {
+        console.error("Error:", error);
+        const typingElements = document.getElementsByClassName("typing");
+        if (typingElements.length > 0) {
+            typingElements[0].remove();
+        }
+        chatDiv.innerHTML += `<p><strong>Error:</strong> No se pudo obtener respuesta del asistente.</p>`;
+    }
+}
+
+// Permitir enviar con Enter
+document.getElementById("chatbot-input").addEventListener("keypress", function(e) {
+    if (e.key === "Enter") {
+        enviarPreguntaChatbot();
+    }
+});
+
+
+
+
+
+
     </script>
 
 </body>

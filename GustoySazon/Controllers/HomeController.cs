@@ -1,4 +1,5 @@
 ﻿using GustoySazon.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -6,15 +7,18 @@ using System.Data.SqlClient;
 using System.Drawing.Printing;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Net.Mail;
 using System.Net.NetworkInformation;
 using System.Net.Security;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using static GustoySazon.Models.MeseroViewModel;
+
 
 
 
@@ -37,6 +41,9 @@ namespace GustoySazon.Controllers
         {
             return View();
         }
+        
+
+       
 
 
         public ActionResult Clientes()
@@ -835,7 +842,7 @@ namespace GustoySazon.Controllers
         public ActionResult Menu()
         {
             var usuarioId = Session["UsuarioId"] as int?;
-            if (usuarioId == null) return RedirectToAction("Registro");
+            if (usuarioId == null) return RedirectToAction("index");
 
             var menu = new List<Platillo>();
             int mesaId = 0;
@@ -1222,6 +1229,7 @@ namespace GustoySazon.Controllers
 
             else
                 throw new Exception("Usuario no autenticado, Vaya al Login y Registrese");
+                
 
         }
 
@@ -1838,7 +1846,7 @@ namespace GustoySazon.Controllers
             var smtp = new SmtpClient("smtp.gmail.com")
             {
                 Port = 587,
-                Credentials = new NetworkCredential("gustosazon8@gmail.com", "asiv yjjj ixtj nqch"),
+                Credentials = new NetworkCredential("gustosazon8@gmail.com", "amwt dziv ezmx heod"),
                 EnableSsl = true
             };
 
@@ -2194,7 +2202,672 @@ namespace GustoySazon.Controllers
 
 
 
-        
+
+
+
+
+
+
+
+        // Diccionario de platillos y precios organizado por categorías
+        private readonly Dictionary<string, Dictionary<string, decimal>> _menuCategorizado = new Dictionary<string, Dictionary<string, decimal>>
+    {
+        {
+            "Comida", new Dictionary<string, decimal>
+            {
+                {"Casado con Pollo", 7200.00m},
+                {"Arroz con Camarones", 8600.00m},
+                {"Gallo Pinto", 3500.00m},
+                {"Sopa Negra", 4000.00m},
+                {"Olla de Carne", 9000.00m},
+                {"Ceviche Tradicional", 6500.00m},
+                {"Empanadas de Queso", 3000.00m},
+                {"Chifrijo", 5800.00m},
+                {"Tamal de Cerdo", 4500.00m},
+                {"Picadillo de Verduras", 4000.00m}
+            }
+        },
+        {
+            "Bebida", new Dictionary<string, decimal>
+            {
+                {"Fresco de Guayaba", 2500.00m},
+                {"Agua de Sapo", 2700.00m},
+                {"Refresco Natural de Maracuyá", 3000.00m},
+                {"Café Chorreado", 3200.00m},
+                {"Batido de Guanábana", 4000.00m},
+                {"Agua Mineral", 2500.00m},
+                {"Limonada Natural", 2800.00m},
+                {"Cerveza Nacional", 8500.00m},
+                {"Mojito Tropical", 11000.00m},
+                {"Refresco de Tamarindo", 3000.00m}
+            }
+        },
+        {
+            "Postre", new Dictionary<string, decimal>
+            {
+                {"Tres Leches", 5000.00m},
+                {"Arroz con Leche", 4000.00m},
+                {"Flan de Coco", 5200.00m},
+                {"Cocada", 2800.00m},
+                {"Helado Artesanal de Café", 6000.00m},
+                {"Postre de Nance", 4500.00m},
+                {"Bizcocho de Pan", 3000.00m},
+                {"Bocadillo con Queso", 2700.00m},
+                {"Pay de Limón", 5800.00m},
+                {"Churros con Chocolate", 5500.00m}
+            }
+        }
+    };
+
+        // Detalles adicionales de los platillos
+        private readonly Dictionary<string, string> _detallesPlatillos = new Dictionary<string, string>
+    {
+        {"Casado con Pollo", "Nuestro Casado lleva: arroz, frijoles, pollo asado, ensalada, plátano maduro y tortillas recién hechas"},
+        {"Olla de Carne", "Cocción de 5 horas con 7 tipos de verduras y carne de res premium"},
+        {"Tres Leches", "Preparado con leche entera, leche evaporada y leche condensada, bañado en almíbar casero"},
+        {"Chifrijo", "Deliciosa combinación de chicharrón, frijoles, pico de gallo y toques de ají"},
+        {"Mojito Tropical", "Preparado con ron, hierbabuena fresca, limón, azúcar y un toque de frutas tropicales"}
+    };
+
+        // Lista de respuestas aleatorias
+        private readonly List<string> _saludos = new List<string>
+    {
+        "¡Hola! Soy el asistente virtual de Gusto y Sazón. ¿En qué puedo ayudarte?",
+        "¡Buen día! ¿Qué deseas saber sobre nuestro restaurante?",
+        "Hola :) Estoy aquí para ayudarte con cualquier consulta sobre el menú o servicios."
+    };
+
+        private readonly List<string> _despedidas = new List<string>
+    {
+        "¡Gracias por visitar Gusto y Sazón! Que tengas un excelente día.",
+        "Fue un placer ayudarte. ¡Buen provecho!",
+        "Hasta luego. ¡Esperamos verte pronto de nuevo!"
+    };
+
+        private readonly List<string> _recomendaciones = new List<string>
+    {
+        "Te recomiendo nuestro {0}, un plato exquisito por sólo ₡{1:#,###}",
+        "No puedes perderte nuestro {0}, uno de los favoritos por sólo ₡{1:#,###}",
+        "Prueba nuestro {0}, una delicia culinaria por ₡{1:#,###}"
+    };
+
+        private readonly List<string> _chistes = new List<string>
+    {
+        "¿Qué le dice un jamón a otro jamón? ¡Nos han cortado!",
+        "¿Cómo se llama el hijo del cocinero? El recetario",
+        "¿Qué hace un muelle en un restaurante? Nada, pero tiene mucho resorte"
+    };
+
+        // Juego de adivinanzas
+        private readonly List<(string pregunta, string respuesta)> _adivinanzas = new List<(string, string)>
+    {
+        ("Soy redonda como el sol, con huevos y jamón, en el desayuno soy tradición. ¿Qué soy?", "Gallo Pinto"),
+        ("Blanco por dentro, verde por fuera, si quieres que te lo diga, espera.", "Aguacate"),
+        ("Tengo masa y soy relleno, en hojas me cocino lento, en Navidad no puedo faltar. ¿Quién soy?", "Tamal"),
+        ("No soy postre ni soy pan, pero con café me comerán. ¿Qué soy?", "Bizcocho"),
+        ("Bebida soy, pero no agua, de frutas tropicales tengo la magia.", "Refresco Natural")
+    };
+
+        // Curiosidades gastronómicas
+        private readonly List<string> _curiosidades = new List<string>
+    {
+        "¿Sabías que el Gallo Pinto es considerado plato nacional en Costa Rica y Nicaragua?",
+        "Nuestra Sopa Negra lleva 7 horas de cocción para lograr su sabor perfecto",
+        "El secreto del Ceviche Tradicional está en macerar el pescado con limón criollo",
+        "El 'Agua de Sapo' debe su nombre a su color característico, ¡pero no lleva sapos!",
+        "Nuestros Churros con Chocolate siguen una receta española original de 1894"
+    };
+
+        // Trivia del restaurante
+        private readonly List<(string pregunta, string respuesta)> _trivia = new List<(string, string)>
+    {
+        ("¿En qué año se fundó Gusto y Sazón?", "1999"),
+        ("¿Cuál es nuestro plato más antiguo?", "Olla de Carne"),
+        ("¿Qué ingrediente secreto lleva nuestra Sopa Negra?", "hojas de culantro coyote"),
+        ("¿Cuántos tipos de leche lleva nuestro Tres Leches?", "tres"),
+        ("¿De qué país es originaria la receta de nuestro Flan de Coco?", "Filipinas")
+    };
+
+        // Variables para mantener estado del juego
+        private string _adivinanzaActual = "";
+        private string _respuestaAdivinanza = "";
+        private string _triviaActual = "";
+        private string _respuestaTrivia = "";
+
+        [HttpPost]
+        public JsonResult Chatbot(string mensaje)
+        {
+            System.Threading.Thread.Sleep(new Random().Next(800, 1500));
+
+            // Preprocesamiento del mensaje
+            mensaje = PreprocesarMensaje(mensaje);
+
+            string respuesta = "";
+
+            // 1. Verificar herramientas útiles
+            respuesta = ProporcionarHerramientas(mensaje);
+            if (!string.IsNullOrEmpty(respuesta))
+                return Json(new { respuesta });
+
+            // 2. Verificar entretenimiento
+            respuesta = ProporcionarEntretenimiento(mensaje);
+            if (!string.IsNullOrEmpty(respuesta))
+                return Json(new { respuesta });
+
+            // 3. Manejo de contexto
+            if (Session["ultimoContexto"] != null)
+            {
+                var contexto = Session["ultimoContexto"].ToString();
+
+                // Respuesta a adivinanza
+                if (contexto == "esperandoRespuestaAdivinanza")
+                {
+                    if (mensaje.Contains(_respuestaAdivinanza.ToLower()) ||
+                        _adivinanzas.Any(a => a.respuesta.ToLower() == mensaje))
+                    {
+                        respuesta = $"¡Correcto! Era {_respuestaAdivinanza}. ¿Quieres otra adivinanza?";
+                    }
+                    else
+                    {
+                        respuesta = $"Casi... la respuesta era {_respuestaAdivinanza}. ¿Otra adivinanza?";
+                    }
+                    Session.Remove("ultimoContexto");
+                    return Json(new { respuesta });
+                }
+
+                // Selección de categoría de menú
+                if (contexto == "esperandoCategoriaMenu")
+                {
+                    string categoria = "";
+                    if (mensaje == "1" || mensaje == "comida" || mensaje == "comidas" || mensaje.Contains("plato")) categoria = "Comida";
+                    else if (mensaje == "2" || mensaje == "bebida" || mensaje == "bebidas" || mensaje.Contains("tomar")) categoria = "Bebida";
+                    else if (mensaje == "3" || mensaje == "postre" || mensaje == "postres" || mensaje.Contains("dulce")) categoria = "Postre";
+
+                    if (!string.IsNullOrEmpty(categoria))
+                    {
+                        respuesta = FormatMenuCategory(categoria);
+                        Session["ultimoContexto"] = "esperandoDetallePlatillo";
+                        return Json(new { respuesta });
+                    }
+                }
+
+                // Detalles de platillo
+                if (contexto == "esperandoDetallePlatillo")
+                {
+                    var platillo = BuscarPlatillo(mensaje);
+                    if (platillo != null)
+                    {
+                        var (nombre, precio, categoria) = platillo.Value;
+                        respuesta = $"🔹 {nombre} (₡{precio:#,###})";
+
+                        if (_detallesPlatillos.ContainsKey(nombre))
+                        {
+                            respuesta += $"\n{_detallesPlatillos[nombre]}";
+                        }
+
+                        respuesta += $"\n\n¿Quieres agregar este {categoria.ToLower()} a tu pedido?";
+                        Session["ultimoContexto"] = "esperandoConfirmacionPedido";
+                        Session["platilloActual"] = nombre;
+                        return Json(new { respuesta });
+                    }
+                }
+
+                // Confirmación de pedido
+                if (contexto == "esperandoConfirmacionPedido")
+                {
+                    if (mensaje.Contains("si") || mensaje.Contains("claro") || mensaje.Contains("ok"))
+                    {
+                        var platillo = Session["platilloActual"].ToString();
+                        respuesta = $"¡Perfecto! He anotado {platillo} para tu pedido. ¿Deseas algo más?";
+                    }
+                    else
+                    {
+                        respuesta = "Entendido. ¿Te interesa otro platillo o en qué más puedo ayudarte?";
+                    }
+                    Session.Remove("ultimoContexto");
+                    Session.Remove("platilloActual");
+                    return Json(new { respuesta });
+                }
+            }
+
+            // Intenciones principales
+            if (EsSaludo(mensaje))
+            {
+                respuesta = _saludos[new Random().Next(_saludos.Count)];
+            }
+            else if (EsDespedida(mensaje))
+            {
+                respuesta = _despedidas[new Random().Next(_despedidas.Count)];
+            }
+            else if (EsMenu(mensaje))
+            {
+                respuesta = "Nuestro menú se divide en:\n1. Comidas 🍛\n2. Bebidas 🍹\n3. Postres 🍰\n\n¿Qué categoría deseas? (Di el número o nombre)";
+                Session["ultimoContexto"] = "esperandoCategoriaMenu";
+            }
+            else if (EsRecomendacion(mensaje))
+            {
+                if (mensaje.Contains("comida") || mensaje.Contains("plato"))
+                {
+                    respuesta = RecomendarPlatillo("Comida");
+                }
+                else if (mensaje.Contains("bebida") || mensaje.Contains("tomar"))
+                {
+                    respuesta = RecomendarPlatillo("Bebida");
+                }
+                else if (mensaje.Contains("postre") || mensaje.Contains("dulce"))
+                {
+                    respuesta = RecomendarPlatillo("Postre");
+                }
+                else
+                {
+                    respuesta = $"Te recomiendo:\n{RecomendarPlatillo(RecomendarPorHora())}";
+                }
+            }
+            else if (EsPago(mensaje))
+            {
+                respuesta = "💳 Aceptamos Visa/Mastercard. Solicita la cuenta al mesero cuando termines.";
+            }
+            else if (EsAdivinanza(mensaje))
+            {
+                var adivinanza = _adivinanzas[new Random().Next(_adivinanzas.Count)];
+                _respuestaAdivinanza = adivinanza.respuesta;
+                Session["ultimoContexto"] = "esperandoRespuestaAdivinanza";
+                respuesta = $"🧩 ADIVINANZA:\n{adivinanza.pregunta}";
+            }
+            else if (EsHora(mensaje))
+            {
+                respuesta = $"Son las {DateTime.Now.ToString("hh:mm tt")}. ¿En qué más te ayudo?";
+            }
+            else if (EsQueja(mensaje))
+            {
+                respuesta = "Lamentamos escuchar eso. Por favor comunícate con nuestro gerente: 5555-1234";
+            }
+            else if (EsGracias(mensaje))
+            {
+                respuesta = "¡Gracias a ti! ¿Necesitas algo más?";
+            }
+            else if (EsConsultaRestaurante(mensaje))
+            {
+                respuesta = ResponderConsultaRestaurante(mensaje);
+            }
+            else
+            {
+                // Respuesta por defecto mejorada
+                var respuestas = new List<string>
+            {
+                "¿Te gustaría ver el menú, una recomendación o jugar una adivinanza?",
+                "Puedo ayudarte con: nuestro menú, métodos de pago o recomendaciones",
+                "¿Quieres información sobre comidas, bebidas o postres?"
+            };
+                respuesta = respuestas[new Random().Next(respuestas.Count)];
+            }
+
+            return Json(new { respuesta });
+        }
+
+        #region Métodos de ayuda
+        private string PreprocesarMensaje(string mensaje)
+        {
+            return mensaje.ToLower()
+                .Replace("?", "")
+                .Replace("¿", "")
+                .Replace("!", "")
+                .Replace("¡", "")
+                .Replace(".", "")
+                .Replace(",", "")
+                .Trim();
+        }
+
+        private bool EsSaludo(string mensaje) =>
+            mensaje.Contains("hola") || mensaje == "hi" || mensaje.Contains("buen") || mensaje.Contains("buenas");
+
+        private bool EsDespedida(string mensaje) =>
+            mensaje.Contains("adios") || mensaje.Contains("chao") || mensaje.Contains("hasta luego") ||
+            mensaje.Contains("gracias") || mensaje.Contains("listo");
+
+        private bool EsMenu(string mensaje) =>
+            mensaje.Contains("menu") || mensaje.Contains("carta") || mensaje.Contains("que ofreces") ||
+            mensaje.Contains("platillos") || mensaje.Contains("que tienen");
+
+        private bool EsRecomendacion(string mensaje) =>
+            mensaje.Contains("recomi") || mensaje.Contains("sugiere") ||
+            mensaje.Contains("que me aconsejas") || mensaje.Contains("que es bueno");
+
+        private bool EsPago(string mensaje) =>
+            mensaje.Contains("pago") || mensaje.Contains("pagar") || mensaje.Contains("cuenta") ||
+            mensaje.Contains("metodo") || mensaje.Contains("tarjeta") || mensaje.Contains("efectivo");
+
+        private bool EsAdivinanza(string mensaje) =>
+            mensaje.Contains("adivina") || mensaje.Contains("juego") || mensaje.Contains("jugar");
+
+        private bool EsHora(string mensaje) =>
+            mensaje.Contains("hora") || mensaje.Contains("fecha");
+
+        private bool EsQueja(string mensaje) =>
+            mensaje.Contains("queja") || mensaje.Contains("reclamo") || mensaje.Contains("problema");
+
+        private bool EsGracias(string mensaje) =>
+            mensaje.Contains("gracias") || mensaje == "thx" || mensaje.Contains("agradezco");
+
+        private bool EsConsultaRestaurante(string mensaje) =>
+            mensaje.Contains("horario") || mensaje.Contains("abren") || mensaje.Contains("cierran") ||
+            mensaje.Contains("ubicacion") || mensaje.Contains("direccion") || mensaje.Contains("telefono");
+
+        private string ResponderConsultaRestaurante(string mensaje)
+        {
+            if (mensaje.Contains("horario") || mensaje.Contains("abren") || mensaje.Contains("cierran"))
+                return "🕒 Nuestros horarios son:\nLunes a Viernes: 11am - 10pm\nSábados y Domingos: 9am - 11pm";
+
+            if (mensaje.Contains("ubicacion") || mensaje.Contains("direccion"))
+                return "📍 Estamos en Avenida Central, 200m este del Parque Central, San José";
+
+            if (mensaje.Contains("telefono"))
+                return "📞 Puedes llamarnos al: 2222-5555";
+
+            return "ℹ️ Más información:\nHorarios: L-V 11am-10pm\nDirección: Av. Central, SJ\nTeléfono: 2222-5555";
+        }
+
+        private string ProporcionarHerramientas(string mensaje)
+        {
+            if (mensaje.Contains("clima"))
+                return "☀️ El clima actual en San José es cálido, 27°C con posibilidad de lluvias por la tarde.";
+
+            if (mensaje.Contains("trafico") || mensaje.Contains("transito"))
+                return "🚗 El tráfico alrededor del restaurante es fluido actualmente.";
+
+            if (mensaje.Contains("wifi"))
+                return "📶 Nuestra red WiFi es 'GustoSazon_Guest' con contraseña 'Bienvenidos2023'";
+
+            if (mensaje.Contains("evento") || mensaje.Contains("fiesta"))
+                return "🎉 Ofrecemos servicio de banquetes para eventos. Contáctanos al 2222-5555 ext. 3 para más información.";
+
+            return null;
+        }
+
+        private string ProporcionarEntretenimiento(string mensaje)
+        {
+            if (mensaje.Contains("chiste") || mensaje.Contains("broma"))
+                return _chistes[new Random().Next(_chistes.Count)];
+
+            if (mensaje.Contains("trivia"))
+                return IniciarTrivia();
+
+            if (mensaje.Contains("adivina") || mensaje.Contains("jugar"))
+                return IniciarAdivinanza();
+
+            if (mensaje.Contains("curiosidad") || mensaje.Contains("dato"))
+                return _curiosidades[new Random().Next(_curiosidades.Count)];
+
+            return null;
+        }
+
+        private string IniciarTrivia()
+        {
+            var pregunta = _trivia[new Random().Next(_trivia.Count)];
+            _triviaActual = pregunta.pregunta;
+            _respuestaTrivia = pregunta.respuesta;
+            Session["ultimoContexto"] = "esperandoRespuestaTrivia";
+            return $"❓ TRIVIA:\n{pregunta.pregunta}";
+        }
+
+        private string IniciarAdivinanza()
+        {
+            var adivinanza = _adivinanzas[new Random().Next(_adivinanzas.Count)];
+            _adivinanzaActual = adivinanza.pregunta;
+            _respuestaAdivinanza = adivinanza.respuesta;
+            Session["ultimoContexto"] = "esperandoRespuestaAdivinanza";
+            return $"🧩 ADIVINANZA:\n{adivinanza.pregunta}";
+        }
+
+        private string RecomendarPorHora()
+        {
+            var hora = DateTime.Now.Hour;
+            if (hora < 11) return "Comida";
+            if (hora < 16) return "Comida";
+            if (hora < 19) return "Bebida";
+            return "Postre";
+        }
+
+        private string FormatMenuCategory(string categoria)
+        {
+            var items = _menuCategorizado[categoria]
+                .Select(item => $"• {item.Key}: ₡{item.Value:#,###}")
+                .OrderBy(x => x)
+                .ToArray();
+
+            return $"{categoria.ToUpper()} 🍴:\n" + string.Join("\n", items) +
+                   $"\n\n¿Quieres más detalles de algún {categoria.ToLower()} en especial?";
+        }
+
+        private string RecomendarPlatillo(string categoria)
+        {
+            var platillos = _menuCategorizado[categoria];
+            var platillo = platillos.ElementAt(new Random().Next(platillos.Count));
+
+            var recomendacion = _recomendaciones[new Random().Next(_recomendaciones.Count)];
+            return string.Format(recomendacion, platillo.Key, platillo.Value) +
+                   (_detallesPlatillos.ContainsKey(platillo.Key) ?
+                    $"\n{_detallesPlatillos[platillo.Key]}" : "");
+        }
+
+        private (string nombre, decimal precio, string categoria)? BuscarPlatillo(string mensaje)
+        {
+            foreach (var categoria in _menuCategorizado)
+            {
+                foreach (var platillo in categoria.Value)
+                {
+                    if (mensaje.Contains(platillo.Key.ToLower()))
+                    {
+                        return (platillo.Key, platillo.Value, categoria.Key);
+                    }
+                }
+            }
+            return null;
+        }
+    #endregion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        private const string RecoveryEmailKey = "RecoveryEmail";
+        private readonly string _apiBaseUrl = "http://localhost:3004/api/recuperar";
+
+        // GET: Home/ContrasenaOlvidada
+        public ActionResult ContrasenaOlvidada()
+        {
+            return View();
+        }
+
+        // GET: Home/CambiarContrasena
+        public ActionResult CambiarContrasena()
+        {
+            // Recuperar email de múltiples fuentes
+            var email = Session[RecoveryEmailKey] as string ??
+                       TempData[RecoveryEmailKey] as string ??
+                       Request.Cookies[RecoveryEmailKey]?.Value;
+
+            if (string.IsNullOrEmpty(email))
+            {
+                return RedirectToAction("ContrasenaOlvidada");
+            }
+
+            // Guardar nuevamente para la próxima petición POST
+            TempData[RecoveryEmailKey] = email;
+            ViewBag.RecoveryEmail = email;
+            return View();
+        }
+
+
+
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<JsonResult> SolicitarCodigo(string email)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(email))
+                {
+                    return Json(new { success = false, message = "Debe proporcionar un correo electrónico" });
+                }
+
+                using (var client = new HttpClient())
+                {
+                    var response = await client.PostAsync($"{_apiBaseUrl}/recuperar",
+                        new StringContent(
+                            JsonConvert.SerializeObject(new { correo = email }),
+                            System.Text.Encoding.UTF8,
+                            "application/json"));
+
+                    var content = await response.Content.ReadAsStringAsync();
+                    var result = JsonConvert.DeserializeObject<dynamic>(content);
+
+                    if (response.IsSuccessStatusCode && result.success == true)
+                    {
+                        // Almacenar en múltiples lugares para persistencia
+                        Session[RecoveryEmailKey] = email;
+                        TempData[RecoveryEmailKey] = email;
+                        Response.Cookies.Add(new HttpCookie(RecoveryEmailKey, email)
+                        {
+                            Expires = DateTime.Now.AddMinutes(30)
+                        });
+
+                        // Devolver URL de redirección
+                        return Json(new
+                        {
+                            success = true,
+                            redirectUrl = Url.Action("CambiarContrasena", "Home")
+                        });
+                    }
+
+                    string errorMessage = result.message ?? "Error al enviar el código";
+                    return Json(new { success = false, message = errorMessage });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = $"Error de conexión: {ex.Message}" });
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<JsonResult> CambiarContrasena(string codigo, string nuevaContrasena, string confirmarContrasena)
+        {
+            // Recuperar email de múltiples fuentes
+            var email = Session[RecoveryEmailKey] as string ??
+                       TempData[RecoveryEmailKey] as string ??
+                       Request.Cookies[RecoveryEmailKey]?.Value;
+
+            if (string.IsNullOrEmpty(email))
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = "Sesión expirada, por favor inicie el proceso nuevamente"
+                });
+            }
+
+            if (nuevaContrasena != confirmarContrasena)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = "Las contraseñas no coinciden"
+                });
+            }
+
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    var response = await client.PostAsync($"{_apiBaseUrl}/cambiar",
+                        new StringContent(
+                            JsonConvert.SerializeObject(new
+                            {
+                                correo = email,
+                                codigo = codigo,
+                                nuevaContrasena = nuevaContrasena
+                            }),
+                            System.Text.Encoding.UTF8,
+                            "application/json"));
+
+                    var content = await response.Content.ReadAsStringAsync();
+                    var result = JsonConvert.DeserializeObject<dynamic>(content);
+
+                    if (response.IsSuccessStatusCode && result.success == true)
+                    {
+                        // Limpiar todos los datos de recuperación
+                        Session.Remove(RecoveryEmailKey);
+                        TempData.Remove(RecoveryEmailKey);
+                        Response.Cookies.Add(new HttpCookie(RecoveryEmailKey) { Expires = DateTime.Now.AddDays(-1) });
+
+                        return Json(new
+                        {
+                            success = true,
+                            redirectUrl = Url.Action("Login", "Home"),
+                            message = "Contraseña cambiada exitosamente"
+                        });
+                    }
+
+                    string errorMessage = result.message ?? "Error al cambiar la contraseña";
+                    return Json(new { success = false, message = errorMessage });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = $"Error de conexión: {ex.Message}"
+                });
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

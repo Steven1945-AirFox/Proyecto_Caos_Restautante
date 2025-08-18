@@ -1,0 +1,110 @@
+﻿@{
+    ViewBag.Title = "Cambiar Contraseña";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4>Cambiar Contraseña</h4>
+                    <small id="sessionTimer" class="float-right">Tiempo restante: 30 minutos</small>
+                </div>
+                <div class="card-body">
+                    @using (Html.BeginForm("CambiarContrasena", "Home", FormMethod.Post, new { id = "changePasswordForm", autocomplete = "off" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        <div class="form-group">
+                            @Html.Label("Código de verificación:")
+                            @Html.TextBox("codigo", null, new { @class = "form-control", required = "required" })
+                            @Html.ValidationMessage("codigo", "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.Label("Nueva contraseña:")
+                            @Html.Password("nuevaContrasena", null, new { @class = "form-control", required = "required" })
+                            @Html.ValidationMessage("nuevaContrasena", "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.Label("Confirmar contraseña:")
+                            @Html.Password("confirmarContrasena", null, new { @class = "form-control", required = "required" })
+                            @Html.ValidationMessage("confirmarContrasena", "", new { @class = "text-danger" })
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-block mt-3" id="submitButton">
+                            <span id="submitText">Cambiar Contraseña</span>
+                            <span id="loadingSpinner" style="display:none;">
+                                <i class="fas fa-spinner fa-spin"></i> Procesando...
+                            </span>
+                        </button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- En CambiarContrasena.cshtml -->
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#changePasswordForm").submit(function (e) {
+                e.preventDefault();
+
+                var $form = $(this);
+                var $submitButton = $("#submitButton");
+                var $submitText = $("#submitText");
+                var $loadingSpinner = $("#loadingSpinner");
+                var $passwordError = $("#passwordError");
+
+                // Validación de contraseñas
+                var nuevaContrasena = $form.find("[name='nuevaContrasena']").val();
+                var confirmarContrasena = $form.find("[name='confirmarContrasena']").val();
+
+                if (nuevaContrasena !== confirmarContrasena) {
+                    $passwordError.text("Las contraseñas no coinciden");
+                    return;
+                }
+
+                // Mostrar loading
+                $submitText.hide();
+                $loadingSpinner.show();
+                $submitButton.prop("disabled", true);
+                $passwordError.text("");
+
+                // Enviar formulario via AJAX
+                $.ajax({
+                    url: "@Url.Action("CambiarContrasena", "Home")",
+                    type: "POST",
+                    data: $form.serialize(),
+                    dataType: "json",
+                    success: function (response) {
+                        if (response.success && response.redirectUrl) {
+                            // Redirigir si la respuesta contiene una URL
+                            window.location.href = response.redirectUrl;
+                        } else if (!response.success && response.message) {
+                            // Mostrar mensaje de error
+                            $passwordError.text(response.message);
+                        }
+                    },
+                    error: function (xhr) {
+                        var errorMessage = "Error al procesar la solicitud";
+                        if (xhr.responseJSON && xhr.responseJSON.message) {
+                            errorMessage = xhr.responseJSON.message;
+                        }
+                        $passwordError.text(errorMessage);
+                    },
+                    complete: function () {
+                        $submitText.show();
+                        $loadingSpinner.hide();
+                        $submitButton.prop("disabled", false);
+                    }
+                });
+            });
+        });
+    </script>
+}

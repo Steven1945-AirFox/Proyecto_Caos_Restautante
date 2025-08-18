@@ -91,14 +91,17 @@
 
 
         <div class="payment-mode">
+            <!--
             <button type="button" class="@(!Model.EsPagoGrupal ? "selected" : "")"
                     onclick="location.href='@Url.Action("Pagos", new { pagoGrupal = false })'">
                 Pago Individual
             </button>
+
             <button type="button" class="@(Model.EsPagoGrupal ? "selected" : "")"
                     onclick="location.href='@Url.Action("Pagos", new { pagoGrupal = true })'">
                 Pago de Mesa Completa
             </button>
+            -->
         </div>
 
         @using (Html.BeginForm("ProcesarPago", "Home", FormMethod.Post, new { id = "pagoForm" }))

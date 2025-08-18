@@ -10,6 +10,10 @@
     <title>Restaurant Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="~/Content/loginStyle.css" rel="stylesheet" />
+    <style>
+
+        .contra{text-align:center}
+    </style>
 </head>
 <body>
     <div class="carousel-container">
@@ -34,13 +38,15 @@
 
                 <div class="form-group">
                     <label for="Contrasena" class="form-label">Contraseña</label>
-                    @Html.PasswordFor(m => m.Contrasena, new { @class = "form-input", placeholder="123456" , required = "required" })
+                    @Html.PasswordFor(m => m.Contrasena, new { @class = "form-input", placeholder = "123456", required = "required" })
                 </div>
 
                 <button type="submit" class="login-button">Entrar</button>
 
 
             }
+
+        <a class="contra" href="@Url.Action("ContrasenaOlvidada", "Home")">¿Olvidaste tu contraseña?</a>
         </div>
     </div>
 
